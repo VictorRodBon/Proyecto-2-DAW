@@ -1,7 +1,7 @@
 // useState para manejar el estado de los campos del formulario y los mensajes de error/correcto
 import { useState } from "react";
 // Link para navegar entre páginas 
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import "./registro.css";
 
 export function Registro() {
@@ -10,6 +10,7 @@ export function Registro() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
   const [Correcto, setCorrecto] = useState("");
+  const navigate = useNavigate();
 
   const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
   
@@ -49,14 +50,19 @@ export function Registro() {
     }
 
 
-    setCorrecto("Registro completado correctamente.");
-    //información que se enviaría al backend para el registro del usuario de momento nada
+    setCorrecto("Registro completado correctamente. Redirigiendo a login...");
+    // información que se enviaría al backend para el registro del usuario de momento nada
     console.log("Datos enviados:", { email, password });
+    //para a login, pero que se vea el mensaje de registro correcto antes de redirigir.
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
   };
 //input contiene el valor del estado email y actualiza el estado cada vez que el usuario escribe en el campo
 //lo mismo para el campo de contraseña y confirmación de contraseña
+//el onChange actualiza el estado cada vez que el usuario escribe en el campo,
+// cogiendo el valor del input que pasa por la validacion y asignándolo al estado correspondiente(error o correcto), 
 
-//se muestra un mensaje de error en rojo si hay algún error y un mensaje de éxito en verde si el registro se completó correctamente
   return (
     <form onSubmit={handleSubmit}>
       <h2>Registro</h2>
@@ -84,7 +90,7 @@ export function Registro() {
       />
 
       <button type="submit">Registrarse</button>
-
+    {/* //se muestra un mensaje de error en rojo si hay algún error y un mensaje de éxito en verde si el registro se completó correctamente */}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {Correcto && <p style={{ color: "green" }}>{Correcto}</p>}
 
