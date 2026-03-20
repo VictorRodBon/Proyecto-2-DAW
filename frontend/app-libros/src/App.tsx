@@ -1,17 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Login} from "./componentes/componente-login/login";
-import {Registro} from "./componentes/componente-registro/registro";
-import { Prueba } from "./componentes/componente-prueba/prueba";
-function App(){
-   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login/>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/prueba" element={<Prueba />} />
-      </Routes>
-    </BrowserRouter>
-  );
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes"; // Importamos la configuración que acabamos de crear
+
+function App() {
+  // RouterProvider es el encargado de renderizar la ruta actual
+  return <RouterProvider router={router} />;
 }
+
 export default App;
