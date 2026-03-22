@@ -1,0 +1,112 @@
+# Tabla usuarios
+
+create table usuarios (
+  id uuid primary key references auth.users(id) on delete cascade,
+  nombre_usuario text not null,
+  estado text check (estado in ('activo', 'no-activo')) default 'no-activo',
+  rol text check (rol in ('usuario', 'admin')) default 'usuario',
+  foto_perfil text,
+  fecha_creacion timestamp default now()
+);
+
+# Tabla opiniones
+
+create table opiniones (
+  id_opinion bigserial primary key,
+  id_usuario uuid references auth.users(id) on delete cascade,
+  id_libro text not null,
+  puntuacion int check (puntuacion between 1 and 5),
+  valoracion text,
+  fecha_creacion timestamp default now()
+);
+
+# Tabla lecturas_usuarios
+
+create table lecturas_usuarios (
+  id_lectura uuid primary key default gen_random_uuid(),
+  id_usuario uuid not null references usuarios(id) on delete cascade,
+  id_libro text not null,
+  fecha_inicio date,
+  fecha_fin date,
+  estado text not null check (estado in ('Pendiente', 'Leyendo', 'Terminado', 'Abandonado'))
+);
+
+# RLS para usuarios
+
+alter table usuarios enable row level security;
+
+create policy "Ver perfiles"
+on usuarios
+for select
+using (
+  auth.uid() = id
+  or exists (
+    select 1 from usuarios
+    where id = auth.uid() and rol = 'admin'
+  )
+);
+
+create policy "Editar perfiles"
+on usuarios
+for update
+using (
+  auth.uid() = id
+  or exists (
+    select 1 from usuarios
+    where id = auth.uid() and rol = 'admin'
+  )
+);
+
+# RLS para opiniones
+
+alter table opiniones enable row level security;
+
+create policy "Ver opiniones"
+on opiniones
+for select
+using (true);
+
+create policy "Crear opiniones"
+on opiniones
+for insert
+with check (auth.uid() = id_usuario);
+
+create policy "Editar opiniones"
+on opiniones
+for update
+using (auth.uid() = id_usuario);
+
+create policy "Borrar opiniones"
+on opiniones
+for delete
+using (
+  auth.uid() = id_usuario
+  or exists (
+    select 1 from usuarios
+    where id = auth.uid() and rol = 'admin'
+  )
+);
+
+# RLS para lecturas_usuarios
+
+alter table lecturas_usuarios enable row level security;
+
+create policy "Ver lecturas de cualquier usuario"
+on lecturas_usuarios
+for select
+using (true);
+
+create policy "Crear lecturas propias"
+on lecturas_usuarios
+for insert
+with check (auth.uid() = id_usuario);
+
+create policy "Editar lecturas propias"
+on lecturas_usuarios
+for update
+using (auth.uid() = id_usuario);
+
+create policy "Borrar lecturas propias"
+on lecturas_usuarios
+for delete
+using (auth.uid() = id_usuario);
