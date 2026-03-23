@@ -4,6 +4,7 @@ import { Login } from "./componentes/componente-login/Login";
 import { Registro } from "./componentes/componente-registro/Registro";
 import { Prueba } from "./componentes/componente-prueba/Prueba";
 import { Pagina404 } from "./componentes/componente-Pagina404/Pagina404";
+import { Search } from "./componentes/componente-search/Search";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
   {
     path: "/prueba",
     element: <Prueba />,
+  },
+  {
+    path:"search",
+    element: <Search />,
   },
   {
     path: "*",

@@ -1,0 +1,27 @@
+.buscador {
+    background-color: aliceblue;
+    min-height: 100vh; /* Usa min-height para que crezca si hay muchos libros */
+    width: 100%;       /* 100% es más seguro que 100vw para evitar scroll horizontal */
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 20px;     /* El espacio se da hacia ADENTRO */
+    box-sizing: border-box; /* Fundamental para que el padding no sume al ancho */
+}
+
+/* El contenedor de los inputs (tu div de arriba) */
+.buscador > div {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Centra la barra de búsqueda */
+}
+
+/* El contenedor de los libros (tu main) */
+.buscador > main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center; /* Centra los libros si sobran espacios */
+    gap: 20px;              /* ¡Usa GAP en lugar de margin en los libros! */
+}
