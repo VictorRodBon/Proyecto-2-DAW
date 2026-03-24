@@ -1,4 +1,7 @@
 .libro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -6,29 +9,53 @@
     text-align: center;
     width: 20%;
     max-width: 300px;
+    min-width: 250px;
     margin: 10px;
+    gap: 10px;
 }
 
-.libro > .imagen > img {
-    max-width: 100%;
-    height: 100%;
+.imagen {
+    height: 200px; /* Altura fija para que todas las tarjetas midan lo mismo */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    background-color: #eee;  /* Fondo neutro por si la imagen es pequeña */
     border-radius: 4px;
+    overflow: hidden;        /* Corta lo que sobresalga */
+    margin-bottom: 10px;
 }
 
-.imagen{
-    height: 50%;
+.libro .imagen > img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Mantiene la proporción sin deformar la imagen */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave para darle volumen */
 }
-
-select {
-    padding: 8px;
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.buttons>button{
+    border: none;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    margin: 0 10px;
-    cursor: pointer;
-    background-color: white;
+    transition: ease-in-out, .5s
 }
 
-select:focus {
-    outline: none;
-    border-color: #007bff;
+.buttons>button:hover{
+    scale: 1.0625;
+}
+
+.buttons>button:first-child{
+    background-color: rgb(106, 212, 236);
+}
+
+.esta{
+    background-color: red;
+}
+
+.no-esta{
+    background-color: green;
 }

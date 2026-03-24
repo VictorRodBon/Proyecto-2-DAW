@@ -25,3 +25,17 @@
     justify-content: center; /* Centra los libros si sobran espacios */
     gap: 20px;              /* ¡Usa GAP en lugar de margin en los libros! */
 }
+
+.buscador>select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.buscador>select:focus {
+    outline: none;
+    border-color: #007bff;
+}
