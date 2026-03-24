@@ -1,61 +1,103 @@
 .libro {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    width: 20%;
-    max-width: 300px;
-    min-width: 250px;
-    margin: 10px;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  width: min(100%, 260px);
+  min-height: 430px;
+  gap: 12px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.libro:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
+}
+
+.main {
+  display: grid;
+  gap: 10px;
+}
+
+.main h2 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 18px;
+  line-height: 1.25;
+  min-height: 46px;
+}
+
+.main h4 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+  font-size: 14px;
+  min-height: 20px;
 }
 
 .imagen {
-    height: 200px; /* Altura fija para que todas las tarjetas midan lo mismo */
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center;     /* Centra verticalmente */
-    background-color: #eee;  /* Fondo neutro por si la imagen es pequeña */
-    border-radius: 4px;
-    overflow: hidden;        /* Corta lo que sobresalga */
-    margin-bottom: 10px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .libro .imagen > img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain; /* Mantiene la proporción sin deformar la imagen */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave para darle volumen */
-}
-.buttons{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.buttons>button{
-    border: none;
-    border-radius: 5px;
-    transition: ease-in-out, .5s
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
-.buttons>button:hover{
-    scale: 1.0625;
+.placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
 }
 
-.buttons>button:first-child{
-    background-color: rgb(106, 212, 236);
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.esta{
-    background-color: red;
+.buttons > button {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 8px;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
-.no-esta{
-    background-color: green;
+.buttons > button:hover {
+  transform: translateY(-1px);
+}
+
+.buttons > button:first-child {
+  background: rgba(99, 102, 241, 0.28);
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
+.esta {
+  background: rgba(239, 68, 68, 0.24);
+  border-color: rgba(239, 68, 68, 0.45);
+}
+
+.no-esta {
+  background: rgba(16, 185, 129, 0.24);
+  border-color: rgba(16, 185, 129, 0.45);
 }

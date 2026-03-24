@@ -10,44 +10,54 @@ export function Search() {
     const [libros, setLibros] = useState<ILibro[]>([]);
     const [pagina, setPagina]= useState(1);
     const [cantidad, setCantidad]= useState<number>(10);
+    const [cantidadActiva, setCantidadActiva] = useState<number>(10);
     const [cargando,setCargando]=useState(false);
+    const [hayMasResultados, setHayMasResultados] = useState(false);
 
 
     const nuevaBusqueda = async () => {
+        const cantidadBusqueda = cantidad;
         setCargando(true);
         setPagina(1); // Resetear a la primera página
-        const resultados = await servicioLibros.getByTitle(busqueda, 1, cantidad);
+        setCantidadActiva(cantidadBusqueda);
+        const resultados = await servicioLibros.getByTitle(busqueda, 1, cantidadBusqueda);
         setLibros(resultados);
+        setHayMasResultados(resultados.length === cantidadBusqueda);
         setCargando(false);
     };
 
     // Función para cargar más (mantiene los que ya están)
     const cargarMas = async () => {
+        if (!hayMasResultados) return;
         setCargando(true);
         const siguientePagina = pagina + 1;
-        const nuevosLibros = await servicioLibros.getByTitle(busqueda, siguientePagina, cantidad);
+        const nuevosLibros = await servicioLibros.getByTitle(busqueda, siguientePagina, cantidadActiva);
         
         setLibros((prevLibros) => [...prevLibros, ...nuevosLibros]);
         setPagina(siguientePagina);
+        setHayMasResultados(nuevosLibros.length === cantidadActiva);
         setCargando(false);
     };
 
     return (
         <div className={styles.buscador}>
-            <div>
+            <div className={styles.controles}>
                 <input 
+                    className={styles.inputTexto}
                     type="text" 
                     value={busqueda} 
                     onChange={(e) => setBusqueda(e.target.value)} 
                     placeholder="Escribe un título..."
                 />
                 <input 
+                    className={styles.botonBuscar}
                     type="button" 
                     value="Buscar" 
                     onClick={nuevaBusqueda} 
                 />
 
                 <select 
+                    className={styles.selectCantidad}
                     name="cantidad" value={cantidad} onChange={(e)=>setCantidad(Number(e.target.value))}
                 >
                     <option value="10">10</option>
@@ -55,15 +65,15 @@ export function Search() {
                     <option value="50">50</option>
                 </select>
             </div>
-            <main className="styles.resultados">
+            <main className={styles.resultados}>
                 {libros.map((libro) => (
                     <Libro key={libro.key} datos={libro} />
                 ))}
             </main>
-            {libros.length > 0 && (
-                <div style={{ textAlign: 'center', margin: '20px' }}>
-                    <button onClick={cargarMas} disabled={cargando}>
-                        {cargando ? "Cargando..." : `Cargar ${cantidad} más`}
+            {libros.length > 0 && hayMasResultados && (
+                <div className={styles.cargarMasWrap}>
+                    <button className={styles.botonCargarMas} onClick={cargarMas} disabled={cargando}>
+                        {cargando ? "Cargando..." : `Cargar ${cantidadActiva} más`}
                     </button>
                 </div>
             )}
