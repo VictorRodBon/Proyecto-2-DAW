@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../servicios/servicioLibros";
 import type { ILibro } from "../../types";
@@ -6,37 +7,95 @@ import type { ILibro } from "../../types";
 import styles from "./Search.module.css";
 
 export function Search() {
-    const [busqueda, setBusqueda] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const MAX_PAGINAS_URL = 5;
+
+    const parsePositiveInt = (value: string | null, fallback: number) => {
+        const parsed = value ? Number(value) : NaN;
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+    };
+
+    const urlBusqueda = (searchParams.get("q") ?? "").trim();
+    const urlPagina = Math.min(parsePositiveInt(searchParams.get("page"), 1), MAX_PAGINAS_URL);
+    const urlLimit = parsePositiveInt(searchParams.get("limit"), 10);
+
+    // Estado para el input; la búsqueda activa sale de la URL.
+    const [busquedaInput, setBusquedaInput] = useState("");
+    const [cantidad, setCantidad] = useState<number>(10);
+
     const [libros, setLibros] = useState<ILibro[]>([]);
-    const [pagina, setPagina]= useState(1);
-    const [cantidad, setCantidad]= useState<number>(10);
-    const [cantidadActiva, setCantidadActiva] = useState<number>(10);
-    const [cargando,setCargando]=useState(false);
+    const [cargando, setCargando] = useState(false);
     const [hayMasResultados, setHayMasResultados] = useState(false);
 
+    useEffect(() => {
+        // Sin query, limpiamos la vista.
+        if (!urlBusqueda) {
+            setLibros([]);
+            setBusquedaInput("");
+            setHayMasResultados(false);
+            return;
+        }
+
+        // Mantener UI sincronizada con la URL (cuando se recarga o se vuelve).
+        setBusquedaInput(urlBusqueda);
+        setCantidad(urlLimit);
+
+        const cargar = async () => {
+            setCargando(true);
+            try {
+                const resultadosAcumulados: ILibro[] = [];
+                let ultimoResultados: ILibro[] = [];
+
+                // Reconstruimos la lista acumulada (páginas 1..urlPagina).
+                for (let p = 1; p <= urlPagina; p++) {
+                    ultimoResultados = await servicioLibros.getByTitle(urlBusqueda, p, urlLimit);
+                    resultadosAcumulados.push(...ultimoResultados);
+                }
+
+                setLibros(resultadosAcumulados);
+                setHayMasResultados(ultimoResultados.length === urlLimit);
+            } finally {
+                setCargando(false);
+            }
+        };
+
+        cargar();
+    }, [urlBusqueda, urlPagina, urlLimit]);
 
     const nuevaBusqueda = async () => {
-        const cantidadBusqueda = cantidad;
-        setCargando(true);
-        setPagina(1); // Resetear a la primera página
-        setCantidadActiva(cantidadBusqueda);
-        const resultados = await servicioLibros.getByTitle(busqueda, 1, cantidadBusqueda);
-        setLibros(resultados);
-        setHayMasResultados(resultados.length === cantidadBusqueda);
-        setCargando(false);
+        const q = busquedaInput.trim();
+        if (!q) {
+            setLibros([]);
+            setHayMasResultados(false);
+            return;
+        }
+
+        // Actualizamos URL y dejamos que el efecto recargue los resultados.
+        setSearchParams(
+            {
+                q,
+                page: "1",
+                limit: String(cantidad),
+            },
+            { replace: true }
+        );
     };
 
     // Función para cargar más (mantiene los que ya están)
     const cargarMas = async () => {
         if (!hayMasResultados) return;
-        setCargando(true);
-        const siguientePagina = pagina + 1;
-        const nuevosLibros = await servicioLibros.getByTitle(busqueda, siguientePagina, cantidadActiva);
-        
-        setLibros((prevLibros) => [...prevLibros, ...nuevosLibros]);
-        setPagina(siguientePagina);
-        setHayMasResultados(nuevosLibros.length === cantidadActiva);
-        setCargando(false);
+
+        if (urlPagina >= MAX_PAGINAS_URL) return;
+
+        setSearchParams(
+            {
+                q: urlBusqueda,
+                page: String(urlPagina + 1),
+                limit: String(urlLimit),
+            },
+            { replace: true }
+        );
     };
 
     return (
@@ -45,8 +104,8 @@ export function Search() {
                 <input 
                     className={styles.inputTexto}
                     type="text" 
-                    value={busqueda} 
-                    onChange={(e) => setBusqueda(e.target.value)} 
+                    value={busquedaInput} 
+                    onChange={(e) => setBusquedaInput(e.target.value)} 
                     placeholder="Escribe un título..."
                 />
                 <input 
@@ -73,7 +132,7 @@ export function Search() {
             {libros.length > 0 && hayMasResultados && (
                 <div className={styles.cargarMasWrap}>
                     <button className={styles.botonCargarMas} onClick={cargarMas} disabled={cargando}>
-                        {cargando ? "Cargando..." : `Cargar ${cantidadActiva} más`}
+                        {cargando ? "Cargando..." : `Cargar ${urlLimit} más`}
                     </button>
                 </div>
             )}

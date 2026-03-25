@@ -1,27 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../servicios/servicioLibros";
+import { useVolver } from "../../hooks/useVolver";
 
 import type { IDetalleLibro } from "../../types/DetalleLibro";
 import styles from "./DetalleLibro.module.css";
 
 export function Detalle() {
     const { id, cover } = useParams<{ id: string; cover?: string }>();
-    const navigate = useNavigate();
     const location = useLocation();
+    const { volver } = useVolver();
     const [libro, setLibro] = useState<IDetalleLibro | null>(null);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [imgError, setImgError] = useState(false);
     const [autores, setAutores] = useState<string>("");
-
-    const volver = () => {
-        if (typeof window !== "undefined" && window.history.length > 1) {
-            navigate(-1);
-            return;
-        }
-        navigate("/search");
-    };
 
     const autorDesdeBusqueda =
         location.state && typeof (location.state as { authorName?: unknown }).authorName === "string"
