@@ -2,7 +2,7 @@
 import { useState } from "react";
 // Link para navegar entre páginas 
 import { Link, useNavigate } from "react-router-dom";
-import "../form.css";
+import styles from "../form.module.css";
 
 export function Registro() {
   const [email, setEmail] = useState("");
@@ -64,7 +64,7 @@ export function Registro() {
 // cogiendo el valor del input que pasa por la validacion y asignándolo al estado correspondiente(error o correcto), 
 
 return (
-  <form onSubmit={handleSubmit} className="form">
+  <form onSubmit={handleSubmit} className={styles.form}>
     <h2>Crear una cuenta</h2>
 
     <label>Email:</label>
@@ -93,8 +93,8 @@ return (
     {error && <p style={{ color: "red" }}>{error}</p>}
     {Correcto && <p style={{ color: "green" }}>{Correcto}</p>}
 
-     <p className="registro-p">
-      <Link to="/login" className="enlaceVolverLogin">Volver al login</Link>
+     <p className={styles.registroP}>
+      <Link to="/login" className={styles.enlaceVolverLogin}>Volver al login</Link>
     </p>
   </form>
 );

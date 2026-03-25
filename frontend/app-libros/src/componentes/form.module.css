@@ -61,3 +61,13 @@
 .enlaceVolverLogin {
     text-decoration: none;
 }
+
+.registroP {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.enlaceCrearCuenta {
+    text-decoration: none;
+}

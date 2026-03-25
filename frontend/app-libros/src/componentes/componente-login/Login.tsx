@@ -3,7 +3,7 @@ import { useState } from "react";
 // Link para navegar entre páginas
 // useNavigate para redirigir a otra página después del login exitoso
 import { Link, useNavigate } from "react-router-dom";
-import "../form.css";
+import styles from "../form.module.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -63,7 +63,7 @@ export function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit} className={styles.form}>
       <h2>Iniciar sesión</h2>
 
       <label>Email:</label>
@@ -86,7 +86,7 @@ export function Login() {
       {Correcto && <p style={{ color: "green" }}>{Correcto}</p>}
 
       <p >
-        ¿No tienes cuenta? <Link to="/registro" className="enlaceCrearCuenta"> Crear cuenta</Link>
+        ¿No tienes cuenta? <Link to="/registro" className={styles.enlaceCrearCuenta}> Crear cuenta</Link>
       </p>
       
     </form>
