@@ -4,7 +4,7 @@ import { Login } from "./componentes/componente-login/Login";
 import { Registro } from "./componentes/componente-registro/Registro";
 import { Prueba } from "./componentes/componente-prueba/Prueba";
 import { Pagina404 } from "./componentes/componente-Pagina404/Pagina404";
-import { Search } from "./componentes/componente-search/Search";
+import { BuscarLibro } from "./componentes/componente-buscar-libro/Buscar-libro";
 import { Detalle } from "./componentes/componente-detalle-libro/Detalle-libro";
 
 export const router = createBrowserRouter([
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
   },
   {
     path:"search",
-    element: <Search />,
+    element: <BuscarLibro />,
   },
   {
     path:"detalle/:id/:cover",

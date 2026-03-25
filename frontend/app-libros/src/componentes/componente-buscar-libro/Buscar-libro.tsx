@@ -4,9 +4,9 @@ import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../servicios/servicioLibros";
 import type { ILibro } from "../../types";
 
-import styles from "./Search.module.css";
+import styles from "./Buscar-libro.module.css";
 
-export function Search() {
+export function BuscarLibro() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const MAX_PAGINAS_URL = 5;
