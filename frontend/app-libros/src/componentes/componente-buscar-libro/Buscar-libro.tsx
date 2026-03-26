@@ -19,9 +19,11 @@ export function BuscarLibro() {
     const urlBusqueda = (searchParams.get("q") ?? "").trim();
     const urlPagina = Math.min(parsePositiveInt(searchParams.get("page"), 1), MAX_PAGINAS_URL);
     const urlLimit = parsePositiveInt(searchParams.get("limit"), 10);
+    const urlAuthor = (searchParams.get("author") ?? "").trim();
 
     // Estado para el input; la búsqueda activa sale de la URL.
-    const [busquedaInput, setBusquedaInput] = useState("");
+    const [busquedaTitle, setBusquedaTitle] = useState("");
+    const [busquedaAuthor, setBusquedaAuthor] = useState("");
     const [cantidad, setCantidad] = useState<number>(10);
 
     const [libros, setLibros] = useState<ILibro[]>([]);
@@ -32,13 +34,15 @@ export function BuscarLibro() {
         // Sin query, limpiamos la vista.
         if (!urlBusqueda) {
             setLibros([]);
-            setBusquedaInput("");
+            setBusquedaTitle("");
+            setBusquedaAuthor("");
             setHayMasResultados(false);
             return;
         }
 
         // Mantener UI sincronizada con la URL (cuando se recarga o se vuelve).
-        setBusquedaInput(urlBusqueda);
+        setBusquedaTitle(urlBusqueda);
+        setBusquedaAuthor(urlAuthor);
         setCantidad(urlLimit);
 
         const cargar = async () => {
@@ -49,7 +53,7 @@ export function BuscarLibro() {
 
                 // Reconstruimos la lista acumulada (páginas 1..urlPagina).
                 for (let p = 1; p <= urlPagina; p++) {
-                    ultimoResultados = await servicioLibros.getByTitle(urlBusqueda, p, urlLimit);
+                    ultimoResultados = await servicioLibros.getByTitle(urlBusqueda, p, urlLimit, urlAuthor);
                     resultadosAcumulados.push(...ultimoResultados);
                 }
 
@@ -61,25 +65,31 @@ export function BuscarLibro() {
         };
 
         cargar();
-    }, [urlBusqueda, urlPagina, urlLimit]);
+    }, [urlBusqueda, urlPagina, urlLimit, urlAuthor]);
 
     const nuevaBusqueda = async () => {
-        const q = busquedaInput.trim();
+        const q = busquedaTitle.trim();
         if (!q) {
             setLibros([]);
             setHayMasResultados(false);
             return;
         }
 
+        const author = busquedaAuthor.trim();
+
+        // Solo incluir author en la URL si tiene contenido
+        const params: Record<string, string> = {
+            q,
+            page: "1",
+            limit: String(cantidad),
+        };
+
+        if (author) {
+            params.author = author;
+        }
+
         // Actualizamos URL y dejamos que el efecto recargue los resultados.
-        setSearchParams(
-            {
-                q,
-                page: "1",
-                limit: String(cantidad),
-            },
-            { replace: true }
-        );
+        setSearchParams(params, { replace: true });
     };
 
     // Función para cargar más (mantiene los que ya están)
@@ -88,14 +98,18 @@ export function BuscarLibro() {
 
         if (urlPagina >= MAX_PAGINAS_URL) return;
 
-        setSearchParams(
-            {
-                q: urlBusqueda,
-                page: String(urlPagina + 1),
-                limit: String(urlLimit),
-            },
-            { replace: true }
-        );
+        const params: Record<string, string> = {
+            q: urlBusqueda,
+            page: String(urlPagina + 1),
+            limit: String(urlLimit),
+        };
+
+        // Mantener el filtro de autor al cargar más resultados
+        if (urlAuthor) {
+            params.author = urlAuthor;
+        }
+
+        setSearchParams(params, { replace: true });
     };
 
     return (
@@ -104,9 +118,16 @@ export function BuscarLibro() {
                 <input 
                     className={styles.inputTexto}
                     type="text" 
-                    value={busquedaInput} 
-                    onChange={(e) => setBusquedaInput(e.target.value)} 
+                    value={busquedaTitle} 
+                    onChange={(e) => setBusquedaTitle(e.target.value)} 
                     placeholder="Escribe un título..."
+                />
+                <input 
+                    className={styles.inputTexto}
+                    type="text" 
+                    value={busquedaAuthor} 
+                    onChange={(e) => setBusquedaAuthor(e.target.value)} 
+                    placeholder="Escribe un autor..."
                 />
                 <input 
                     className={styles.botonBuscar}

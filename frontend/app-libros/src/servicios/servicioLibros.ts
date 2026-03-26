@@ -4,12 +4,23 @@ import type { ILibro } from "../types";
 const API_URL = "https://openlibrary.org";
 
 export const servicioLibros = {
-    getByTitle: async (title: string, pagina: number = 1, cantidad:number = 10): Promise<ILibro[]> => {
+    getByTitle: async (title: string="", pagina: number = 1, cantidad:number = 10, author_name:string=""): Promise<ILibro[]> => {
         const newTitle = title.replace(/ /g, "+");
         
-        const url = `${API_URL}/search.json?q=${newTitle}&fields=key,title,author_name,cover_i&limit=${cantidad}&page=${pagina}`;
+        let url = `${API_URL}/search.json?q=${newTitle}&fields=key,title,author_name,cover_i&limit=${cantidad}&page=${pagina}`;
+        
+        // Solo agregar parámetro author si tiene contenido
+        if (author_name && author_name.trim()) {
+            url += `&author=${author_name.trim().replace(/ /g, "+")}`;
+        }
         
         const response = await fetch(url);
+        
+        if (!response.ok) {
+            console.error("Error en la búsqueda:", response.status, response.statusText);
+            return [];
+        }
+        
         const data = await response.json();
 
         return (data?.docs ?? []) as ILibro[];

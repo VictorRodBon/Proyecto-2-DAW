@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../servicios/servicioLibros";
 import { useVolver } from "../../hooks/useVolver";
 
-import type { IDetalleLibro } from "../../types/DetalleLibro";
+import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
 
 export function Detalle() {
@@ -34,9 +34,7 @@ export function Detalle() {
     }, [cover, libro?.covers]);
 
     useEffect(() => {
-        if (!id) return;
-
-        // Función interna asíncrona
+        if (!id) return; // si no existe un ID se sale del useEffect
         const cargarDatos = async () => {
             try {
                 setCargando(true);
