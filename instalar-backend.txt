@@ -1,0 +1,33 @@
+1. Instala Node.js
+Descárgalo desde nodejs.org — versión 20 o superior.
+Verifica que está instalado:
+node -v
+npm -v
+
+2. Instala NestJS CLI globalmente
+npm install -g @nestjs/cli
+
+3. Clona el repositorio
+git clone https://github.com/tu-usuario/tu-repo.git
+cd tu-repo/backend
+
+4. Instala las dependencias del proyecto
+npm install --legacy-peer-deps
+
+5. Crea el archivo .env
+Crea un archivo .env dentro de backend/ con este contenido (pide la URL a quien tenga acceso a Supabase):
+envDATABASE_URL="postgresql://postgres:[PASSWORD]@db.xxxxxxxxxxxx.supabase.co:5432/postgres"
+PORT=3000
+
+6. Genera el cliente Prisma
+npx prisma generate
+
+7. Arranca el servidor
+npm run start:dev
+```
+
+**8. Comprueba que funciona**
+
+Deberías ver en la consola:
+```
+App corriendo en: http://localhost:3000
