@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id             String   @id
+  nombre_usuario String
+  estado         String   @default("no-activo")
+  rol            String   @default("usuario")
+  foto_perfil    String?
+  fecha_creacion DateTime @default(now())
+
+  opiniones Opiniones[]
+  lecturas  LecturasUsuarios[]
+
+  @@map("usuarios")
+}
+
+model Opiniones {
+  id_opinion     BigInt   @id @default(autoincrement())
+  id_usuario     String
+  id_libro       String
+  puntuacion     Int
+  valoracion     String?
+  fecha_creacion DateTime @default(now())
+
+  usuario Usuario @relation(fields: [id_usuario], references: [id])
+
+  @@map("opiniones")
+}
+
+model LecturasUsuarios {
+  id_lectura   String    @id @default(uuid())
+  id_usuario   String
+  id_libro     String
+  fecha_inicio DateTime?
+  fecha_fin    DateTime?
+  estado       String
+
+  usuario Usuario @relation(fields: [id_usuario], references: [id])
+
+  @@map("lecturas_usuarios")
+}
