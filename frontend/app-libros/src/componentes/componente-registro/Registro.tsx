@@ -1,101 +1,121 @@
-// useState para manejar el estado de los campos del formulario y los mensajes de error/correcto
 import { useState } from "react";
-// Link para navegar entre páginas 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { servicioUsuarios } from "../../servicios/servicioUsuarios";
 import styles from "../form.module.css";
 
 export function Registro() {
+  const [nombreUsuario, setNombreUsuario] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
-  const [Correcto, setCorrecto] = useState("");
-  const navigate = useNavigate();
-
-  const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
+  const [correcto, setCorrecto] = useState("");
+  const [loading, setLoading] = useState(false);
   
+  const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
   const dominiosBaneados = ["tempmail.com", "10minutemail.com", "mailinator.com", "yopmail.com"];
-  //handleSubmit para validar los datos ingresados por el usuario y mostrar mensajes de error o éxito
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  
+  const validarContrasena = (pwd: string): string | null => {
+    if (pwd.length < 6) return "La contraseña debe tener al menos 6 caracteres";
+    if (!/[A-Z]/.test(pwd))
+      return "La contraseña debe tener al menos una mayúscula";
+    if (!/[a-z]/.test(pwd))
+      return "La contraseña debe tener al menos una minúscula";
+    if (!/[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`';]/.test(pwd))
+      return "La contraseña debe tener al menos un carácter especial";
+    return null;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setCorrecto("");
-
-
+    // Validaciones locales
+    if (!nombreUsuario.trim()) {
+      setError("El nombre de usuario es obligatorio");
+      return;
+    }
     if (!email.includes("@")) {
       setError("El email debe contener @");
       return;
     }
-
+    
     const domain = email.split("@")[1];
-
     if (dominiosBaneados.includes(domain)) {
       setError("No se permiten correos temporales.");
       return;
     }
-
     if (!dominiosValidos.includes(domain)) {
       setError("Dominio no permitido. Usa Gmail, Yahoo u Outlook.");
       return;
     }
-
-    if (password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres.");
+    const errorContrasena = validarContrasena(password);
+    if (errorContrasena) {
+      setError(errorContrasena);
       return;
     }
-
+    if (!confirm) {
+      setError("La confirmación de contraseña es obligatoria.");
+      return;
+    }
+    const errorConfirmacion = validarContrasena(confirm);
+    if (errorConfirmacion) {
+      setError(errorConfirmacion);
+      return;
+    }
     if (password !== confirm) {
       setError("Las contraseñas no coinciden.");
       return;
     }
-
-
-    setCorrecto("Registro completado correctamente. Redirigiendo a login...");
-    // información que se enviaría al backend para el registro del usuario de momento nada
-    console.log("Datos enviados:", { email, password });
-    //para a login, pero que se vea el mensaje de registro correcto antes de redirigir.
-    setTimeout(() => {
-      navigate("/login");
-    }, 1500);
+    // Registro en Supabase Auth
+    setLoading(true);
+    const resultado = await servicioUsuarios.registro(email, password, nombreUsuario);
+    if (!resultado.success) {
+      setError(resultado.error || "Error al registrar");
+      setLoading(false);
+      return;
+    }
+    // Registro exitoso
+    setCorrecto("Registro completado. Revisa tu email para confirmar.");
+    setLoading(false);
   };
-//input contiene el valor del estado email y actualiza el estado cada vez que el usuario escribe en el campo
-//lo mismo para el campo de contraseña y confirmación de contraseña
-//el onChange actualiza el estado cada vez que el usuario escribe en el campo,
-// cogiendo el valor del input que pasa por la validacion y asignándolo al estado correspondiente(error o correcto), 
 
-return (
-  <form onSubmit={handleSubmit} className={styles.form}>
-    <h2>Crear una cuenta</h2>
-
-    <label>Email:</label>
-    <input
-      type="text"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-
-    <label>Contraseña:</label>
-    <input
-      type="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
-
-    <label>Confirmar contraseña:</label>
-    <input
-      type="password"
-      value={confirm}
-      onChange={(e) => setConfirm(e.target.value)}
-    />
-
-    <button type="submit">Registrarse</button>
-
-    {error && <p style={{ color: "red" }}>{error}</p>}
-    {Correcto && <p style={{ color: "green" }}>{Correcto}</p>}
-
-     <p className={styles.registroP}>
-      <Link to="/login" className={styles.enlaceVolverLogin}>Volver al login</Link>
-    </p>
-  </form>
-);
+  return (
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <h2>Crear una cuenta</h2>
+      <label>Nombre de usuario:</label>
+      <input
+        type="text"
+        value={nombreUsuario}
+        onChange={(e) => setNombreUsuario(e.target.value)}
+        placeholder="Tu nombre de usuario"
+      />
+      <label>Email:</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <label>Contraseña:</label>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <label>Confirmar contraseña:</label>
+      <input
+        type="password"
+        value={confirm}
+        onChange={(e) => setConfirm(e.target.value)}
+      />
+      <button type="submit" disabled={loading}>
+        {loading ? "Registrando..." : "Registrarse"}
+      </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {correcto && <p style={{ color: "green" }}>{correcto}</p>}
+      <p className={styles.registroP}>
+        <Link to="/login" className={styles.enlaceVolverLogin}>Volver al login</Link>
+      </p>
+    </form>
+  );
 }

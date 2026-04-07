@@ -3,6 +3,7 @@ import { useState } from "react";
 // Link para navegar entre páginas
 // useNavigate para redirigir a otra página después del login exitoso
 import { Link, useNavigate } from "react-router-dom";
+import { servicioUsuarios } from "../../servicios/servicioUsuarios";
 import styles from "../form.module.css";
 
 export function Login() {
@@ -10,21 +11,14 @@ export function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [Correcto, setCorrecto] = useState("");
+  const [correcto, setCorrecto] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  //validarContrasena para verificar que la contraseña que cumpla esto de momento
-  const validarContrasena = (pwd: string): string | null => {
-    if (pwd.length < 6) return "La contraseña debe tener al menos 6 caracteres";
-    if (!/[A-Z]/.test(pwd))
-      return "La contraseña debe tener al menos una mayúscula";
-    if (!/[a-z]/.test(pwd))
-      return "La contraseña debe tener al menos una minúscula";
-    if (!/[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`';]/.test(pwd))
-      return "La contraseña debe tener al menos un carácter especial";
-    return null;
-  };
+  //dominios permitidos para el email
+  const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
+
   //handleSubmit para validar los datos ingresados por el usuario y mostrar mensajes de error o éxito
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setCorrecto("");
@@ -33,33 +27,36 @@ export function Login() {
       setError("Email inválido");
       return;
     }
-    // Validar que el dominio del correo sea uno de los permitidos, aunque creo que mejor que llegue con una validación en el backend también por seguridad
-    const dominiosValidos = [
-      "gmail.com",
-      "yahoo.com",
-      "outlook.com",
-      "hotmail.com",
-    ];
+    
     const dominio = email.split("@")[1];
     if (!dominiosValidos.includes(dominio)) {
       setError("Dominio de correo no válido");
       return;
     }
 
-    const errorContrasena = validarContrasena(password);
-    if (errorContrasena) {
-      setError(errorContrasena);
+    if (password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres");
       return;
     }
 
-    setError("");
-    console.log("Login:", { email, password });
+    // Login en Supabase Auth
+    setLoading(true);
+    const resultado = await servicioUsuarios.login(email, password);
+    
+    if (!resultado.success) {
+      setError(resultado.error || "Error al iniciar sesión");
+      setLoading(false);
+      return;
+    }
 
-    setCorrecto("Registro completado correctamente.");
-    console.log("Datos enviados:", { email, password });
-
-    //cuando el login es exitoso, se redirige a la página de prueba
-    navigate("/prueba");
+    // Login exitoso
+    setCorrecto("Sesión iniciada correctamente");
+    setLoading(false);
+    
+    // Redirigir tras un breve delay
+    setTimeout(() => {
+      navigate("/prueba");
+    }, 1000);
   };
 
   return (
@@ -80,10 +77,12 @@ export function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit">Entrar</button>
+      <button type="submit" disabled={loading}>
+        {loading ? "Iniciando sesión..." : "Entrar"}
+      </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {Correcto && <p style={{ color: "green" }}>{Correcto}</p>}
+      {correcto && <p style={{ color: "green" }}>{correcto}</p>}
 
       <p >
         ¿No tienes cuenta? <Link to="/registro" className={styles.enlaceCrearCuenta}> Crear cuenta</Link>
