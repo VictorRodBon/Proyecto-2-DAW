@@ -1,15 +1,19 @@
 import type { IOpinion } from "../../types/Opinion";
 
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
+
 export const OpinionListada = ({ opinion }: { opinion: IOpinion }) => {
-
-    // obtener el nombre del usuario y del autor
-
-    return (
-        <div>
-            <h3>{opinion.id_libro}</h3>
-            <p>{opinion.id_usuario}</p>
-            <p>{opinion.puntuacion}</p>
-            <p>{opinion.valoracion}</p>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Rating
+        value={opinion.puntuacion}
+        readOnly
+        precision={0.5}
+        icon={<StarIcon fontSize="inherit" />}
+        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+      />
+      <p>{opinion.valoracion}</p>
+    </div>
+  );
+};

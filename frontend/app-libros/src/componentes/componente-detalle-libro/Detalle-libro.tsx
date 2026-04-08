@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../servicios/servicioLibros";
 import { useVolver } from "../../hooks/useVolver";
 import { ListaOpiniones } from "../componente-lista-opiniones-libro/Lista-opiniones";
@@ -17,6 +17,8 @@ export function Detalle() {
     const [imgError, setImgError] = useState(false);
     const [autores, setAutores] = useState<string>("");
     const [mostrarOpiniones, setMostrarOpiniones] = useState(false);
+
+      const navigate = useNavigate();
 
     const autorDesdeBusqueda =
         location.state && typeof (location.state as { authorName?: unknown }).authorName === "string"
@@ -149,6 +151,15 @@ export function Detalle() {
                             onClick={() => setMostrarOpiniones(!mostrarOpiniones)}
                         >
                             {mostrarOpiniones ? "Ocultar opiniones" : "Ver opiniones"}
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                navigate(`/addOpinion/${id}`);
+                            }}
+                        >
+                            DETALLE
                         </button>
                     </div>
                     <h1 className={styles.title}>{libro.title}</h1>
