@@ -223,11 +223,41 @@
    animation: shimmer 1.2s ease-in-out infinite;
  }
  
- @keyframes shimmer {
-   0% {
-     background-position: 200% 0;
-   }
-   100% {
-     background-position: -200% 0;
-   }
- }
+@keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .opinionesToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+  
+  .opinionesToggle:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  
+  .opinionesSection {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .buttonsGrp{
+    display: flex;
+    gap: 10px;
+  }

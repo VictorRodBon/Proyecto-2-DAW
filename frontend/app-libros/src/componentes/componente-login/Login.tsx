@@ -55,7 +55,7 @@ export function Login() {
     
     // Redirigir tras un breve delay
     setTimeout(() => {
-      navigate("/prueba");
+      navigate("/search");
     }, 1000);
   };
 

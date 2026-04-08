@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../servicios/servicioLibros";
 import { useVolver } from "../../hooks/useVolver";
+import { ListaOpiniones } from "../componente-lista-opiniones-libro/Lista-opiniones";
 
 import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
@@ -15,6 +16,7 @@ export function Detalle() {
     const [error, setError] = useState<string | null>(null);
     const [imgError, setImgError] = useState(false);
     const [autores, setAutores] = useState<string>("");
+    const [mostrarOpiniones, setMostrarOpiniones] = useState(false);
 
     const autorDesdeBusqueda =
         location.state && typeof (location.state as { authorName?: unknown }).authorName === "string"
@@ -137,9 +139,18 @@ export function Detalle() {
         <div className={styles.page}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <button type="button" className={styles.backLink} onClick={volver}>
-                        ← Volver
-                    </button>
+                    <div className={styles.buttonsGrp}>
+                        <button type="button" className={styles.backLink} onClick={volver}>
+                            ← Volver
+                        </button>
+                        <button
+                            type="button"
+                            className={styles.opinionesToggle}
+                            onClick={() => setMostrarOpiniones(!mostrarOpiniones)}
+                        >
+                            {mostrarOpiniones ? "Ocultar opiniones" : "Ver opiniones"}
+                        </button>
+                    </div>
                     <h1 className={styles.title}>{libro.title}</h1>
                 </div>
 
@@ -199,6 +210,12 @@ export function Detalle() {
                         ) : null}
                     </div>
                 </div>
+
+                {mostrarOpiniones && id && (
+                    <div className={styles.opinionesSection}>
+                        <ListaOpiniones id_libro={id} />
+                    </div>
+                )}
             </div>
         </div>
     );
