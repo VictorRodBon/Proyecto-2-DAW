@@ -9,12 +9,9 @@ import { Detalle } from "./componentes/componente-detalle-libro/Detalle-libro";
 import { FormularioOpinion } from "./componentes/componente-formulario-opinion/Formulario-opinion";
 
 export const router = createBrowserRouter([
+  
   {
     path: "/",
-    element: <Navigate to="/login" replace />,
-  },
-  {
-    path: "/login",
     element: <Login />,
   },
   {

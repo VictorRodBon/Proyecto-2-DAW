@@ -261,3 +261,15 @@
     display: flex;
     gap: 10px;
   }
+
+  /* Ajuste para que Boneyard use tus colores de Glassmorphism */
+/* Esto forzará a que aparezca ALGO si la librería está funcionando */
+.card :global([data-boneyard-skeleton]), 
+.card :global([class*="boneyard"]) {
+    background: red !important; /* Ponlo en rojo para debugguear */
+    min-height: 20px !important;
+    min-width: 100px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
