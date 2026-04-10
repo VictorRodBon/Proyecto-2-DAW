@@ -61,14 +61,14 @@ backend/
 
 #### Usuario
 
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| id | String (UUID) | Identificador único del usuario |
-| nombre_usuario | String | Nombre de usuario |
-| estado | String | Estado del usuario (por defecto: "no-activo") |
-| rol | String | Rol del usuario (por defecto: "usuario") |
-| foto_perfil | String? | URL de la foto de perfil (opcional) |
-| fecha_creacion | DateTime | Fecha de creación del usuario |
+| Campo          | Tipo          | Descripción                                   |
+| ----------------| ---------------| -----------------------------------------------|
+| id             | String (UUID) | Identificador único del usuario               |
+| nombre_usuario | String        | Nombre de usuario                             |
+| estado         | String        | Estado del usuario (por defecto: "no-activo") |
+| rol            | String        | Rol del usuario (por defecto: "usuario")      |
+| foto_perfil    | String?       | URL de la foto de perfil (opcional)           |
+| fecha_creacion | DateTime      | Fecha de creación del usuario                 |
 
 **Relaciones:**
 - Un usuario puede tener muchas opiniones
@@ -102,6 +102,48 @@ backend/
 **Relaciones:**
 - Cada lectura pertenece a un usuario
 
+#### Diagrama
+
+```mermaid
+erDiagram
+    auth.users ||--|| Usuarios : "extiende"
+    Usuarios ||--|| Opiniones : "opina"
+    Usuarios ||--|| LecturasUsuarios : "realiza"
+
+
+    auth.users {
+        String(UUID) id PK
+        String correo
+    }
+
+    Usuarios {
+        String(UUID) id_usuario PK FK
+        String nombre de usuario
+        String estado "activo/no-activo"
+        String rol "usuario/admin"
+        Stirng? foto_perfil "opcional"
+        DateTime fecha_creacion
+    }
+
+    Opiniones {
+        BigInt id_opinion PK
+        String id_usuario FK
+        String id_libro FK
+        Int puntuacion "(1-5)"
+        String? valoracion
+        DateTime fecha_creacion
+    }
+
+    LecturasUsuarios {
+        String(UUID) id_lectura PK
+        String id_usuario FK
+        String id_libro FK
+        DateTime? fecha_inicio
+        DateTime? fecha_fin
+        String estado "sin empezar/leyendo/terminado/abandonado"
+    }
+
+```
 ---
 
 ## API Endpoints
