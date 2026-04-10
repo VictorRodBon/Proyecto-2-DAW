@@ -89,7 +89,6 @@ export function Detalle() {
                 <Skeleton
                     name="detalle-libro"
                     loading={cargando}
-                    
                 >
                     <DetalleContent
                         libro={libro || libroMock} 

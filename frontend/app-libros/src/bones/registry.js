@@ -3,7 +3,9 @@
 import { registerBones } from 'boneyard-js'
 
 import _tarjeta_libro from './tarjeta-libro.bones.json'
+import _detalle_libro from './detalle-libro.bones.json'
 
 registerBones({
   "tarjeta-libro": _tarjeta_libro,
+  "detalle-libro": _detalle_libro,
 })

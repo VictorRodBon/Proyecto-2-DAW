@@ -114,7 +114,7 @@ export function Registro() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       {correcto && <p style={{ color: "green" }}>{correcto}</p>}
       <p className={styles.registroP}>
-        <Link to="/login" className={styles.enlaceVolverLogin}>Volver al login</Link>
+        <Link to="/" className={styles.enlaceVolverLogin}>Volver al login</Link>
       </p>
     </form>
   );
