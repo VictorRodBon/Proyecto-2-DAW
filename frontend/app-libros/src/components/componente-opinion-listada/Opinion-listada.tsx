@@ -13,7 +13,7 @@ export const OpinionListada = ({ opinion }: { opinion: IOpinion }) => {
         icon={<StarIcon fontSize="inherit" />}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />
-      <p>{opinion.valoracion}</p>
+      { opinion.valoracion && <p>{opinion.valoracion}</p> }
     </div>
   );
 };
