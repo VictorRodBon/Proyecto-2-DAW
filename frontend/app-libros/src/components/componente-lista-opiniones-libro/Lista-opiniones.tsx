@@ -1,4 +1,4 @@
-import { servicioOpiniones } from "../../servicios/servicioOpiniones";
+import { servicioOpiniones } from "../../api/servicioOpiniones";
 import { useState, useEffect } from "react";
 import type { IOpinion } from "../../types/Opinion";
 import {OpinionListada} from "../componente-opinion-listada/Opinion-listada";

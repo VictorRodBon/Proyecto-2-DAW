@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { servicioLibros } from "../../servicios/servicioLibros";
+import { servicioLibros } from "../../api/servicioLibros";
 import { useVolver } from "../../hooks/useVolver";
 import { DetalleContent } from './Detalle-content';
 import { Skeleton } from 'boneyard-js/react';

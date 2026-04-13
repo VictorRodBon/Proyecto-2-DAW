@@ -3,7 +3,7 @@ import { useState } from "react";
 // Link para navegar entre páginas
 // useNavigate para redirigir a otra página después del login exitoso
 import { Link, useNavigate } from "react-router-dom";
-import { servicioUsuarios } from "../../servicios/servicioUsuarios";
+import { servicioUsuarios } from "../../api/servicioUsuarios";
 import styles from "../form.module.css";
 
 export function Login() {

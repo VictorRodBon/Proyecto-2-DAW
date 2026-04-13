@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Libro } from "../componente-libro/Libro";
-import { servicioLibros } from "../../servicios/servicioLibros";
+import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
 
 import { Skeleton } from 'boneyard-js/react';
@@ -37,7 +37,7 @@ export function BuscarLibro() {
 
     const libroMock: ILibro = {
         key: "mock-key",
-        title: "Cargando título...", // Texto dummy para dar volumen
+        title: "Cargando título...",
         author_name: "autor", 
         cover_i: "",
     };
@@ -147,7 +147,6 @@ export function BuscarLibro() {
                     value="Buscar"
                     onClick={nuevaBusqueda}
                 />
-
                 <select
                     className={styles.selectCantidad}
                     name="cantidad" value={cantidad} onChange={(e) => setCantidad(Number(e.target.value))}

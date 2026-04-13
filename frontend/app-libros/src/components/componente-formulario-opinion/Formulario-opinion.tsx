@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { servicioOpiniones } from "../../servicios/servicioOpiniones";
-import { servicioUsuarios } from "../../servicios/servicioUsuarios";
+import { servicioOpiniones } from "../../api/servicioOpiniones";
+import { servicioUsuarios } from "../../api/servicioUsuarios";
 import { RatingInput } from "./RatingInput";
 import styles from "./Formulario-opinion.module.css";
 

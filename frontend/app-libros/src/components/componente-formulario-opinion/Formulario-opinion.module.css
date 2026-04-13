@@ -115,6 +115,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-top: 10px;
 }
 
 .botonEnviar:hover:not(:disabled) {

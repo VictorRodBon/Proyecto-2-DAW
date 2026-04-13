@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { servicioUsuarios } from "../../servicios/servicioUsuarios";
+import { servicioUsuarios } from "../../api/servicioUsuarios";
 import styles from "../form.module.css";
 
 export function Registro() {

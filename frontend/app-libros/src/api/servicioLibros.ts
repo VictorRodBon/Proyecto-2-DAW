@@ -1,4 +1,4 @@
-// src/servicios/servicioLibros.ts
+// src/api/servicioLibros.ts
 import type { ILibro } from "../types";
 
 const API_URL = "https://openlibrary.org";
