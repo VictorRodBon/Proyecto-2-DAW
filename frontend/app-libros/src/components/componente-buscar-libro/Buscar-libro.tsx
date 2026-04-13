@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Libro } from "../componente-libro/Libro";
-import { servicioLibros } from "../../servicios/servicioLibros";
+import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
+
+import { Skeleton } from 'boneyard-js/react';
+
+import '../../bones/registry'
 
 import styles from "./Buscar-libro.module.css";
 
@@ -29,6 +33,14 @@ export function BuscarLibro() {
     const [libros, setLibros] = useState<ILibro[]>([]);
     const [cargando, setCargando] = useState(false);
     const [hayMasResultados, setHayMasResultados] = useState(false);
+
+
+    const libroMock: ILibro = {
+        key: "mock-key",
+        title: "Cargando título...",
+        author_name: "autor", 
+        cover_i: "",
+    };
 
     useEffect(() => {
         // Sin query, limpiamos la vista.
@@ -115,30 +127,29 @@ export function BuscarLibro() {
     return (
         <div className={styles.buscador}>
             <div className={styles.controles}>
-                <input 
+                <input
                     className={styles.inputTexto}
-                    type="text" 
-                    value={busquedaTitle} 
-                    onChange={(e) => setBusquedaTitle(e.target.value)} 
+                    type="text"
+                    value={busquedaTitle}
+                    onChange={(e) => setBusquedaTitle(e.target.value)}
                     placeholder="Escribe un título..."
                 />
-                <input 
+                <input
                     className={styles.inputTexto}
-                    type="text" 
-                    value={busquedaAuthor} 
-                    onChange={(e) => setBusquedaAuthor(e.target.value)} 
+                    type="text"
+                    value={busquedaAuthor}
+                    onChange={(e) => setBusquedaAuthor(e.target.value)}
                     placeholder="Escribe un autor..."
                 />
-                <input 
+                <input
                     className={styles.botonBuscar}
-                    type="button" 
-                    value="Buscar" 
-                    onClick={nuevaBusqueda} 
+                    type="button"
+                    value="Buscar"
+                    onClick={nuevaBusqueda}
                 />
-
-                <select 
+                <select
                     className={styles.selectCantidad}
-                    name="cantidad" value={cantidad} onChange={(e)=>setCantidad(Number(e.target.value))}
+                    name="cantidad" value={cantidad} onChange={(e) => setCantidad(Number(e.target.value))}
                 >
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -146,8 +157,18 @@ export function BuscarLibro() {
                 </select>
             </div>
             <main className={styles.resultados}>
-                {libros.map((libro) => (
-                    <Libro key={libro.key} datos={libro} />
+                {/* Usamos un array de mocks si está cargando para que el map se ejecute */}
+                {(cargando && libros.length === 0
+                    ? Array.from({ length: urlLimit }).map((_, i) => ({ ...libroMock, key: `sk-${i}` }))
+                    : libros
+                ).map((libro) => (
+                    <Skeleton
+                        key={libro.key}
+                        name="tarjeta-libro"
+                        loading={cargando && libros.length === 0}
+                    >
+                        <Libro key={libro.key} datos={libro} />
+                    </Skeleton>
                 ))}
             </main>
             {libros.length > 0 && hayMasResultados && (
