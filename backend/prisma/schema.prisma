@@ -22,7 +22,7 @@ model Usuario {
 }
 
 model Opiniones {
-  id_opinion     BigInt   @id @default(autoincrement())
+  id_opinion     Int   @id @default(autoincrement())
   id_usuario     String
   id_libro       String
   puntuacion     Int

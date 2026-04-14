@@ -38,13 +38,13 @@ export class OpinionesService {
   // PATCH /opiniones/:id_opinion
   async update(id_opinion: number, dto: UpdateOpinioneDto) {
     const opinion = await this.prisma.opiniones.findUnique({
-      where: { id_opinion: BigInt(id_opinion) },
+      where: { id_opinion: Number(id_opinion) },
     });
     if (!opinion)
       throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
 
     return this.prisma.opiniones.update({
-      where: { id_opinion: BigInt(id_opinion) },
+      where: { id_opinion: Number(id_opinion) },
       data: dto,
     });
   }
@@ -52,13 +52,13 @@ export class OpinionesService {
   // DELETE /opiniones/:id_opinion
   async remove(id_opinion: number) {
     const opinion = await this.prisma.opiniones.findUnique({
-      where: { id_opinion: BigInt(id_opinion) },
+      where: { id_opinion: Number(id_opinion) },
     });
     if (!opinion)
       throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
 
     await this.prisma.opiniones.delete({
-      where: { id_opinion: BigInt(id_opinion) },
+      where: { id_opinion: Number(id_opinion) },
     });
     return { message: `Opinión #${id_opinion} eliminada correctamente` };
   }

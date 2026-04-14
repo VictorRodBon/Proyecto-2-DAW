@@ -91,11 +91,11 @@ erDiagram
     }
 
     Usuarios {
-        String(UUID) id_usuario PK FK
+        String(UUID) id_usuario FK
         String nombre de usuario
         String estado "activo/no-activo"
         String rol "usuario/admin"
-        Stirng? foto_perfil "opcional"
+        Stirng foto_perfil "opcional"
         DateTime fecha_creacion
     }
 
@@ -104,7 +104,7 @@ erDiagram
         String id_usuario FK
         String id_libro FK
         Int puntuacion "(1-5)"
-        String? valoracion
+        String valoracion "opcional"
         DateTime fecha_creacion
     }
 
@@ -112,8 +112,8 @@ erDiagram
         String(UUID) id_lectura PK
         String id_usuario FK
         String id_libro FK
-        DateTime? fecha_inicio
-        DateTime? fecha_fin
+        DateTime fecha_inicio
+        DateTime fecha_fin
         String estado "sin empezar/leyendo/terminado/abandonado"
     }
 
