@@ -2,6 +2,10 @@ import {IsString, IsNotEmpty, IsInt, IsOptional, Min, Max,} from 'class-validato
 
 export class CreateOpinioneDto {
     @IsString()
+    @IsNotEmpty()
+    id_usuario: string;
+    
+    @IsString()
     @IsNotEmpty({ message: 'El id del libro es obligatorio' })
     id_libro: string;
 
