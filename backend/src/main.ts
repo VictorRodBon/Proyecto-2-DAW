@@ -8,12 +8,15 @@ async function bootstrap() {
     origin: process.env.CORS, // Puerto de Vite (frontend)
     credentials: true,
   });
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
   await app.listen(process.env.PORT ?? 3000);
-  console.log(`App corriendo en: http://localhost:${process.env.PORT ?? 3000}`);
+  console.log(`App corriendo en: http://localhost:${process.env.PORT}`);
+  console.log(process.env.DATABASE_URL_2);
 }
 bootstrap();

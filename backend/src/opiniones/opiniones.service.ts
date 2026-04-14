@@ -5,13 +5,13 @@ import { UpdateOpinioneDto } from './dto/update-opinione.dto';
 
 @Injectable()
 export class OpinionesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // POST /opiniones
-  create(id_usuario: string, dto: CreateOpinioneDto) {
+  create(dto: CreateOpinioneDto) {
     return this.prisma.opiniones.create({
       data: {
-        id_usuario,
+        id_usuario: dto.id_usuario,
         id_libro: dto.id_libro,
         puntuacion: dto.puntuacion,
         valoracion: dto.valoracion,
@@ -40,7 +40,8 @@ export class OpinionesService {
     const opinion = await this.prisma.opiniones.findUnique({
       where: { id_opinion: BigInt(id_opinion) },
     });
-    if (!opinion) throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
+    if (!opinion)
+      throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
 
     return this.prisma.opiniones.update({
       where: { id_opinion: BigInt(id_opinion) },
@@ -53,7 +54,8 @@ export class OpinionesService {
     const opinion = await this.prisma.opiniones.findUnique({
       where: { id_opinion: BigInt(id_opinion) },
     });
-    if (!opinion) throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
+    if (!opinion)
+      throw new NotFoundException(`Opinión #${id_opinion} no encontrada`);
 
     await this.prisma.opiniones.delete({
       where: { id_opinion: BigInt(id_opinion) },

@@ -1,20 +1,29 @@
-import {Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus,} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { OpinionesService } from './opiniones.service';
 import { CreateOpinioneDto } from './dto/create-opinione.dto';
 import { UpdateOpinioneDto } from './dto/update-opinione.dto';
 
 @Controller('opiniones')
 export class OpinionesController {
-  constructor(private readonly opinionesService: OpinionesService) { }
+  constructor(private readonly opinionesService: OpinionesService) {}
 
   // POST /opiniones
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(
-    @Body('id_usuario') id_usuario: string,
-    @Body() dto: CreateOpinioneDto,
-  ) {
-    return this.opinionesService.create(id_usuario, dto);
+  create(@Body() dto: CreateOpinioneDto) {
+    console.log('BODY RECIBIDO:', dto);
+    return this.opinionesService.create(dto);
   }
 
   // GET /opiniones/libro/:id_libro

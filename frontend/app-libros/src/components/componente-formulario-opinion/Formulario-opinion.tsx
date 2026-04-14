@@ -23,6 +23,7 @@ export const FormularioOpinion = () => {
     try {
       const { user } = await servicioUsuarios.getUsuarioActual();
       const id_usuario = user?.id;
+      console.log("usuario actual: "+id_usuario)
       if (!id_usuario) {
         setMensaje({ tipo: 'error', texto: "Debes iniciar sesión" });
         return;
