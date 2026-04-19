@@ -4,6 +4,14 @@ import styles from "./Pagina404.module.css"; // Recomendado usar CSS Modules
 export function Pagina404() {
   const navigate = useNavigate();
 
+  function handleVolverAtras(): void {
+    navigate(-1);
+  }
+
+  function handleIrLogin(): void {
+    navigate("/login");
+  }
+
   return (
     <div className={styles.errorContainer}>
       <div className={styles.errorContent}>
@@ -15,13 +23,13 @@ export function Pagina404() {
         
         <div className={styles.buttonGroup}>
           <button 
-            onClick={() => navigate(-1)} 
+            onClick={handleVolverAtras} 
             className={styles.btnSecondary}
           >
             Volver atrás
           </button>
           <button 
-            onClick={() => navigate("/login")} 
+            onClick={handleIrLogin} 
             className={styles.btnPrimary}
           >
             Ir al Login

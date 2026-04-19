@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { servicioUsuarios } from "../../api/servicioUsuarios";
+import { estaAutenticado } from "../../auth/gestorAutenticacion";
 import styles from "../form.module.css";
 
 export function Registro() {
@@ -11,26 +12,43 @@ export function Registro() {
   const [error, setError] = useState("");
   const [correcto, setCorrecto] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
-  const dominiosBaneados = ["tempmail.com", "10minutemail.com", "mailinator.com", "yopmail.com"];
-  
-  const validarContrasena = (pwd: string): string | null => {
-    if (pwd.length < 6) return "La contraseña debe tener al menos 6 caracteres";
-    if (!/[A-Z]/.test(pwd))
-      return "La contraseña debe tener al menos una mayúscula";
-    if (!/[a-z]/.test(pwd))
-      return "La contraseña debe tener al menos una minúscula";
-    if (!/[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`';]/.test(pwd))
-      return "La contraseña debe tener al menos un carácter especial";
-    return null;
-  };
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const dominiosValidos = [
+    "gmail.com",
+    "yahoo.com",
+    "outlook.com",
+    "hotmail.com",
+  ];
+  const dominiosBaneados = [
+    "tempmail.com",
+    "10minutemail.com",
+    "mailinator.com",
+    "yopmail.com",
+  ];
+
+  function validarContrasena(pwd: string): string | null {
+    if (pwd.length < 6) {
+      return "La contraseña debe tener al menos 6 caracteres";
+    }
+    if (!/[A-Z]/.test(pwd)) {
+      return "La contraseña debe tener al menos una mayúscula";
+    }
+    if (!/[a-z]/.test(pwd)) {
+      return "La contraseña debe tener al menos una minúscula";
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`';]/.test(pwd)) {
+      return "La contraseña debe tener al menos un carácter especial";
+    }
+    return null;
+  }
+
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     e.preventDefault();
     setError("");
     setCorrecto("");
-    // Validaciones locales
     if (!nombreUsuario.trim()) {
       setError("El nombre de usuario es obligatorio");
       return;
@@ -39,7 +57,6 @@ export function Registro() {
       setError("El email debe contener @");
       return;
     }
-    
     const domain = email.split("@")[1];
     if (dominiosBaneados.includes(domain)) {
       setError("No se permiten correos temporales.");
@@ -67,18 +84,53 @@ export function Registro() {
       setError("Las contraseñas no coinciden.");
       return;
     }
-    // Registro en Supabase Auth
     setLoading(true);
-    const resultado = await servicioUsuarios.registro(email, password, nombreUsuario);
+    const resultado = await servicioUsuarios.registro(
+      email,
+      password,
+      nombreUsuario,
+    );
     if (!resultado.success) {
       setError(resultado.error || "Error al registrar");
       setLoading(false);
       return;
     }
-    // Registro exitoso
     setCorrecto("Registro completado. Revisa tu email para confirmar.");
     setLoading(false);
-  };
+  }
+
+  useEffect(
+    function () {
+      const autenticado = estaAutenticado();
+
+      if (autenticado === true) {
+        navigate("/search");
+      }
+    },
+    [navigate],
+  );
+
+  function handleNombreUsuarioChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void {
+    setNombreUsuario(event.target.value);
+  }
+
+  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void {
+    setPassword(event.target.value);
+  }
+
+  function handleConfirmChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void {
+    setConfirm(event.target.value);
+  }
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -87,34 +139,24 @@ export function Registro() {
       <input
         type="text"
         value={nombreUsuario}
-        onChange={(e) => setNombreUsuario(e.target.value)}
+        onChange={handleNombreUsuarioChange}
         placeholder="Tu nombre de usuario"
       />
       <label>Email:</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <input type="email" value={email} onChange={handleEmailChange} />
       <label>Contraseña:</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <input type="password" value={password} onChange={handlePasswordChange} />
       <label>Confirmar contraseña:</label>
-      <input
-        type="password"
-        value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
-      />
+      <input type="password" value={confirm} onChange={handleConfirmChange} />
       <button type="submit" disabled={loading}>
         {loading ? "Registrando..." : "Registrarse"}
       </button>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {correcto && <p style={{ color: "green" }}>{correcto}</p>}
       <p className={styles.registroP}>
-        <Link to="/" className={styles.enlaceVolverLogin}>Volver al login</Link>
+        <Link to="/" className={styles.enlaceVolverLogin}>
+          Volver al login
+        </Link>
       </p>
     </form>
   );
