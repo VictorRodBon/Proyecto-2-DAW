@@ -16,7 +16,7 @@ export function RatingInput({
     <Rating
       name="puntuacion-rating"
       value={value}
-      onChange={(event, newValue) => onChange(newValue || 0)}
+      onChange={(_event, newValue) => onChange(newValue || 0)}
       precision={1}
       size={size}
       disabled={disabled}

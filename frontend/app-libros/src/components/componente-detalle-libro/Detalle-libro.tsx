@@ -66,7 +66,7 @@ export function Detalle() {
 
                 if (authorKeys.length > 0) {
                     const nombres = await Promise.all(
-                        authorKeys.slice(0, 5).map((k) => servicioLibros.getAutorNombre(k))
+                        authorKeys.slice(0, 5).map((k:string) => servicioLibros.getAutorNombre(k))
                     );
                     setAutores(nombres.filter((n): n is string => !!n?.trim()).join(", "));
                 }
