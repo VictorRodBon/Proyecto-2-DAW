@@ -1,42 +1,64 @@
 import { createBrowserRouter } from "react-router-dom";
-// Importamos tus componentes
 import { Login } from "./components/componente-login/Login";
 import { Registro } from "./components/componente-registro/Registro";
-import { Prueba } from "./components/componente-prueba/Prueba";
 import { Pagina404 } from "./components/componente-Pagina404/Pagina404";
 import { BuscarLibro } from "./components/componente-buscar-libro/Buscar-libro";
 import { Detalle } from "./components/componente-detalle-libro/Detalle-libro";
 import { FormularioOpinion } from "./components/componente-formulario-opinion/Formulario-opinion";
+import { RutaProtegida } from "./auth/RutaProtegida";
+import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
 
 export const router = createBrowserRouter([
-  
   {
     path: "/",
-    element: <Login />,
+    element: (
+      <RedirigirSiAutenticado>
+        <Login />
+      </RedirigirSiAutenticado>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <RedirigirSiAutenticado>
+        <Login />
+      </RedirigirSiAutenticado>
+    ),
   },
   {
     path: "/registro",
-    element: <Registro />,
+    element: (
+      <RedirigirSiAutenticado>
+        <Registro />
+      </RedirigirSiAutenticado>
+    ),
   },
   {
-    path: "/prueba",
-    element: <Prueba />,
+    path: "search",
+    element: (
+      <RutaProtegida>
+        <BuscarLibro />
+      </RutaProtegida>
+    ),
   },
   {
-    path:"search",
-    element: <BuscarLibro />,
+    path: "detalle/:id/:cover",
+    element: (
+      <RutaProtegida>
+        <Detalle />
+      </RutaProtegida>
+    ),
   },
   {
-    path:"detalle/:id/:cover",
-    element: <Detalle />,
-  },
-  {
-    path:"addOpinion/:id",
-    element: <FormularioOpinion />,
-
+    path: "addOpinion/:id",
+    element: (
+      <RutaProtegida>
+        <FormularioOpinion />
+      </RutaProtegida>
+    ),
   },
   {
     path: "*",
     element: <Pagina404 />,
-  }
+  },
 ]);

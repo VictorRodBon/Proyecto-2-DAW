@@ -1,24 +1,39 @@
 // useState para manejar el estado de los campos del formulario y los mensajes de error/correcto
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Link para navegar entre páginas
 // useNavigate para redirigir a otra página después del login exitoso
 import { Link, useNavigate } from "react-router-dom";
 import { servicioUsuarios } from "../../api/servicioUsuarios";
+import { estaAutenticado } from "../../auth/gestorAutenticacion";
 import styles from "../form.module.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [correcto, setCorrecto] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  //dominios permitidos para el email
   const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
+useEffect(function () {
+  const autenticado = estaAutenticado();
 
-  //handleSubmit para validar los datos ingresados por el usuario y mostrar mensajes de error o éxito
-  const handleSubmit = async (e: React.FormEvent) => {
+  if (autenticado === true) {
+    navigate("/search");
+  }
+}, [navigate]);
+
+
+  function handleCambioEmail(event: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(event.target.value);
+  }
+
+  function handleCambioPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+    setPassword(event.target.value);
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     setError("");
     setCorrecto("");
@@ -27,7 +42,7 @@ export function Login() {
       setError("Email inválido");
       return;
     }
-    
+
     const dominio = email.split("@")[1];
     if (!dominiosValidos.includes(dominio)) {
       setError("Dominio de correo no válido");
@@ -39,25 +54,22 @@ export function Login() {
       return;
     }
 
-    // Login en Supabase Auth
     setLoading(true);
     const resultado = await servicioUsuarios.login(email, password);
-    
+
     if (!resultado.success) {
       setError(resultado.error || "Error al iniciar sesión");
       setLoading(false);
       return;
     }
 
-    // Login exitoso
     setCorrecto("Sesión iniciada correctamente");
     setLoading(false);
-    
-    // Redirigir tras un breve delay
-    setTimeout(() => {
+
+    setTimeout(function () {
       navigate("/search");
     }, 1000);
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -67,14 +79,14 @@ export function Login() {
       <input
         type="text"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleCambioEmail}
       />
 
       <label>Contraseña:</label>
       <input
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handleCambioPassword}
       />
 
       <button type="submit" disabled={loading}>
@@ -84,10 +96,9 @@ export function Login() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       {correcto && <p style={{ color: "green" }}>{correcto}</p>}
 
-      <p >
+      <p>
         ¿No tienes cuenta? <Link to="/registro" className={styles.enlaceCrearCuenta}> Crear cuenta</Link>
       </p>
-      
     </form>
   );
 }
