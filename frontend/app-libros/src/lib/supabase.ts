@@ -8,6 +8,4 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error("Faltan las variables de entorno de Supabase");
 }
 
-console.log("URL:", supabaseUrl);
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
