@@ -151,8 +151,8 @@ export function Registro() {
       <button type="submit" disabled={loading}>
         {loading ? "Registrando..." : "Registrarse"}
       </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {correcto && <p style={{ color: "green" }}>{correcto}</p>}
+      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
+      {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
       <p className={styles.registroP}>
         <Link to="/" className={styles.enlaceVolverLogin}>
           Volver al login

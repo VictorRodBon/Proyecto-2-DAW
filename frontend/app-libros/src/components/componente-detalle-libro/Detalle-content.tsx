@@ -99,8 +99,15 @@ export function DetalleContent({
                             </span>
                         </div>
                         <div className={styles.metaItem}>
-                            <span className={styles.metaLabel}>ID Obra</span>
-                            <span className={styles.metaValueMono}>{id}</span>
+                            <span className={styles.metaLabel}>Géneros</span>
+                            <ul>
+                                {libro.subjects
+                                    ?.slice(0, 5) // <--- Aquí limitamos a los primeros 5
+                                    .map((subject: string, index: number) => (
+                                        <li key={index}>{subject}</li>
+                                    ))
+                                }
+                            </ul>
                         </div>
                     </div>
                 </div>
