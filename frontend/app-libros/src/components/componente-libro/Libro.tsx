@@ -4,14 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type { ILibro } from "../../types";
 import styles from "./Libro.module.css";
 
-const truncarTexto = (texto: string | string[] | undefined, limite: number) => {
-  if (!texto) return "";
-  const stringBase = Array.isArray(texto) ? texto.join(", ") : texto;
-  const palabras = stringBase.split(" ");
-  return palabras.length <= limite
-    ? stringBase
-    : palabras.slice(0, limite).join(" ") + "...";
-};
+import { truncarTexto } from '../../hooks/useTruncar';
 
 export function Libro({ datos }: { datos: ILibro }) {
   const navigate = useNavigate();
