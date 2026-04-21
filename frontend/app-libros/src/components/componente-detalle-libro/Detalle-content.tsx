@@ -2,6 +2,7 @@ import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
 
 import {BotonAtras} from "../componente-boton-atras/Boton-atras";
+import {FadeMenu} from "../componente-menu/Menu";
 
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
@@ -35,6 +36,7 @@ export function DetalleContent({
         <>
             <div className={styles.header}>
                 <div className={styles.buttonsGrp}>
+                    <FadeMenu />
                     <BotonAtras />
                     <button 
                         type="button" 
@@ -98,14 +100,14 @@ export function DetalleContent({
                         </div>
                         <div className={styles.metaItem}>
                             <span className={styles.metaLabel}>Géneros</span>
-                            <ul>
+                            <div className={styles.chips}>
                                 {libro.subjects
-                                    ?.slice(0, 5) // <--- Aquí limitamos a los primeros 5
+                                    ?.slice(0, 5)
                                     .map((subject: string, index: number) => (
-                                        <li key={index}>{subject}</li>
+                                        <span key={index} className={styles.subject}>{subject}</span>
                                     ))
                                 }
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
