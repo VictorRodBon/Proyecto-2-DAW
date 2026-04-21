@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Pagina404.module.css"; // Recomendado usar CSS Modules
 
+import {BotonAtras} from "../componente-boton-atras/Boton-atras"
+
 export function Pagina404() {
   const navigate = useNavigate();
 
-  function handleVolverAtras(): void {
-    navigate(-1);
-  }
 
   function handleIrLogin(): void {
     navigate("/login");
@@ -22,12 +21,7 @@ export function Pagina404() {
         </p>
         
         <div className={styles.buttonGroup}>
-          <button 
-            onClick={handleVolverAtras} 
-            className={styles.btnSecondary}
-          >
-            Volver atrás
-          </button>
+          <BotonAtras/>
           <button 
             onClick={handleIrLogin} 
             className={styles.btnPrimary}

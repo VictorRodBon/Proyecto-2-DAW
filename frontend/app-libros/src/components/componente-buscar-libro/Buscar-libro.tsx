@@ -4,6 +4,8 @@ import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
 
+import { FadeMenu } from '../componente-menu/Menu'
+
 import { Skeleton } from 'boneyard-js/react';
 
 import '../../bones/registry'
@@ -127,6 +129,7 @@ export function BuscarLibro() {
     return (
         <div className={styles.buscador}>
             <div className={styles.controles}>
+                <FadeMenu />
                 <input
                     className={styles.inputTexto}
                     type="text"

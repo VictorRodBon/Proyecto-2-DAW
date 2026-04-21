@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../api/servicioLibros";
-import { useVolver } from "../../hooks/useVolver";
 import { DetalleContent } from './Detalle-content';
 import { Skeleton } from 'boneyard-js/react';
 import type { IDetalleLibro } from "../../types";
@@ -14,7 +13,6 @@ import '../../bones/registry'
 export function Detalle() {
     const { id, cover } = useParams<{ id: string; cover?: string }>();
     const location = useLocation();
-    const { volver } = useVolver();
     const [libro, setLibro] = useState<IDetalleLibro | null>(null);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -94,7 +92,6 @@ export function Detalle() {
                         libro={libro || libroMock} 
                         autores={autores || "Cargando..."}
                         coverUrl={coverUrl}
-                        volver={volver}
                         setMostrarOpiniones={setMostrarOpiniones}
                         mostrarOpiniones={mostrarOpiniones}
                         navigate={navigate}

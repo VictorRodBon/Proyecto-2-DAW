@@ -1,12 +1,13 @@
 import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
 
+import {BotonAtras} from "../componente-boton-atras/Boton-atras";
+
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
     libro: IDetalleLibro;
     autores: string;
     coverUrl: string | null;
-    volver: () => void;
     setMostrarOpiniones: (mostrar: boolean) => void;
     mostrarOpiniones: boolean;
     navigate: (path: string) => void;
@@ -17,7 +18,6 @@ export function DetalleContent({
     libro, 
     autores, 
     coverUrl, 
-    volver, 
     setMostrarOpiniones, 
     mostrarOpiniones, 
     navigate, 
@@ -35,9 +35,7 @@ export function DetalleContent({
         <>
             <div className={styles.header}>
                 <div className={styles.buttonsGrp}>
-                    <button type="button" className={styles.backLink} onClick={volver}>
-                        ← Volver
-                    </button>
+                    <BotonAtras />
                     <button 
                         type="button" 
                         className={styles.opinionesToggle} 
@@ -47,8 +45,8 @@ export function DetalleContent({
                     </button>
                     <button 
                         type="button" 
-                        className={styles.backLink} // Usamos backLink para mantener el estilo visual
-                        onClick={() => navigate(`/addOpinion/${id}`)}
+                        className={styles.opinionesToggle}
+                        onClick={() => navigate(`/addOpinion/${id}?title=${libro.title.replace(/\s/g, '+')}`)}
                     >
                         Añadir Opinión
                     </button>

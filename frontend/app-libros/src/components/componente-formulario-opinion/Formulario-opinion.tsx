@@ -1,16 +1,29 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { servicioOpiniones } from "../../api/servicioOpiniones";
 import { servicioUsuarios } from "../../api/servicioUsuarios";
 import { RatingInput } from "./RatingInput";
 import styles from "./Formulario-opinion.module.css";
 
+import { truncarTexto } from '../../hooks/useTruncar';
+
+import {BotonAtras} from "../componente-boton-atras/Boton-atras"
+
+
 export const FormularioOpinion = () => {
-  const { id: id_libro } = useParams<{ id: string }>();
+
+  const [searchParams] = useSearchParams();
+
+  const { id: id_libro } = useParams<{ id: string}>();
+  const title = searchParams.get("title");
+
   const [puntuacion, setPuntuacion] = useState(0);
   const [valoracion, setValoracion] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [mensaje, setMensaje] = useState<{ tipo: 'error' | 'exito'; texto: string } | null>(null);
+
+  console.log(id_libro);
+  console.log(title);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +61,8 @@ export const FormularioOpinion = () => {
     <div className={styles.formulario}>
       <div className={styles.contenedor}>
         <div className={styles.header}>
-          <h2 className={styles.titulo}>Escribir opinión</h2>
+          <BotonAtras/>
+          <h2 className={styles.titulo}>Escribir opinión | {truncarTexto(title?.replace(/\+/g, ' '), 5)}</h2>
         </div>
         <div className={styles.contenido}>
           {mensaje && (
