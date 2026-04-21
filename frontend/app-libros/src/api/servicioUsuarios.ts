@@ -45,6 +45,7 @@ export const servicioUsuarios = {
   // LOGOUT - Cerrar sesión
   logout: async (): Promise<void> => {
     await supabase.auth.signOut();
+    localStorage.removeItem("sb-qnwjmetgvbyitgrloosg-auth-token");
   },
   // OBTENER SESIÓN ACTUAL
   getSession: async () => {
