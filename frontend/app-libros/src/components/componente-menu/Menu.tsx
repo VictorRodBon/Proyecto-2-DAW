@@ -82,7 +82,7 @@ export const FadeMenu = () => {
                 >
                     <SearchIcon sx={{ fontSize: 20, color: 'rgba(255,255,255,0.7)' }} /> Buscar libros
                 </MenuItem>
-                <MenuItem 
+                {/* <MenuItem 
                     onClick={() => handleNavigate('/perfil')}
                     sx={{
                         display: 'flex',
@@ -99,7 +99,7 @@ export const FadeMenu = () => {
                     }}
                 >
                     <PersonIcon sx={{ fontSize: 20, color: 'rgba(255,255,255,0.7)' }} /> Perfil
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem 
                     onClick={() => handleNavigate('/biblioteca')}
                     sx={{
