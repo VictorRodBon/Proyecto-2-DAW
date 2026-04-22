@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
+
+import {lista} from "./lista.js";
 
 import { Skeleton } from 'boneyard-js/react';
 
@@ -36,12 +38,16 @@ export function BuscarLibro() {
         cover_i: "",
     };
 
+    const busquedaInicial = useMemo(() => {
+        if (urlBusqueda) return urlBusqueda;
+        const randomIndex = Math.floor(Math.random() * lista.length);
+        return lista[randomIndex];
+    }, [urlBusqueda]);
+
     useEffect(() => {
-        if (!urlBusqueda) {
-            setLibros([]);
-            setHayMasResultados(false);
-            return;
-        }
+        if (!busquedaInicial) return;
+        
+        const busqueda=urlBusqueda||busquedaInicial;
 
         const cargar = async () => {
             setCargando(true);
@@ -50,7 +56,7 @@ export function BuscarLibro() {
                 let ultimoResultados: ILibro[] = [];
 
                 for (let p = 1; p <= urlPagina; p++) {
-                    ultimoResultados = await servicioLibros.getByTitle(urlBusqueda, p, urlLimit, urlAuthor);
+                    ultimoResultados = await servicioLibros.getByTitle(busqueda, p, urlLimit, urlAuthor);
                     resultadosAcumulados.push(...ultimoResultados);
                 }
 
@@ -62,7 +68,7 @@ export function BuscarLibro() {
         };
 
         cargar();
-    }, [urlBusqueda, urlPagina, urlLimit, urlAuthor]);
+    }, [busquedaInicial, urlBusqueda, urlPagina, urlLimit, urlAuthor]);
 
     const cargarMas = async () => {
         if (!hayMasResultados) return;
