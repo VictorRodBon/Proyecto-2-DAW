@@ -101,3 +101,7 @@
   background: rgba(16, 185, 129, 0.24);
   border-color: rgba(16, 185, 129, 0.45);
 }
+
+.authors{
+  height: 40px;
+}

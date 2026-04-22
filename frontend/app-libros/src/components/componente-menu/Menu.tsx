@@ -12,7 +12,7 @@ import styles from "./Menu.module.css";
 
 import { servicioUsuarios } from "../../api/servicioUsuarios";
 
-export const FadeMenu = () => {
+export const MiMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
     const open = Boolean(anchorEl);

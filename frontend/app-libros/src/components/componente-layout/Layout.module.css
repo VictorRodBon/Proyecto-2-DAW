@@ -1,0 +1,91 @@
+.layout {
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(1200px 600px at 20% 10%, rgba(99, 102, 241, 0.12), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(16, 185, 129, 0.10), transparent 55%),
+        linear-gradient(180deg, #0b1220 0%, #070a12 100%);
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(11, 18, 32, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.controles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputTexto,
+.selectCantidad,
+.botonBuscar {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+}
+
+.inputTexto {
+    min-width: 200px;
+    padding: 10px 12px;
+}
+
+.inputTexto::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.inputTexto:focus,
+.selectCantidad:focus {
+    outline: none;
+    border-color: rgba(99, 102, 241, 0.65);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.selectCantidad {
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.selectCantidad option {
+    color: #111827;
+}
+
+.botonBuscar {
+    cursor: pointer;
+    font-weight: 700;
+    padding: 10px 14px;
+}
+
+.botonBuscar:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
