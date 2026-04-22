@@ -3,7 +3,9 @@
 ## INTRODUCCIÓN Y OBJETIVOS
 
 ### Motivación:
+
 ### Objetivos:
+
 ### Alcance:
 La aplicación consiste en llevar un registro de los libros leidos por cada usuario, así como compartir las opiniones que tienen los mismos sobre estos.
 
@@ -11,15 +13,16 @@ No es una aplicación de lecturas ni de compraventa de libros.
 
 ## ANÁLISIS
 ### Requisitos funcionales:
+
 ### Requisitos no funcionales:
+
 ### Casos de uso:
 
 ## DISEÑO
 
-
 ## TECNOLOGÍAS UTILIZADAS
 ### Frontend:
-Para el desarrollo del frontend se ha utilizado el framework de [React](https://es.react.dev/).
+Para el desarrollo del frontend se ha utilizado el framework de [React](https://es.react.dev/). Como apollo para la creación del Frontend se ha utilizado librerías de componentes, como: [Boneyard-js](https://github.com/0xGF/boneyard) para los Skeletons de carga de página, [Material UI (MUI)](https://mui.com/material-ui/) para algunos componentes.
 ### Backend:
 Para el desarrollo del backend se ha utilizado [NestJS](https://nestjs.com/) como framework y [Prisma](https://www.prisma.io/) como ORM.
 ### Base de Datos:
@@ -28,6 +31,7 @@ Para la base de datos se ha utilizado [Supabase](https://supabase.com/), en part
 También se han utilizado otras herrameitnas de apoyo:
 - [GitHub](https://github.com/) -> Control de versiones
 - [Excalidraw](https://excalidraw.com/) -> diseño del prototipo
+- [Open Library Book Search API](https://openlibrary.org/dev/docs/api/search) -> como base de datos de libros
 
 ## DISEÑO
 ### Arquitectura de la aplicación:
@@ -122,6 +126,8 @@ erDiagram
 
 #### Diseños iniciales en Excalidraw
 
+![Mi Diagrama](./prototipo.excalidraw.svg)
+
 ## DESARROLLO
 
 ## PRUEBAS
@@ -138,6 +144,24 @@ El backend de la aplicación se ha desplegado en [Render](https://render.com/)
 La base de datos se ha creado en [Supabase](https://supabase.com/).
 
 ## CASOS DE USO
+
+
+
 ## OPCIONES A MEJORAR
+
+
+
 ## ANEXOS A ESTRACTOS DE CÓDIGO
+
+
+
 ## BIBLIOGRAFÍA
+
+- [Documentación Supabase](https://supabase.com/docs).
+- [Documentación Vercel](https://vercel.com/docs).
+- [Documentación Render](https://render.com/docs).
+- [Documentación Nest](https://docs.nestjs.com/).
+- [Documentación React](https://react.dev/learn/)
+- [Documentación Open Library](https://openlibrary.org/dev/docs/api/search)
+
+- [Documentación Backend](./documentacion-backend.md).
