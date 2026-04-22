@@ -1,15 +1,15 @@
 .page {
   min-height: calc(100dvh - 48px);
-  padding: 24px 16px;
-  display: grid;
-  place-items: start center;
-  background: radial-gradient(1200px 600px at 20% 10%, rgba(99, 102, 241, 0.12), transparent 60%),
-    radial-gradient(900px 500px at 80% 20%, rgba(16, 185, 129, 0.10), transparent 55%),
-    linear-gradient(180deg, #0b1220 0%, #070a12 100%);
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .card {
-  width: min(1100px, 100%);
+  flex: 1;
+  width: min(700px, 100%);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
@@ -38,9 +38,22 @@
   padding: 20px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
+  .page {
+    padding: 24px 16px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 100%;
+    max-width: 500px;
+  }
   .content {
     grid-template-columns: 1fr;
+  }
+  .opinionesSection {
+    width: 100%;
+    max-width: 500px;
   }
 }
 
@@ -139,27 +152,22 @@
   font-size: 14px;
 }
 
-.metaValueMono {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 700;
-  font-size: 13px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  word-break: break-all;
-}
-
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
-.chip {
-  padding: 8px 10px;
+.chip,
+.subject {
+  padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 0.86);
-  font-size: 13px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .error {
@@ -174,15 +182,6 @@
 .muted {
   margin: 14px 20px 20px 20px;
   color: rgba(255, 255, 255, 0.72);
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
 }
 
 .opinionesToggle {
@@ -205,30 +204,20 @@
 }
 
 .opinionesSection {
+  width: min(400px, 100%);
+  flex: 0 0 auto;
+  max-height: calc(100dvh - 96px);
   padding: 14px 14px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
 }
 
 .buttonsGrp {
   display: flex;
   gap: 10px;
 }
-
- /* Ajuste para que Boneyard use tus colores de Glassmorphism */
- /* Esto forzará a que aparezca ALGO si la librería está funcionando */
-.card :global([data-boneyard-skeleton]),
-.card :global([class*="boneyard"]) {
-  background: red !important;
-  /* Ponlo en rojo para debugguear */
-  min-height: 20px !important;
-  min-width: 100px !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
 
 li {
   margin-left: 20px;

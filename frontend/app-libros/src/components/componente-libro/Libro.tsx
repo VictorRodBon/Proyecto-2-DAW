@@ -33,7 +33,7 @@ export function Libro({ datos }: { datos: ILibro }) {
         </div>
 
         <h2>{truncarTexto(datos.title, 5)}</h2>
-        <h4>{authorName}</h4>
+        <h4 className={styles.authors}>{truncarTexto(authorName,5)}</h4>
       </div>
 
       <div className={styles.buttons}>

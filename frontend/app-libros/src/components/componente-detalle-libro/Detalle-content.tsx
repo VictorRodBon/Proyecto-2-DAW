@@ -98,14 +98,14 @@ export function DetalleContent({
                         </div>
                         <div className={styles.metaItem}>
                             <span className={styles.metaLabel}>Géneros</span>
-                            <ul>
+                            <div className={styles.chips}>
                                 {libro.subjects
-                                    ?.slice(0, 5) // <--- Aquí limitamos a los primeros 5
+                                    ?.slice(0, 5)
                                     .map((subject: string, index: number) => (
-                                        <li key={index}>{subject}</li>
+                                        <span key={index} className={styles.subject}>{subject}</span>
                                     ))
                                 }
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

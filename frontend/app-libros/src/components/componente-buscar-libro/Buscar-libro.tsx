@@ -4,8 +4,6 @@ import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
 
-import { FadeMenu } from '../componente-menu/Menu'
-
 import { Skeleton } from 'boneyard-js/react';
 
 import '../../bones/registry'
@@ -13,7 +11,7 @@ import '../../bones/registry'
 import styles from "./Buscar-libro.module.css";
 
 export function BuscarLibro() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const MAX_PAGINAS_URL = 5;
 
@@ -27,37 +25,23 @@ export function BuscarLibro() {
     const urlLimit = parsePositiveInt(searchParams.get("limit"), 10);
     const urlAuthor = (searchParams.get("author") ?? "").trim();
 
-    // Estado para el input; la búsqueda activa sale de la URL.
-    const [busquedaTitle, setBusquedaTitle] = useState("");
-    const [busquedaAuthor, setBusquedaAuthor] = useState("");
-    const [cantidad, setCantidad] = useState<number>(10);
-
     const [libros, setLibros] = useState<ILibro[]>([]);
     const [cargando, setCargando] = useState(false);
     const [hayMasResultados, setHayMasResultados] = useState(false);
 
-
     const libroMock: ILibro = {
         key: "mock-key",
         title: "Cargando título...",
-        author_name: "autor", 
+        author_name: "autor",
         cover_i: "",
     };
 
     useEffect(() => {
-        // Sin query, limpiamos la vista.
         if (!urlBusqueda) {
             setLibros([]);
-            setBusquedaTitle("");
-            setBusquedaAuthor("");
             setHayMasResultados(false);
             return;
         }
-
-        // Mantener UI sincronizada con la URL (cuando se recarga o se vuelve).
-        setBusquedaTitle(urlBusqueda);
-        setBusquedaAuthor(urlAuthor);
-        setCantidad(urlLimit);
 
         const cargar = async () => {
             setCargando(true);
@@ -65,7 +49,6 @@ export function BuscarLibro() {
                 const resultadosAcumulados: ILibro[] = [];
                 let ultimoResultados: ILibro[] = [];
 
-                // Reconstruimos la lista acumulada (páginas 1..urlPagina).
                 for (let p = 1; p <= urlPagina; p++) {
                     ultimoResultados = await servicioLibros.getByTitle(urlBusqueda, p, urlLimit, urlAuthor);
                     resultadosAcumulados.push(...ultimoResultados);
@@ -81,86 +64,25 @@ export function BuscarLibro() {
         cargar();
     }, [urlBusqueda, urlPagina, urlLimit, urlAuthor]);
 
-    const nuevaBusqueda = async () => {
-        const q = busquedaTitle.trim();
-        if (!q) {
-            setLibros([]);
-            setHayMasResultados(false);
-            return;
-        }
-
-        const author = busquedaAuthor.trim();
-
-        // Solo incluir author en la URL si tiene contenido
-        const params: Record<string, string> = {
-            q,
-            page: "1",
-            limit: String(cantidad),
-        };
-
-        if (author) {
-            params.author = author;
-        }
-
-        // Actualizamos URL y dejamos que el efecto recargue los resultados.
-        setSearchParams(params, { replace: true });
-    };
-
-    // Función para cargar más (mantiene los que ya están)
     const cargarMas = async () => {
         if (!hayMasResultados) return;
-
         if (urlPagina >= MAX_PAGINAS_URL) return;
 
-        const params: Record<string, string> = {
-            q: urlBusqueda,
-            page: String(urlPagina + 1),
-            limit: String(urlLimit),
-        };
-
-        // Mantener el filtro de autor al cargar más resultados
-        if (urlAuthor) {
-            params.author = urlAuthor;
+        const siguientePagina = urlPagina + 1;
+        
+        setCargando(true);
+        try {
+            const nuevosLibros = await servicioLibros.getByTitle(urlBusqueda, siguientePagina, urlLimit, urlAuthor);
+            setLibros(prev => [...prev, ...nuevosLibros]);
+            setHayMasResultados(nuevosLibros.length === urlLimit);
+        } finally {
+            setCargando(false);
         }
-
-        setSearchParams(params, { replace: true });
     };
 
     return (
         <div className={styles.buscador}>
-            <div className={styles.controles}>
-                <FadeMenu />
-                <input
-                    className={styles.inputTexto}
-                    type="text"
-                    value={busquedaTitle}
-                    onChange={(e) => setBusquedaTitle(e.target.value)}
-                    placeholder="Escribe un título..."
-                />
-                <input
-                    className={styles.inputTexto}
-                    type="text"
-                    value={busquedaAuthor}
-                    onChange={(e) => setBusquedaAuthor(e.target.value)}
-                    placeholder="Escribe un autor..."
-                />
-                <input
-                    className={styles.botonBuscar}
-                    type="button"
-                    value="Buscar"
-                    onClick={nuevaBusqueda}
-                />
-                <select
-                    className={styles.selectCantidad}
-                    name="cantidad" value={cantidad} onChange={(e) => setCantidad(Number(e.target.value))}
-                >
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select>
-            </div>
             <main className={styles.resultados}>
-                {/* Usamos un array de mocks si está cargando para que el map se ejecute */}
                 {(cargando && libros.length === 0
                     ? Array.from({ length: urlLimit }).map((_, i) => ({ ...libroMock, key: `sk-${i}` }))
                     : libros
