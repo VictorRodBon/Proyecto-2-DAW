@@ -2,7 +2,6 @@ import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
 
 import {BotonAtras} from "../componente-boton-atras/Boton-atras";
-import {MiMenu} from "../componente-menu/Menu";
 
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
@@ -36,7 +35,6 @@ export function DetalleContent({
         <>
             <div className={styles.header}>
                 <div className={styles.buttonsGrp}>
-                    <MiMenu />
                     <BotonAtras />
                     <button 
                         type="button" 
