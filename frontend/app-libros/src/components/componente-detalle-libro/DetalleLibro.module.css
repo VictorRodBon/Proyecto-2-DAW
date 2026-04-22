@@ -11,6 +11,10 @@
   .page {
     padding: 24px 16px;
   }
+  .content{
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .card {

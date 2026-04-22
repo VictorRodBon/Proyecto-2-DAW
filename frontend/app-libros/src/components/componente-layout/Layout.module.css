@@ -69,6 +69,9 @@
 }
 
 .botonBuscar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     font-weight: 700;
     padding: 10px 14px;
@@ -88,4 +91,54 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.buscadorMovil {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.botonExpandir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 auto;
+    width: 120px;
+}
+
+.botonExpandir:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+}
+
+.botonExpandir:active {
+    transform: scale(0.98);
+}
+
+.iconoBuscar {
+    font-size: 18px;
+}
+
+.formularioExpandido {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
 }

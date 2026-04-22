@@ -33,8 +33,8 @@ export function Detalle() {
     };
 
     const autorDesdeBusqueda =
-        location.state && typeof (location.state as any).authorName === "string"
-            ? ((location.state as any).authorName as string)
+        location.state && typeof location.state === "object" && location.state !== null && "authorName" in location.state
+            ? String((location.state as { authorName?: unknown }).authorName ?? "")
             : "";
 
     const coverUrl = useMemo(() => {
@@ -59,7 +59,7 @@ export function Detalle() {
                 }
 
                 const authorKeys = Array.isArray(data?.authors)
-                    ? data.authors.map((a: any) => a.author?.key).filter((k: any): k is string => !!k)
+                    ? data.authors.map((a: { author?: { key?: string } }) => a.author?.key).filter((k: string): k is string => !!k)
                     : [];
 
                 if (authorKeys.length > 0) {
