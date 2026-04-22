@@ -4,7 +4,7 @@ import { Libro } from "../componente-libro/Libro";
 import { servicioLibros } from "../../api/servicioLibros";
 import type { ILibro } from "../../types";
 
-import {lista} from "./lista.js";
+import {lista} from "./lista.ts";
 
 import { Skeleton } from 'boneyard-js/react';
 
