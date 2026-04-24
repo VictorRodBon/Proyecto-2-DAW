@@ -6,6 +6,7 @@ import { BuscarLibro } from "./components/componente-buscar-libro/Buscar-libro";
 import { Detalle } from "./components/componente-detalle-libro/Detalle-libro";
 import { FormularioOpinion } from "./components/componente-formulario-opinion/Formulario-opinion";
 import { Perfil } from "./components/componente-usuario/UserSection";
+import { LayoutPrincipal } from "./components/componente-layout/Layout";
 import { RutaProtegida } from "./auth/RutaProtegida";
 import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
 
@@ -35,28 +36,25 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "search",
     element: (
       <RutaProtegida>
-        <BuscarLibro />
+        <LayoutPrincipal />
       </RutaProtegida>
     ),
-  },
-  {
-    path: "detalle/:id/:cover",
-    element: (
-      <RutaProtegida>
-        <Detalle />
-      </RutaProtegida>
-    ),
-  },
-  {
-    path: "addOpinion/:id",
-    element: (
-      <RutaProtegida>
-        <FormularioOpinion />
-      </RutaProtegida>
-    ),
+    children: [
+      {
+        path: "search",
+        element: <BuscarLibro />,
+      },
+      {
+        path: "detalle/:id/:cover",
+        element: <Detalle />,
+      },
+      {
+        path: "addOpinion/:id",
+        element: <FormularioOpinion />,
+      },
+    ],
   },
   {
     path: "perfil",

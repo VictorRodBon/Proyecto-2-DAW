@@ -1,35 +1,40 @@
 .errorContainer {
-    height: 100vh;
+    min-height: 100vh;
+    min-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f4f7f6;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(1200px 600px at 20% 10%, rgba(99, 102, 241, 0.12), transparent 60%),
+      radial-gradient(900px 500px at 80% 20%, rgba(16, 185, 129, 0.10), transparent 55%),
+      linear-gradient(180deg, #0b1220 0%, #070a12 100%);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .errorContent {
     text-align: center;
     padding: 40px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
 }
 
 .errorCode {
     font-size: 8rem;
     margin: 0;
-    color: #4a90e2;
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1;
 }
 
 .errorTitle {
     font-size: 1.5rem;
-    color: #333;
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 10px;
 }
 
 .errorText {
-    color: #666;
+    color: rgba(255, 255, 255, 0.72);
     margin-bottom: 30px;
 }
 
@@ -39,26 +44,29 @@
     justify-content: center;
 }
 
-.btnPrimary, .btnSecondary {
+.btnPrimary,
+.btnSecondary {
     padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     cursor: pointer;
     font-weight: 600;
-    transition: transform 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btnPrimary {
-    background-color: #4a90e2;
-    color: white;
+    background: rgba(99, 102, 241, 0.25);
+    color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(99, 102, 241, 0.5);
 }
 
 .btnSecondary {
-    background-color: #e1e8ed;
-    color: #444;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.78);
 }
 
-.btnPrimary:hover, .btnSecondary:hover {
+.btnPrimary:hover,
+.btnSecondary:hover {
     transform: translateY(-2px);
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.12);
 }

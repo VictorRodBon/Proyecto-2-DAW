@@ -10,25 +10,6 @@ export function obtenerTokenAutenticacion(): string | null {
   return token;
 }
 
-export function guardarTokenAutenticacion(token: string): void {
-  if (token === null) {
-    return;
-  }
-
-  if (token.trim() === "") {
-    return;
-  }
-
-  localStorage.setItem(LLAVE_TOKEN, token);
-}
-
-export function quitarTokenAutenticacion(): void {
-  const token = localStorage.getItem(LLAVE_TOKEN);
-
-  if (token !== null) {
-    localStorage.removeItem(LLAVE_TOKEN);
-  }
-}
 
 export function estaAutenticado(): boolean {
   const token = obtenerTokenAutenticacion();

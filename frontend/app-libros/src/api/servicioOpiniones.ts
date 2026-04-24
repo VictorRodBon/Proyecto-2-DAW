@@ -15,8 +15,6 @@ export const servicioOpiniones = {
       body: JSON.stringify(datos),
     });
 
-    console.log(datos)
-
     if (!response.ok) {
       console.error("Error al crear opinión:", response.status, response.statusText);
       return null;

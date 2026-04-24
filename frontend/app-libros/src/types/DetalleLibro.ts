@@ -8,4 +8,5 @@ export interface IDetalleLibro {
     authors?: Array<{
         author?: { key: string };
     }>;
+    subjects?: string[];
 }

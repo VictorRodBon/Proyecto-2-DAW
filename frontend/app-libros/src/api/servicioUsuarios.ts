@@ -1,7 +1,7 @@
 import { supabase } from "../lib/supabase";
 import type { IUsuario } from "../types/Usuario";
 import type { User, Session } from "@supabase/supabase-js";
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 export interface AuthResponse {
   success: boolean;
   data?: {
@@ -45,6 +45,7 @@ export const servicioUsuarios = {
   // LOGOUT - Cerrar sesión
   logout: async (): Promise<void> => {
     await supabase.auth.signOut();
+    localStorage.removeItem("sb-qnwjmetgvbyitgrloosg-auth-token");
   },
   // OBTENER SESIÓN ACTUAL
   getSession: async () => {

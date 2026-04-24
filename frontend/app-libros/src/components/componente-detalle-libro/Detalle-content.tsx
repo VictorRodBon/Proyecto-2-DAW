@@ -1,13 +1,13 @@
-import React from "react";
 import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
+
+import {BotonAtras} from "../componente-boton-atras/Boton-atras";
 
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
     libro: IDetalleLibro;
     autores: string;
     coverUrl: string | null;
-    volver: () => void;
     setMostrarOpiniones: (mostrar: boolean) => void;
     mostrarOpiniones: boolean;
     navigate: (path: string) => void;
@@ -18,7 +18,6 @@ export function DetalleContent({
     libro, 
     autores, 
     coverUrl, 
-    volver, 
     setMostrarOpiniones, 
     mostrarOpiniones, 
     navigate, 
@@ -36,9 +35,7 @@ export function DetalleContent({
         <>
             <div className={styles.header}>
                 <div className={styles.buttonsGrp}>
-                    <button type="button" className={styles.backLink} onClick={volver}>
-                        ← Volver
-                    </button>
+                    <BotonAtras />
                     <button 
                         type="button" 
                         className={styles.opinionesToggle} 
@@ -48,8 +45,8 @@ export function DetalleContent({
                     </button>
                     <button 
                         type="button" 
-                        className={styles.backLink} // Usamos backLink para mantener el estilo visual
-                        onClick={() => navigate(`/addOpinion/${id}`)}
+                        className={styles.opinionesToggle}
+                        onClick={() => navigate(`/addOpinion/${id}?title=${libro.title.replace(/\s/g, '+')}`)}
                     >
                         Añadir Opinión
                     </button>
@@ -100,8 +97,15 @@ export function DetalleContent({
                             </span>
                         </div>
                         <div className={styles.metaItem}>
-                            <span className={styles.metaLabel}>ID Obra</span>
-                            <span className={styles.metaValueMono}>{id}</span>
+                            <span className={styles.metaLabel}>Géneros</span>
+                            <div className={styles.chips}>
+                                {libro.subjects
+                                    ?.slice(0, 5)
+                                    .map((subject: string, index: number) => (
+                                        <span key={index} className={styles.subject}>{subject}</span>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../api/servicioLibros";
-import { useVolver } from "../../hooks/useVolver";
 import { DetalleContent } from './Detalle-content';
 import { Skeleton } from 'boneyard-js/react';
 import type { IDetalleLibro } from "../../types";
@@ -14,7 +13,6 @@ import '../../bones/registry'
 export function Detalle() {
     const { id, cover } = useParams<{ id: string; cover?: string }>();
     const location = useLocation();
-    const { volver } = useVolver();
     const [libro, setLibro] = useState<IDetalleLibro | null>(null);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -35,8 +33,8 @@ export function Detalle() {
     };
 
     const autorDesdeBusqueda =
-        location.state && typeof (location.state as any).authorName === "string"
-            ? ((location.state as any).authorName as string)
+        location.state && typeof location.state === "object" && location.state !== null && "authorName" in location.state
+            ? String((location.state as { authorName?: unknown }).authorName ?? "")
             : "";
 
     const coverUrl = useMemo(() => {
@@ -61,12 +59,12 @@ export function Detalle() {
                 }
 
                 const authorKeys = Array.isArray(data?.authors)
-                    ? data.authors.map((a: any) => a.author?.key).filter((k: any): k is string => !!k)
+                    ? data.authors.map((a: { author?: { key?: string } }) => a.author?.key).filter((k: string): k is string => !!k)
                     : [];
 
                 if (authorKeys.length > 0) {
                     const nombres = await Promise.all(
-                        authorKeys.slice(0, 5).map((k) => servicioLibros.getAutorNombre(k))
+                        authorKeys.slice(0, 5).map((k:string) => servicioLibros.getAutorNombre(k))
                     );
                     setAutores(nombres.filter((n): n is string => !!n?.trim()).join(", "));
                 }
@@ -94,7 +92,6 @@ export function Detalle() {
                         libro={libro || libroMock} 
                         autores={autores || "Cargando..."}
                         coverUrl={coverUrl}
-                        volver={volver}
                         setMostrarOpiniones={setMostrarOpiniones}
                         mostrarOpiniones={mostrarOpiniones}
                         navigate={navigate}

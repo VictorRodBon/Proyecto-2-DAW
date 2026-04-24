@@ -96,8 +96,8 @@ export function Login() {
         {loading ? "Iniciando sesión..." : "Entrar"}
       </button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {correcto && <p style={{ color: "green" }}>{correcto}</p>}
+      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
+      {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
 
       <p>
         ¿No tienes cuenta?{" "}
