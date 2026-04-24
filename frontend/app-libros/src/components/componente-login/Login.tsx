@@ -15,25 +15,36 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const dominiosValidos = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
-useEffect(function () {
-  const autenticado = estaAutenticado();
+  const dominiosValidos = [
+    "gmail.com",
+    "yahoo.com",
+    "outlook.com",
+    "hotmail.com",
+  ];
+  useEffect(
+    function () {
+      const autenticado = estaAutenticado();
 
-  if (autenticado === true) {
-    navigate("/search");
-  }
-}, [navigate]);
-
+      if (autenticado === true) {
+        navigate("/search");
+      }
+    },
+    [navigate],
+  );
 
   function handleCambioEmail(event: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(event.target.value);
   }
 
-  function handleCambioPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleCambioPassword(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void {
     setPassword(event.target.value);
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     e.preventDefault();
     setError("");
     setCorrecto("");
@@ -76,18 +87,10 @@ useEffect(function () {
       <h2>Iniciar sesión</h2>
 
       <label>Email:</label>
-      <input
-        type="text"
-        value={email}
-        onChange={handleCambioEmail}
-      />
+      <input type="text" value={email} onChange={handleCambioEmail} />
 
       <label>Contraseña:</label>
-      <input
-        type="password"
-        value={password}
-        onChange={handleCambioPassword}
-      />
+      <input type="password" value={password} onChange={handleCambioPassword} />
 
       <button type="submit" disabled={loading}>
         {loading ? "Iniciando sesión..." : "Entrar"}
@@ -97,7 +100,11 @@ useEffect(function () {
       {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
 
       <p>
-        ¿No tienes cuenta? <Link to="/registro" className={styles.enlaceCrearCuenta}> Crear cuenta</Link>
+        ¿No tienes cuenta?{" "}
+        <Link to="/registro" className={styles.enlaceCrearCuenta}>
+          {" "}
+          Crear cuenta
+        </Link>
       </p>
     </form>
   );

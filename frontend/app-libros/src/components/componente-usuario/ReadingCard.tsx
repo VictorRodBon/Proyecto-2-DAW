@@ -1,0 +1,48 @@
+import type { ILibro } from '../../types/Libro';
+import type { ILectura, } from '../../types/Lectura';
+import styles from './ReadingCard.module.css';
+
+interface ReadingCardProps {
+  lectura: ILectura;
+  libro: ILibro;
+  alEliminar: (id: string) => void;
+}
+
+export function ReadingCard({ lectura, libro, alEliminar }: ReadingCardProps) {
+  function manejarEliminar(): void {
+    alEliminar(lectura.id_lectura);
+  }
+
+  return (
+    <div className={styles.card}>
+      <div className={styles.imageContainer}>
+        <img 
+          src={libro.cover_i ? `https://covers.openlibrary.org/b/id/${libro.cover_i}-M.jpg` : 'https://via.placeholder.com/200x300?text=Sin+Portada'} 
+          alt={libro.title}
+          className={styles.image}
+        />
+        <div className={styles.statusBadge}>
+          {lectura.estado === 'finalizado' ? '✓ Finalizado' : ' En progreso'}
+        </div>
+      </div>
+      
+      <div className={styles.content}>
+        <h3 className={styles.title}>{libro.title}</h3>
+        <p className={styles.author}><span></span>{libro.author_name}</p>
+        <div className={styles.divider}></div>
+        {lectura.fecha_fin && (
+          <p className={styles.dateInfo}>
+             Finalizado: {lectura.fecha_fin}
+          </p>
+        )}
+        <button
+          onClick={manejarEliminar}
+          className={styles.deleteBtn}
+        >
+          <span className={styles.emoji}></span>
+          Eliminar de biblioteca
+        </button>
+      </div>
+    </div>
+  );
+}
