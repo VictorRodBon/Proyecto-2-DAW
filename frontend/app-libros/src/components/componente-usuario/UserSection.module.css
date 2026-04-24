@@ -1,0 +1,187 @@
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.headerSection {
+  position: relative;
+  margin-bottom: 3rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.headerGradientBg {
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.headerContent {
+  padding: 2rem;
+  background: white;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.appName {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
+}
+
+
+.sectionsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.sectionBar {
+  width: 4px;
+  height: 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.sectionBar.red {
+  background: linear-gradient(135deg, #f93b1d 0%, #ea580c 100%);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+
+.sectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.emptyState {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #d1d5db;
+}
+
+.emptyMessage {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin: 0;
+}
+
+
+@media (max-width: 1024px) {
+  .sectionsContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .wrapper {
+    max-width: 100%;
+  }
+
+  .headerContent {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .appName {
+    font-size: 0.9rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .sectionContent {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .headerGradientBg {
+    height: 80px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .sectionHeader {
+    gap: 0.75rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+}

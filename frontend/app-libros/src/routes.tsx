@@ -5,6 +5,7 @@ import { Pagina404 } from "./components/componente-Pagina404/Pagina404";
 import { BuscarLibro } from "./components/componente-buscar-libro/Buscar-libro";
 import { Detalle } from "./components/componente-detalle-libro/Detalle-libro";
 import { FormularioOpinion } from "./components/componente-formulario-opinion/Formulario-opinion";
+import { Perfil } from "./components/componente-usuario/UserSection";
 import { RutaProtegida } from "./auth/RutaProtegida";
 import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
 
@@ -54,6 +55,14 @@ export const router = createBrowserRouter([
     element: (
       <RutaProtegida>
         <FormularioOpinion />
+      </RutaProtegida>
+    ),
+  },
+  {
+    path: "perfil",
+    element: (
+      <RutaProtegida>
+        <Perfil nombreAplicacion="Mi Biblioteca de Libros" />
       </RutaProtegida>
     ),
   },
