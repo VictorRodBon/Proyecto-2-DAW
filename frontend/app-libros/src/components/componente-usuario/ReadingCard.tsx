@@ -1,16 +1,33 @@
+import { useState } from "react";
 import type { ILibro } from '../../types/Libro';
 import type { ILectura, } from '../../types/Lectura';
+import { servicioLecturas } from '../../api/servicioLecturas';
 import styles from './ReadingCard.module.css';
 
 interface ReadingCardProps {
   lectura: ILectura;
   libro: ILibro;
   alEliminar: (id: string) => void;
+  alCambiarEstado: (id: string, nuevoEstado: string) => void;
 }
 
-export function ReadingCard({ lectura, libro, alEliminar }: ReadingCardProps) {
+const ESTADOS = ['Pendiente', 'Leyendo', 'Terminado', 'Abandonado'];
+
+export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado }: ReadingCardProps) {
+  const [cargando, setCargando] = useState(false);
+
   function manejarEliminar(): void {
     alEliminar(lectura.id_lectura);
+    servicioLecturas.deleteLectura(lectura.id_lectura);
+  }
+
+  async function manejarCambioEstado(e: React.ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const nuevoEstado = e.target.value;
+    if (nuevoEstado === lectura.estado) return;
+
+    setCargando(true);
+    await alCambiarEstado(lectura.id_lectura, nuevoEstado);
+    setCargando(false);
   }
 
   return (
@@ -21,9 +38,18 @@ export function ReadingCard({ lectura, libro, alEliminar }: ReadingCardProps) {
           alt={libro.title}
           className={styles.image}
         />
-        <div className={styles.statusBadge}>
-          {lectura.estado === 'finalizado' ? '✓ Finalizado' : ' En progreso'}
-        </div>
+        <select
+          className={styles.statusSelect}
+          value={lectura.estado}
+          onChange={manejarCambioEstado}
+          disabled={cargando}
+        >
+          {ESTADOS.map((estado) => (
+            <option key={estado} value={estado}>
+              {estado}
+            </option>
+          ))}
+        </select>
       </div>
       
       <div className={styles.content}>
@@ -32,16 +58,22 @@ export function ReadingCard({ lectura, libro, alEliminar }: ReadingCardProps) {
         <div className={styles.divider}></div>
         {lectura.fecha_fin && (
           <p className={styles.dateInfo}>
-             Finalizado: {lectura.fecha_fin}
+            Finalizado: {lectura.fecha_fin}
           </p>
         )}
         <button
           onClick={manejarEliminar}
           className={styles.deleteBtn}
         >
-          <span className={styles.emoji}></span>
           Eliminar de biblioteca
         </button>
+        <button
+          onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
+          className={styles.detailBtn}
+        >
+          VER DETALLE
+        </button>
+
       </div>
     </div>
   );

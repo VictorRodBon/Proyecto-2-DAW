@@ -3,19 +3,15 @@ import type { ILibro } from '../../types/Libro';
 import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
-import { OpinionCard } from './OpinionCard';
-import { ReadingCard } from './ReadingCard';
+import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
+import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
 import { servicioLecturas } from '../../api/servicioLecturas';
 import { servicioLibros } from '../../api/servicioLibros';
 import styles from './UserSection.module.css';
 
-interface PerfílProps {
-  nombreAplicacion: string;
-}
-
-export function Perfil({ nombreAplicacion }: PerfílProps) {
+export function Perfil() {
   const [usuario, setUsuario] = useState<IUsuario | null>(null);
   const [opiniones, setOpiniones] = useState<IOpinion[]>([]);
   const [lecturasActuales, setLecturasActuales] = useState<Array<{ lectura: ILectura; libro: ILibro }>>([]);
@@ -46,6 +42,8 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
         // Obtener opiniones del usuario
         const opinionesUsuario = await servicioOpiniones.getPorUsuario(idUsuario);
         setOpiniones(opinionesUsuario || []);
+
+        console.log(opiniones)
 
         // Obtener lecturas del usuario
         const lecturasUsuario = await servicioLecturas.getPorUsuario(idUsuario);
@@ -82,6 +80,7 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
               author_name: 'Autor desconocido',
               cover_i: undefined
             };
+            console.log("error al solicitar los libros: "+err)
           }
           
           lecturasConLibros.push({
@@ -114,20 +113,25 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
     setLecturasActuales(lecturasActualizadas);
   }
 
-  if (cargando) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <div className={styles.headerSection}>
-            <div className={styles.headerGradientBg}></div>
-            <div className={styles.headerContent}>
-              <h1 className={styles.title}>Cargando...</h1>
-              <p className={styles.appName}>{nombreAplicacion}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  async function manejarCambiarEstadoLectura(id: string, nuevoEstado: string): Promise<void> {
+    const datosActualizar: { estado: string; fecha_inicio?: string; fecha_fin?: string } = { estado: nuevoEstado };
+    
+    if (nuevoEstado === 'Leyendo') {
+      datosActualizar.fecha_inicio = new Date().toISOString();
+    } else if (nuevoEstado === 'Terminado') {
+      datosActualizar.fecha_fin = new Date().toISOString();
+    }
+    
+    const lecturaActualizada = await servicioLecturas.putLectura(id, datosActualizar);
+    if (lecturaActualizada) {
+      setLecturasActuales((prev) =>
+        prev.map((item) =>
+          item.lectura.id_lectura === id
+            ? { ...item, lectura: { ...item.lectura, estado: nuevoEstado, fecha_inicio: lecturaActualizada.fecha_inicio, fecha_fin: lecturaActualizada.fecha_fin } }
+            : item
+        )
+      );
+    }
   }
 
   if (error) {
@@ -152,72 +156,34 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {/* Encabezado */}
         <div className={styles.headerSection}>
           <div className={styles.headerGradientBg}></div>
           <div className={styles.headerContent}>
-            <h1 className={styles.title}>
-              {tituloEncabezado}
-            </h1>
-            <p className={styles.appName}>{nombreAplicacion}</p>
+            <h1 className={styles.title}>{tituloEncabezado}</h1>
+            <p className={styles.appName}>Mi Biblioteca de libros</p>
           </div>
         </div>
 
-        {/* Contenedor de dos secciones lado a lado */}
         <div className={styles.sectionsContainer}>
-          {/* Sección de Últimas opiniones - IZQUIERDA */}
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <div className={styles.sectionBar}></div>
-              <h2 className={styles.sectionTitle}>
-                Últimas opiniones
-              </h2>
+              <div className={`${styles.bar} ${styles.purple}`}></div>
+              <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
             </div>
-            {opiniones.length > 0 ? (
-              <div className={styles.sectionContent}>
-                {opiniones.map(function(opinion) {
-                  return (
-                    <OpinionCard key={opinion.id_opinion} opinion={opinion} />
-                  );
-                })}
-              </div>
-            ) : (
-              <div className={styles.emptyState}>
-                <p className={styles.emptyMessage}>
-                  No hay opiniones disponibles
-                </p>
-              </div>
-            )}
+            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
           </section>
 
-          {/* Sección de Últimas lecturas - DERECHA */}
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <div className={`${styles.sectionBar} ${styles.red}`}></div>
-              <h2 className={styles.sectionTitle}>
-                Últimas lecturas
-              </h2>
+              <div className={`${styles.bar} ${styles.orange}`}></div>
+              <h2 className={styles.sectionTitle}>Últimas lecturas</h2>
             </div>
-            {lecturasActuales.length > 0 ? (
-              <div className={styles.sectionContent}>
-                {lecturasActuales.map(function(item) {
-                  return (
-                    <ReadingCard
-                      key={item.lectura.id_lectura}
-                      lectura={item.lectura}
-                      libro={item.libro}
-                      alEliminar={manejarEliminarLectura}
-                    />
-                  );
-                })}
-              </div>
-            ) : (
-              <div className={styles.emptyState}>
-                <p className={styles.emptyMessage}>
-                  No hay lecturas disponibles
-                </p>
-              </div>
-            )}
+            <ListaLecturas
+              lecturas={lecturasActuales}
+              alEliminar={manejarEliminarLectura}
+              alCambiarEstado={manejarCambiarEstadoLectura}
+              cargando={cargando}
+            />
           </section>
         </div>
       </div>

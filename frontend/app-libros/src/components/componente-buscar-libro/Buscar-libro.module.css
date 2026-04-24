@@ -1,13 +1,15 @@
+@import '../../styles/variables.css';
+
 .inputTexto,
 .selectCantidad,
 .botonBuscar,
 .botonCargarMas {
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  background: var(--color-bg-input);
   backdrop-filter: blur(6px);
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
 .inputTexto {
@@ -16,13 +18,13 @@
 }
 
 .inputTexto::placeholder {
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-text-placeholder);
 }
 
 .inputTexto:focus,
 .selectCantidad:focus {
   outline: none;
-  border-color: rgba(99, 102, 241, 0.65);
+  border-color: var(--color-border-primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
@@ -44,7 +46,7 @@
 
 .botonBuscar:hover,
 .botonCargarMas:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--color-bg-hover);
   transform: translateY(-1px);
 }
 
@@ -60,86 +62,44 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  /* Añadimos esto para asegurar que el flujo sea consistente */
-  align-items: flex-start; 
 }
 
-.cargarMasWrap {
-  width: min(1100px, 100%);
-  margin: 20px auto 0 auto;
-  display: flex;
-  justify-content: center;
+.resultados > * {
+  width: 260px;
 }
 
-
-
-/* --- Contenedor de resultados --- */
-.resultados {
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-/* 1. EL CONTENEDOR SKELETON: Evita que flexbox deforme la caja mientras carga */
 .resultados :global(.boneyard-skeleton-container) {
-  width: 260px; /* Igual al width de tu .libro */
-  flex: 0 0 260px; 
+  width: 260px;
   display: flex;
   justify-content: center;
 }
 
-/* 2. EL ESQUELETO ACTIVO: Calca visualmente tu .libro */
 .resultados :global([data-boneyard-skeleton="tarjeta-libro"]) {
   width: 100%;
-  height: 430px; /* Igual al min-height de tu .libro */
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  height: 430px;
+  background: var(--color-bg-hover) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   padding: 16px;
   backdrop-filter: blur(8px);
   position: relative;
   overflow: hidden;
-  box-sizing: border-box;
 }
 
-/* 3. LOS HUESOS INTERNOS: Detectados por el registry */
 .resultados :global([data-boneyard-skeleton="tarjeta-libro"]) :global([data-boneyard-bone]) {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-radius: 8px;
+  background: var(--color-bg-section) !important;
+  border-radius: var(--radius-sm);
 }
 
-/* 4. ANIMACIÓN SHIMMER */
 .resultados :global([data-boneyard-skeleton="tarjeta-libro"])::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.06),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
   animation: boneyardShimmer 2s infinite;
   transform: translateX(-100%);
 }
 
 @keyframes boneyardShimmer {
   100% { transform: translateX(100%); }
-}
-
-/* 5. Cuando loading es false, el contenedor debe mantener el layout */
-.resultados :global(.boneyard-skeleton-container:not([data-boneyard-loading="true"])) {
-  display: flex;
-  width: 260px;
-  flex: 0 0 260px;
-}
-
-/* Asegurar que los libros tenga el ancho correcto */
-.resultados > * {
-  width: 260px;
-  flex: 0 0 260px;
 }

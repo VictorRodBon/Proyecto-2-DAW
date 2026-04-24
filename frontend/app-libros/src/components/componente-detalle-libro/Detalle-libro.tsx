@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { servicioLibros } from "../../api/servicioLibros";
+import type { IOpinion } from "../../types/Opinion";
 import { DetalleContent } from './Detalle-content';
 import { Skeleton } from 'boneyard-js/react';
 import type { IDetalleLibro } from "../../types";
 import styles from "./DetalleLibro.module.css";
 
-import { ListaOpiniones } from "../componente-lista-opiniones-libro/Lista-opiniones";
+import {servicioOpiniones} from "../../api/servicioOpiniones";
+
+import { ListaOpiniones } from "../componente-lista-opiniones/Lista-opiniones";
 
 import '../../bones/registry'
 
@@ -19,6 +22,8 @@ export function Detalle() {
     const [autores, setAutores] = useState<string>("");
     const [mostrarOpiniones, setMostrarOpiniones] = useState(false);
     const navigate = useNavigate();
+    const [opiniones, setOpiniones] = useState<IOpinion[] | []>([]);
+    const [cargandoOpiniones, setCargandoOpiniones] = useState(false);
 
     const libroMock: IDetalleLibro = {
         key: "mock-key-123",
@@ -75,6 +80,20 @@ export function Detalle() {
                 setCargando(false);
             }
         };
+
+        const cargarOpiniones = async () => {
+            setCargandoOpiniones(true);
+            try {
+                const opiniones = await servicioOpiniones.getPorLibro(id);
+                setOpiniones(opiniones);
+            } catch (error) {
+                console.error("Error cargando opiniones:", error);
+                setOpiniones([]);
+            } finally {
+                setCargandoOpiniones(false);
+            }
+        }
+        cargarOpiniones();
         cargarDatos();
     }, [id, autorDesdeBusqueda]);
 
@@ -101,7 +120,11 @@ export function Detalle() {
             </div>
             {mostrarOpiniones && id && (
                 <div className={styles.opinionesSection}>
-                    <ListaOpiniones id_libro={id} />
+                    <div className={styles.opinionesHeader}>
+                        <div className={styles.bar}></div>
+                        <h2 className={styles.opinionesTitle}>Últimas opiniones</h2>
+                    </div>
+                    <ListaOpiniones opiniones={opiniones} cargando={cargandoOpiniones} />
                 </div>
             )}
             </div>

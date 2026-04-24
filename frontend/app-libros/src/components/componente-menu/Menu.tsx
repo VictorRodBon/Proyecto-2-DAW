@@ -101,7 +101,7 @@ export const MiMenu = () => {
                     <PersonIcon sx={{ fontSize: 20, color: 'rgba(255,255,255,0.7)' }} /> Perfil
                 </MenuItem> */}
                 <MenuItem 
-                    onClick={() => handleNavigate('/biblioteca')}
+                    onClick={() => handleNavigate('/perfil')}
                     sx={{
                         display: 'flex',
                         alignItems: 'center',

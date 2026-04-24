@@ -54,15 +54,11 @@ export const router = createBrowserRouter([
         path: "addOpinion/:id",
         element: <FormularioOpinion />,
       },
+      {
+        path: "perfil",
+        element: <Perfil />
+      }
     ],
-  },
-  {
-    path: "perfil",
-    element: (
-      <RutaProtegida>
-        <Perfil nombreAplicacion="Mi Biblioteca de Libros" />
-      </RutaProtegida>
-    ),
   },
   {
     path: "*",

@@ -1,3 +1,5 @@
+@import '../../styles/variables.css';
+
 .menuButton {
     display: inline-flex;
     align-items: center;
@@ -5,29 +7,22 @@
     gap: 8px;
     padding: 10px 16px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(6px);
-    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-input);
+    color: var(--color-text-secondary);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     width: 120px;
 }
 
 .menuButton:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(99, 102, 241, 0.5);
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-primary);
     box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
 }
 
 .menuButton:active {
     transform: scale(0.98);
-}
-
-.icon {
-    font-size: 18px;
-    line-height: 1;
-    vertical-align: middle;
 }
