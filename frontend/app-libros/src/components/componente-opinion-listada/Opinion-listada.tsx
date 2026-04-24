@@ -21,6 +21,3 @@ export const OpinionListada = ({ opinion }: { opinion: IOpinion }) => {
     </div>
   );
 };
-// El componente OpinionListada muestra una opinión individual con su puntuación y valoración. Se utiliza el componente Rating de Material-UI para mostrar la puntuación de forma visual con estrellas. 
-// La valoración se muestra como texto debajo de las estrellas.  
-// Recibe un objeto opinion de tipo IOpinion y renderiza y lo renderiza

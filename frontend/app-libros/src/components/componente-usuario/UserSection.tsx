@@ -11,11 +11,7 @@ import { servicioLecturas } from '../../api/servicioLecturas';
 import { servicioLibros } from '../../api/servicioLibros';
 import styles from './UserSection.module.css';
 
-interface PerfílProps {
-  nombreAplicacion: string;
-}
-
-export function Perfil({ nombreAplicacion }: PerfílProps) {
+export function Perfil() {
   const [usuario, setUsuario] = useState<IUsuario | null>(null);
   const [opiniones, setOpiniones] = useState<IOpinion[]>([]);
   const [lecturasActuales, setLecturasActuales] = useState<Array<{ lectura: ILectura; libro: ILibro }>>([]);
@@ -82,6 +78,7 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
               author_name: 'Autor desconocido',
               cover_i: undefined
             };
+            console.log("error al solicitar los libros: "+err)
           }
           
           lecturasConLibros.push({
@@ -122,7 +119,7 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
             <div className={styles.headerGradientBg}></div>
             <div className={styles.headerContent}>
               <h1 className={styles.title}>Cargando...</h1>
-              <p className={styles.appName}>{nombreAplicacion}</p>
+              <p className={styles.appName}>Mi Biblioteca de libros</p>
             </div>
           </div>
         </div>
@@ -159,7 +156,7 @@ export function Perfil({ nombreAplicacion }: PerfílProps) {
             <h1 className={styles.title}>
               {tituloEncabezado}
             </h1>
-            <p className={styles.appName}>{nombreAplicacion}</p>
+            <p className={styles.appName}>Mi Biblioteca de libros</p>
           </div>
         </div>
 
