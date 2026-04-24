@@ -1,40 +1,38 @@
+@import '../../styles/variables.css';
+
 .errorContainer {
-    min-height: 100vh;
-    min-width: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(1200px 600px at 20% 10%, rgba(99, 102, 241, 0.12), transparent 60%),
-      radial-gradient(900px 500px at 80% 20%, rgba(16, 185, 129, 0.10), transparent 55%),
-      linear-gradient(180deg, #0b1220 0%, #070a12 100%);
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
 }
 
 .errorContent {
     text-align: center;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+    background: var(--color-bg-hover);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
     backdrop-filter: blur(10px);
 }
 
 .errorCode {
     font-size: 8rem;
     margin: 0;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-primary);
     line-height: 1;
 }
 
 .errorTitle {
     font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-primary);
     margin-bottom: 10px;
 }
 
 .errorText {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--color-text-secondary);
     margin-bottom: 30px;
 }
 
@@ -48,25 +46,25 @@
 .btnSecondary {
     padding: 12px 25px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--color-border);
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .btnPrimary {
     background: rgba(99, 102, 241, 0.25);
-    color: rgba(255, 255, 255, 0.92);
-    border-color: rgba(99, 102, 241, 0.5);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-primary);
 }
 
 .btnSecondary {
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.78);
+    background: var(--color-bg-input);
+    color: var(--color-text-secondary);
 }
 
 .btnPrimary:hover,
 .btnSecondary:hover {
     transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--color-bg-hover);
 }

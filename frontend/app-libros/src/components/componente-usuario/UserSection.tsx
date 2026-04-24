@@ -4,7 +4,6 @@ import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
 import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
-import { ReadingCard } from './ReadingCard';
 import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
@@ -135,22 +134,6 @@ export function Perfil() {
     }
   }
 
-  if (cargando) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <div className={styles.headerSection}>
-            <div className={styles.headerGradientBg}></div>
-            <div className={styles.headerContent}>
-              <h1 className={styles.title}>Cargando...</h1>
-              <p className={styles.appName}>Mi Biblioteca de libros</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className={styles.container}>
@@ -173,47 +156,34 @@ export function Perfil() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {/* Encabezado */}
         <div className={styles.headerSection}>
           <div className={styles.headerGradientBg}></div>
           <div className={styles.headerContent}>
-            <h1 className={styles.title}>
-              {tituloEncabezado}
-            </h1>
+            <h1 className={styles.title}>{tituloEncabezado}</h1>
             <p className={styles.appName}>Mi Biblioteca de libros</p>
           </div>
         </div>
 
-        {/* Contenedor de dos secciones lado a lado */}
         <div className={styles.sectionsContainer}>
-          {/* Sección de Últimas opiniones - IZQUIERDA */}
           <section className={styles.section}>
-            {opiniones.length > 0 ? (
-              <ListaOpiniones opiniones={opiniones} cargando={cargando}/>
-            ) : (
-              <div className={styles.emptyState}>
-                <p className={styles.emptyMessage}>
-                  No hay opiniones disponibles
-                </p>
-              </div>
-            )}
+            <div className={styles.sectionHeader}>
+              <div className={`${styles.bar} ${styles.purple}`}></div>
+              <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
+            </div>
+            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
           </section>
 
-          {/* Sección de Últimas lecturas - DERECHA */}
           <section className={styles.section}>
-            {lecturasActuales.length > 0 ? (
-              <ListaLecturas
-                lecturas={lecturasActuales}
-                alEliminar={manejarEliminarLectura}
-                alCambiarEstado={manejarCambiarEstadoLectura}
-              />
-            ) : (
-              <div className={styles.emptyState}>
-                <p className={styles.emptyMessage}>
-                  No hay lecturas disponibles
-                </p>
-              </div>
-            )}
+            <div className={styles.sectionHeader}>
+              <div className={`${styles.bar} ${styles.orange}`}></div>
+              <h2 className={styles.sectionTitle}>Últimas lecturas</h2>
+            </div>
+            <ListaLecturas
+              lecturas={lecturasActuales}
+              alEliminar={manejarEliminarLectura}
+              alCambiarEstado={manejarCambiarEstadoLectura}
+              cargando={cargando}
+            />
           </section>
         </div>
       </div>

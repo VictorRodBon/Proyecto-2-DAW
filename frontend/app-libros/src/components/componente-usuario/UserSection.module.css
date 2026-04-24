@@ -1,9 +1,10 @@
 @import '../../styles/variables.css';
 
 .container {
+  margin-top: 0px;
   width: 100%;
-  padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  padding: 0.5rem 0.5rem;
+  background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
 }
 
 .wrapper {
@@ -14,34 +15,34 @@
 .headerSection {
   position: relative;
   margin-bottom: 3rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  background: white;
-  box-shadow: var(--shadow-sm);
+  background: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xl);
 }
 
 .headerGradientBg {
-  height: 120px;
+  height: 80px;
   background: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
 }
 
 .headerContent {
   padding: 2rem;
-  background: white;
+  background: var(--color-bg-hover);
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-text-dark);
+  color: var(--color-text-primary);
   margin: 0 0 0.5rem 0;
 }
 
 .appName {
   font-size: 1rem;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0;
-  font-weight: 500;
 }
 
 .sectionsContainer {
@@ -52,28 +53,56 @@
 }
 
 .section {
-  background: white;
-  border-radius: var(--radius-md);
+  background: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-normal);
+  box-shadow: var(--shadow-xl);
+  transition: border-color var(--transition-normal);
 }
 
 .section:hover {
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-hover);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.bar {
+  width: 4px;
+  height: 24px;
+  border-radius: 2px;
+}
+
+.bar.purple {
+  background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
+}
+
+.bar.orange {
+  background: linear-gradient(to bottom, var(--color-orange), var(--color-orange-dark));
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-text-primary);
 }
 
 .emptyState {
   padding: 3rem 2rem;
   text-align: center;
-  background: #f9fafb;
-  border-radius: var(--radius-sm);
-  border: 2px dashed #d1d5db;
+  background: var(--color-bg-hover);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
 }
 
 .emptyMessage {
-  color: #9ca3af;
-  font-size: 1rem;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -81,31 +110,17 @@
   .sectionsContainer {
     grid-template-columns: 1fr;
   }
-
   .title {
     font-size: 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 1.5rem 1rem;
-  }
-
-  .headerContent {
+  .headerContent, .section {
     padding: 1.5rem;
   }
-
   .title {
     font-size: 1.75rem;
-  }
-
-  .appName {
-    font-size: 0.9rem;
-  }
-
-  .section {
-    padding: 1.5rem;
   }
 }
 
@@ -113,16 +128,36 @@
   .container {
     padding: 1rem;
   }
-
   .headerGradientBg {
     height: 80px;
   }
-
   .title {
     font-size: 1.5rem;
   }
-
   .section {
     padding: 1rem;
   }
+}
+
+:global([data-boneyard-skeleton="perfil-usuario"]) {
+  background: var(--color-bg-hover) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+
+:global([data-boneyard-skeleton="perfil-usuario"])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: boneyardShimmer 2s infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes boneyardShimmer {
+  100% { transform: translateX(100%); }
 }

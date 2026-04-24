@@ -2,7 +2,7 @@
 
 .listaLecturas {
   width: 100%;
-  max-height: calc(100dvh - 500px);
+  max-height: calc(100vh - 525px);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -13,20 +13,8 @@
   overflow-y: auto;
 }
 
-.titulo {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.titulo::before {
-  content: '';
-  width: 4px;
-  height: 24px;
-  background: linear-gradient(to bottom, var(--color-orange), var(--color-orange-dark));
-  border-radius: 2px;
+.loading {
+  margin: 0;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
 }

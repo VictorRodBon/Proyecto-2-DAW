@@ -120,6 +120,10 @@ export function Detalle() {
             </div>
             {mostrarOpiniones && id && (
                 <div className={styles.opinionesSection}>
+                    <div className={styles.opinionesHeader}>
+                        <div className={styles.bar}></div>
+                        <h2 className={styles.opinionesTitle}>Últimas opiniones</h2>
+                    </div>
                     <ListaOpiniones opiniones={opiniones} cargando={cargandoOpiniones} />
                 </div>
             )}

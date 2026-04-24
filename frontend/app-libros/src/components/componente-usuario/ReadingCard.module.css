@@ -18,6 +18,15 @@
   border-color: var(--color-border-hover);
 }
 
+.card:hover .image {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+.card:hover .title {
+  color: #93c5fd;
+}
+
 .imageContainer {
   position: relative;
   height: 18rem;
@@ -30,11 +39,6 @@
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-normal), filter var(--transition-normal);
-}
-
-.card:hover .image {
-  transform: scale(1.1);
-  filter: brightness(1.1);
 }
 
 .statusSelect {
@@ -52,7 +56,6 @@
   letter-spacing: 0.05em;
   border: none;
   cursor: pointer;
-  outline: none;
 }
 
 .statusSelect:hover {
@@ -77,17 +80,10 @@
   overflow: hidden;
 }
 
-.card:hover .title {
-  color: #93c5fd;
-}
-
 .author {
   font-size: 0.875rem;
   color: var(--color-text-muted);
   margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .divider {
@@ -103,16 +99,12 @@
   margin-bottom: 0.75rem;
 }
 
-.deleteBtn {
+.deleteBtn,
+.detailBtn {
   width: 100%;
-  margin-top: auto;
-  background: linear-gradient(to right, var(--color-danger), var(--color-danger-dark));
-  color: var(--color-text-primary);
-  font-weight: bold;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-sm);
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.875rem;
@@ -122,6 +114,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.deleteBtn {
+  margin-top: auto;
+  background: linear-gradient(to right, var(--color-danger), var(--color-danger-dark));
+  color: var(--color-text-primary);
 }
 
 .deleteBtn:hover {
@@ -130,39 +130,21 @@
   box-shadow: var(--shadow-md);
 }
 
-.deleteBtn:active {
+.deleteBtn:active,
+.detailBtn:active {
   transform: scale(0.95);
 }
 
 .detailBtn {
-  width: 100%;
   margin-top: 0.5rem;
   background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-dark));
   color: var(--color-text-primary);
-  font-weight: bold;
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 0.875rem;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 }
 
 .detailBtn:hover {
   background: linear-gradient(to right, var(--color-secondary-dark), #1e40af);
   transform: scale(1.05);
   box-shadow: var(--shadow-md);
-}
-
-.detailBtn:active {
-  transform: scale(0.95);
 }
 
 @media (max-width: 768px) {

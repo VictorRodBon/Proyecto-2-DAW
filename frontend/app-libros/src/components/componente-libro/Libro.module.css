@@ -9,12 +9,11 @@
   border-radius: var(--radius-xl);
   padding: 16px;
   text-align: center;
-  width: min(100%, 260px);
+  width: 260px;
   min-height: 430px;
-  gap: 12px;
   box-shadow: var(--shadow-card);
   backdrop-filter: blur(8px);
-  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .libro:hover {
@@ -55,11 +54,9 @@
   overflow: hidden;
 }
 
-.libro .imagen > img {
+.imagen > img {
   max-width: 100%;
   max-height: 100%;
-  width: auto;
-  height: auto;
   object-fit: contain;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
@@ -82,16 +79,16 @@
   color: var(--color-text-primary);
   font-weight: 700;
   cursor: pointer;
-  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-}
-
-.buttons > button:hover {
-  transform: translateY(-1px);
+  transition: all var(--transition-fast);
 }
 
 .buttons > button:first-child {
   background: rgba(99, 102, 241, 0.28);
   border-color: var(--color-border-primary);
+}
+
+.buttons > button:hover {
+  transform: translateY(-1px);
 }
 
 .esta {

@@ -10,9 +10,7 @@ interface Props {
 
 export const ListaOpiniones = ({ opiniones, cargando = false }: Props) => {
     return (
-        <section className={styles.listaOpiniones}>
-            <h2 className={styles.titulo}>Últimas opiniones</h2>
-
+        <div className={styles.listaOpiniones}>
             {cargando ? (
                 <p className={styles.loading}>Cargando opiniones...</p>
             ) : opiniones.length === 0 ? (
@@ -22,6 +20,6 @@ export const ListaOpiniones = ({ opiniones, cargando = false }: Props) => {
                     <OpinionListada key={opinion.id_opinion} opinion={opinion} />
                 ))
             )}
-        </section>
+        </div>
     );
 };
