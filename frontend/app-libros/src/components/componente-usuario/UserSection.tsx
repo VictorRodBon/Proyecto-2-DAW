@@ -113,6 +113,27 @@ export function Perfil() {
     setLecturasActuales(lecturasActualizadas);
   }
 
+  async function manejarCambiarEstadoLectura(id: string, nuevoEstado: string): Promise<void> {
+    const datosActualizar: { estado: string; fecha_inicio?: string; fecha_fin?: string } = { estado: nuevoEstado };
+    
+    if (nuevoEstado === 'Leyendo') {
+      datosActualizar.fecha_inicio = new Date().toISOString();
+    } else if (nuevoEstado === 'Terminado') {
+      datosActualizar.fecha_fin = new Date().toISOString();
+    }
+    
+    const lecturaActualizada = await servicioLecturas.putLectura(id, datosActualizar);
+    if (lecturaActualizada) {
+      setLecturasActuales((prev) =>
+        prev.map((item) =>
+          item.lectura.id_lectura === id
+            ? { ...item, lectura: { ...item.lectura, estado: nuevoEstado, fecha_inicio: lecturaActualizada.fecha_inicio, fecha_fin: lecturaActualizada.fecha_fin } }
+            : item
+        )
+      );
+    }
+  }
+
   if (cargando) {
     return (
       <div className={styles.container}>
@@ -200,6 +221,7 @@ export function Perfil() {
                       lectura={item.lectura}
                       libro={item.libro}
                       alEliminar={manejarEliminarLectura}
+                      alCambiarEstado={manejarCambiarEstadoLectura}
                     />
                   );
                 })}
