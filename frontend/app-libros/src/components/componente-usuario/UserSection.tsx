@@ -3,7 +3,7 @@ import type { ILibro } from '../../types/Libro';
 import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
-import { OpinionCard } from './OpinionCard';
+import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
 import { ReadingCard } from './ReadingCard';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
@@ -42,6 +42,8 @@ export function Perfil() {
         // Obtener opiniones del usuario
         const opinionesUsuario = await servicioOpiniones.getPorUsuario(idUsuario);
         setOpiniones(opinionesUsuario || []);
+
+        console.log(opiniones)
 
         // Obtener lecturas del usuario
         const lecturasUsuario = await servicioLecturas.getPorUsuario(idUsuario);
@@ -171,13 +173,7 @@ export function Perfil() {
               </h2>
             </div>
             {opiniones.length > 0 ? (
-              <div className={styles.sectionContent}>
-                {opiniones.map(function(opinion) {
-                  return (
-                    <OpinionCard key={opinion.id_opinion} opinion={opinion} />
-                  );
-                })}
-              </div>
+              <ListaOpiniones opiniones={opiniones} cargando={cargando}/>
             ) : (
               <div className={styles.emptyState}>
                 <p className={styles.emptyMessage}>
