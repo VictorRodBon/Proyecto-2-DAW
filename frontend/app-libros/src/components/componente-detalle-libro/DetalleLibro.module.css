@@ -1,5 +1,4 @@
 .page {
-  min-height: calc(100dvh - 48px);
   padding: 24px 32px;
   display: flex;
   flex-direction: row;
@@ -206,7 +205,7 @@
 .opinionesSection {
   width: min(400px, 100%);
   flex: 0 0 auto;
-  max-height: calc(100dvh - 96px);
+  max-height: calc(100vh - 150px);
   padding: 14px 14px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);

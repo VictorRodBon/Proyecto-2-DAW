@@ -65,9 +65,15 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado }: Rea
           onClick={manejarEliminar}
           className={styles.deleteBtn}
         >
-          <span className={styles.emoji}></span>
           Eliminar de biblioteca
         </button>
+        <button
+          onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
+          className={styles.detailBtn}
+        >
+          VER DETALLE
+        </button>
+
       </div>
     </div>
   );

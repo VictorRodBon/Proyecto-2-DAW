@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import {servicioUsuarios} from '../../api/servicioUsuarios';
 import {servicioLecturas} from '../../api/servicioLecturas';
@@ -7,10 +7,11 @@ import {servicioLecturas} from '../../api/servicioLecturas';
 import type { ILibro } from "../../types";
 import styles from "./Libro.module.css";
 
+import {BotonDetalle} from "../componente-boton-detalle/Boton-detalle"
+
 import { truncarTexto } from '../../hooks/useTruncar';
 
 export function Libro({ datos }: { datos: ILibro }) {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [biblioteca, setBiblioteca] = useState(false);
@@ -88,16 +89,7 @@ export function Libro({ datos }: { datos: ILibro }) {
       </div>
 
       <div className={styles.buttons}>
-        <button
-          type="button"
-          onClick={() => {
-            navigate(`/detalle/${key}/${datos.cover_i}${queryParams}`, {
-              state: { authorName },
-            });
-          }}
-        >
-          DETALLE
-        </button>
+        <BotonDetalle authorName={authorName} bookKey={key} cover={datos.cover_i} params={queryParams}/>
 
         <button
           type="button"

@@ -1,23 +1,25 @@
+@import '../../styles/variables.css';
+
 .libro {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  background: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   padding: 16px;
   text-align: center;
   width: min(100%, 260px);
   min-height: 430px;
   gap: 12px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .libro:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: var(--color-border-hover);
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
 }
 
@@ -28,7 +30,7 @@
 
 .main h2 {
   margin: 0;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--color-text-primary);
   font-size: 18px;
   line-height: 1.25;
   min-height: 46px;
@@ -36,7 +38,7 @@
 
 .main h4 {
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-text-secondary);
   font-weight: 500;
   font-size: 14px;
   min-height: 20px;
@@ -47,9 +49,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--color-bg-section);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -63,7 +65,7 @@
 }
 
 .placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-secondary);
   font-weight: 700;
 }
 
@@ -74,13 +76,13 @@
 }
 
 .buttons > button {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 10px 8px;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--color-text-primary);
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .buttons > button:hover {
@@ -89,19 +91,19 @@
 
 .buttons > button:first-child {
   background: rgba(99, 102, 241, 0.28);
-  border-color: rgba(99, 102, 241, 0.5);
+  border-color: var(--color-border-primary);
 }
 
 .esta {
   background: rgba(239, 68, 68, 0.24);
-  border-color: rgba(239, 68, 68, 0.45);
+  border-color: var(--color-border-danger);
 }
 
 .no-esta {
   background: rgba(16, 185, 129, 0.24);
-  border-color: rgba(16, 185, 129, 0.45);
+  border-color: var(--color-border-success);
 }
 
-.authors{
+.authors {
   height: 40px;
 }

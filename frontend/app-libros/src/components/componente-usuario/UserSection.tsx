@@ -5,6 +5,7 @@ import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
 import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
 import { ReadingCard } from './ReadingCard';
+import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
 import { servicioLecturas } from '../../api/servicioLecturas';
@@ -187,12 +188,6 @@ export function Perfil() {
         <div className={styles.sectionsContainer}>
           {/* Sección de Últimas opiniones - IZQUIERDA */}
           <section className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <div className={styles.sectionBar}></div>
-              <h2 className={styles.sectionTitle}>
-                Últimas opiniones
-              </h2>
-            </div>
             {opiniones.length > 0 ? (
               <ListaOpiniones opiniones={opiniones} cargando={cargando}/>
             ) : (
@@ -206,26 +201,12 @@ export function Perfil() {
 
           {/* Sección de Últimas lecturas - DERECHA */}
           <section className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <div className={`${styles.sectionBar} ${styles.red}`}></div>
-              <h2 className={styles.sectionTitle}>
-                Últimas lecturas
-              </h2>
-            </div>
             {lecturasActuales.length > 0 ? (
-              <div className={styles.sectionContent}>
-                {lecturasActuales.map(function(item) {
-                  return (
-                    <ReadingCard
-                      key={item.lectura.id_lectura}
-                      lectura={item.lectura}
-                      libro={item.libro}
-                      alEliminar={manejarEliminarLectura}
-                      alCambiarEstado={manejarCambiarEstadoLectura}
-                    />
-                  );
-                })}
-              </div>
+              <ListaLecturas
+                lecturas={lecturasActuales}
+                alEliminar={manejarEliminarLectura}
+                alCambiarEstado={manejarCambiarEstadoLectura}
+              />
             ) : (
               <div className={styles.emptyState}>
                 <p className={styles.emptyMessage}>

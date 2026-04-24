@@ -1,6 +1,6 @@
 @import '../../styles/variables.css';
 
-.listaOpiniones {
+.listaLecturas {
   width: 100%;
   max-height: calc(100dvh - 500px);
   display: flex;
@@ -27,24 +27,6 @@
   content: '';
   width: 4px;
   height: 24px;
-  background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
+  background: linear-gradient(to bottom, var(--color-orange), var(--color-orange-dark));
   border-radius: 2px;
-}
-
-.noOpiniones {
-  margin: 0;
-  padding: 14px;
-  border-radius: var(--radius-md);
-  background: var(--color-bg-hover);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-size: 14px;
-  text-align: center;
-}
-
-.loading {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 14px;
-  opacity: 0.6;
 }

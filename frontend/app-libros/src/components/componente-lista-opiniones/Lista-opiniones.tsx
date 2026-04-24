@@ -11,7 +11,7 @@ interface Props {
 export const ListaOpiniones = ({ opiniones, cargando = false }: Props) => {
     return (
         <section className={styles.listaOpiniones}>
-            <h2 className={styles.titulo}>OPINIONES</h2>
+            <h2 className={styles.titulo}>Últimas opiniones</h2>
 
             {cargando ? (
                 <p className={styles.loading}>Cargando opiniones...</p>
