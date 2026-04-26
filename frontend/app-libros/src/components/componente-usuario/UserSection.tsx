@@ -3,7 +3,7 @@ import type { ILibro } from '../../types/Libro';
 import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
-import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
+import { OpinionListada } from '../componente-opinion-listada/Opinion-listada';
 import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
@@ -170,7 +170,17 @@ export function Perfil() {
               <div className={`${styles.bar} ${styles.purple}`}></div>
               <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
             </div>
-            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
+            <div>
+              {cargando ? (
+                <p>Cargando opiniones...</p>
+              ) : opiniones.length === 0 ? (
+                <p>Aún no hay opiniones.</p>
+              ) : (
+                opiniones.map((opinion) => (
+                  <OpinionListada key={opinion.id_opinion} opinion={opinion} />
+                ))
+              )}
+            </div>
           </section>
 
           <section className={styles.section}>
