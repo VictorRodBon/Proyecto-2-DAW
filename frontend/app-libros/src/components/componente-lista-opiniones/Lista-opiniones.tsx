@@ -6,9 +6,10 @@ import styles from "./Lista-opiniones.module.css";
 interface Props {
     opiniones: IOpinion[];
     cargando?: boolean;
+    coverId?: string;
 }
 
-export const ListaOpiniones = ({ opiniones, cargando = false }: Props) => {
+export const ListaOpiniones = ({ opiniones, cargando = false, coverId }: Props) => {
     return (
         <div className={styles.listaOpiniones}>
             {cargando ? (
@@ -17,7 +18,7 @@ export const ListaOpiniones = ({ opiniones, cargando = false }: Props) => {
                 <p className={styles.noOpiniones}>Aún no hay opiniones para este libro.</p>
             ) : (
                 opiniones.map((opinion) => (
-                    <OpinionListada key={opinion.id_opinion} opinion={opinion} />
+                    <OpinionListada key={opinion.id_opinion} opinion={opinion} coverId={coverId} />
                 ))
             )}
         </div>

@@ -3,7 +3,8 @@ import type { ILibro } from '../../types/Libro';
 import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
-import { OpinionListada } from '../componente-opinion-listada/Opinion-listada';
+import {useParams } from "react-router-dom";
+import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
 import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
 import { servicioOpiniones } from '../../api/servicioOpiniones';
@@ -12,6 +13,7 @@ import { servicioLibros } from '../../api/servicioLibros';
 import styles from './UserSection.module.css';
 
 export function Perfil() {
+  const { id } = useParams();
   const [usuario, setUsuario] = useState<IUsuario | null>(null);
   const [opiniones, setOpiniones] = useState<IOpinion[]>([]);
   const [lecturasActuales, setLecturasActuales] = useState<Array<{ lectura: ILectura; libro: ILibro }>>([]);
@@ -22,16 +24,14 @@ export function Perfil() {
     async function obtenerDatos(): Promise<void> {
       try {
         setCargando(true);
-        
-        // Obtener usuario actual autenticado
-        const respuestaUsuario = await servicioUsuarios.getUsuarioActual();
-        if (!respuestaUsuario.user || respuestaUsuario.error) {
-          setError('No hay sesión activa');
+
+        if (!id) {
+          setError('ID de usuario no proporcionado');
           setCargando(false);
           return;
         }
-
-        const idUsuario = respuestaUsuario.user.id;
+        
+        const idUsuario = id;
         
         // Obtener datos del usuario de la tabla usuarios
         const datosUsuario = await servicioUsuarios.getPorId(idUsuario);
@@ -42,8 +42,6 @@ export function Perfil() {
         // Obtener opiniones del usuario
         const opinionesUsuario = await servicioOpiniones.getPorUsuario(idUsuario);
         setOpiniones(opinionesUsuario || []);
-
-        console.log(opiniones)
 
         // Obtener lecturas del usuario
         const lecturasUsuario = await servicioLecturas.getPorUsuario(idUsuario);
@@ -103,8 +101,9 @@ export function Perfil() {
   }
 
   useEffect(function() {
+    if (!id) return;
     cargarDatos();
-  }, []);
+  }, [id]);
 
   function manejarEliminarLectura(id: string): void {
     const lecturasActualizadas = lecturasActuales.filter(function(item) {
@@ -151,7 +150,7 @@ export function Perfil() {
   }
 
   const nombreUsuario = usuario?.nombre_usuario || 'Usuario';
-  const tituloEncabezado = `Bienvenido ${nombreUsuario}`;
+  const tituloEncabezado = `Biblioteca de ${nombreUsuario}`;
 
   return (
     <div className={styles.container}>
@@ -170,17 +169,7 @@ export function Perfil() {
               <div className={`${styles.bar} ${styles.purple}`}></div>
               <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
             </div>
-            <div>
-              {cargando ? (
-                <p>Cargando opiniones...</p>
-              ) : opiniones.length === 0 ? (
-                <p>Aún no hay opiniones.</p>
-              ) : (
-                opiniones.map((opinion) => (
-                  <OpinionListada key={opinion.id_opinion} opinion={opinion} />
-                ))
-              )}
-            </div>
+            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
           </section>
 
           <section className={styles.section}>
@@ -193,6 +182,7 @@ export function Perfil() {
               alEliminar={manejarEliminarLectura}
               alCambiarEstado={manejarCambiarEstadoLectura}
               cargando={cargando}
+              idUsuario={id}
             />
           </section>
         </div>

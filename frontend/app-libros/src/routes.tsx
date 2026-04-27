@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
         element: <FormularioOpinion />,
       },
       {
-        path: "perfil",
+        path: "perfil/:id",
         element: <Perfil />
       }
     ],
