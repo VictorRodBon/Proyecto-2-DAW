@@ -43,7 +43,6 @@ export function Perfil() {
         const opinionesUsuario = await servicioOpiniones.getPorUsuario(idUsuario);
         setOpiniones(opinionesUsuario || []);
 
-        console.log(opiniones)
 
         // Obtener lecturas del usuario
         const lecturasUsuario = await servicioLecturas.getPorUsuario(idUsuario);
@@ -104,7 +103,7 @@ export function Perfil() {
 
   useEffect(function() {
     cargarDatos();
-  }, []);
+  });
 
   function manejarEliminarLectura(id: string): void {
     const lecturasActualizadas = lecturasActuales.filter(function(item) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,9 +14,19 @@ import styles from "./Menu.module.css";
 import { servicioUsuarios } from "../../api/servicioUsuarios";
 
 export const MiMenu = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
     const open = Boolean(anchorEl);
+    const [usuario, setUsuario] = useState<string>();
+
+    (async function getUser() {
+        
+        const respuestaUsuario = await servicioUsuarios.getUsuarioActual();
+        if (respuestaUsuario.user) {
+            setUsuario(respuestaUsuario.user.id);
+        }
+
+    })()
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -101,7 +112,7 @@ export const MiMenu = () => {
                     <PersonIcon sx={{ fontSize: 20, color: 'rgba(255,255,255,0.7)' }} /> Perfil
                 </MenuItem> */}
                 <MenuItem 
-                    onClick={() => handleNavigate('/perfil')}
+                    onClick={() => handleNavigate(`/perfil/${usuario}`)}
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
