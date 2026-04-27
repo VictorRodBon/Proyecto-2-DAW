@@ -4,7 +4,7 @@
   margin-top: 0px;
   width: 100%;
   padding: 0.5rem 0.5rem;
-  background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
+  background: var(--color-bg-app);
 }
 
 .wrapper {
@@ -14,7 +14,7 @@
 
 .headerSection {
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--color-bg-hover);
@@ -65,7 +65,7 @@
 .sectionsContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 1rem;
   align-items: start;
 }
 
@@ -73,9 +73,10 @@
   background: var(--color-bg-hover);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-xl);
   transition: border-color var(--transition-normal);
+  min-height: 500px;
 }
 
 .section:hover {
@@ -143,10 +144,10 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 1rem;
+    padding: 0.5rem;
   }
   .headerGradientBg {
-    height: 80px;
+    height: 60px;
   }
   .title {
     font-size: 1.5rem;
@@ -156,25 +157,3 @@
   }
 }
 
-:global([data-boneyard-skeleton="perfil-usuario"]) {
-  background: var(--color-bg-hover) !important;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 16px;
-  backdrop-filter: blur(8px);
-  position: relative;
-  overflow: hidden;
-}
-
-:global([data-boneyard-skeleton="perfil-usuario"])::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-  animation: boneyardShimmer 2s infinite;
-  transform: translateX(-100%);
-}
-
-@keyframes boneyardShimmer {
-  100% { transform: translateX(100%); }
-}

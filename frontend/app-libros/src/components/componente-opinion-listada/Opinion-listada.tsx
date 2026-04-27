@@ -62,9 +62,16 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
             {truncarTexto(nombreAMostrar, 3)}
           </Link>
         ) : (
-          <Link to={`/perfil/${opinion.id_usuario}`}>
-            {nombreAMostrar}
-          </Link>
+          <div className={styles.userInfo}>
+            <img 
+              src={usuario?.foto_perfil || "/avatar-default.svg"} 
+              alt="" 
+              className={styles.userImage}
+            />
+            <Link to={`/perfil/${opinion.id_usuario}`}>
+              {nombreAMostrar}
+            </Link>
+          </div>
         )}
         <Rating
           value={opinion.puntuacion}

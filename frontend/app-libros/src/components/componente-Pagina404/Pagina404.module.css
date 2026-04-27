@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
+    background: var(--color-bg-app);
 }
 
 .errorContent {

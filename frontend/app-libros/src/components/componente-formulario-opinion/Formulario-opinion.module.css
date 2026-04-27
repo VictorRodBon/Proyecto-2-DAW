@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: 24px 16px;
-  background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
+  background: var(--color-bg-app);
 }
 
 .contenedor {
