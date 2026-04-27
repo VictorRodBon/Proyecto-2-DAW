@@ -86,4 +86,26 @@ export const servicioUsuarios = {
     const data = (await response.json()) as IUsuario;
     return data;
   },
+  // SUBIR IMAGEN A SUPABASE STORAGE
+  subirFotoPerfil: async (file: File, userId: string): Promise<string | null> => {
+    const extension = file.name.split(".").pop();
+    const nombreArchivo = `perfil-${userId}-${Date.now()}.${extension}`;
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(nombreArchivo, file);
+    if (error) {
+      console.error("Error al subir imagen:", error.message);
+      return null;
+    }
+    const { data: urlData } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(nombreArchivo);
+    return urlData.publicUrl;
+  },
+  // ACTUALIZAR FOTO DE PERFIL (upload + update en DB)
+  actualizarFotoPerfil: async (userId: string, file: File): Promise<IUsuario | null> => {
+    const urlImagen = await servicioUsuarios.subirFotoPerfil(file, userId);
+    if (!urlImagen) return null;
+    return servicioUsuarios.putPorId(userId, { foto_perfil: urlImagen });
+  },
 };

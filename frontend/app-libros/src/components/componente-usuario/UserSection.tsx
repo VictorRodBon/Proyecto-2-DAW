@@ -105,6 +105,7 @@ export function Perfil() {
     cargarDatos();
   }, [id]);
 
+
   function manejarEliminarLectura(id: string): void {
     const lecturasActualizadas = lecturasActuales.filter(function(item) {
       return item.lectura.id_lectura !== id;
@@ -158,8 +159,17 @@ export function Perfil() {
         <div className={styles.headerSection}>
           <div className={styles.headerGradientBg}></div>
           <div className={styles.headerContent}>
-            <h1 className={styles.title}>{tituloEncabezado}</h1>
-            <p className={styles.appName}>Mi Biblioteca de libros</p>
+            <div className={styles.headerText}>
+              <h1 className={styles.title}>{tituloEncabezado}</h1>
+              <p className={styles.appName}>Mi Biblioteca de libros</p>
+            </div>
+            <img 
+              src={usuario?.foto_perfil || "/avatar-default.svg"} 
+              alt={usuario?.nombre_usuario}
+              className={styles.profileImage}
+              onClick={() => window.location.href = `/update/${usuario?.id}`}
+            />
+
           </div>
         </div>
 

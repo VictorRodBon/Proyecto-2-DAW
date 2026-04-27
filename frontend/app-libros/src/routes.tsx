@@ -6,6 +6,7 @@ import { BuscarLibro } from "./components/componente-buscar-libro/Buscar-libro";
 import { Detalle } from "./components/componente-detalle-libro/Detalle-libro";
 import { FormularioOpinion } from "./components/componente-formulario-opinion/Formulario-opinion";
 import { Perfil } from "./components/componente-usuario/UserSection";
+import { UpdateUser } from "./components/componente-update-user/update";
 import { LayoutPrincipal } from "./components/componente-layout/Layout";
 import { RutaProtegida } from "./auth/RutaProtegida";
 import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "perfil/:id",
         element: <Perfil />
+      },
+      {
+        path:"update/:id",
+        element: <UpdateUser/>
       }
     ],
   },
