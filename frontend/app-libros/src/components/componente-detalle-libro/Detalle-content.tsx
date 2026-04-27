@@ -88,16 +88,17 @@ export function DetalleContent({
                         </p>
                     </div>
 
-                    {/* MetaGrid para datos adicionales */}
-                    <div className={styles.metaGrid}>
-                        <div className={styles.metaItem}>
-                            <span className={styles.metaLabel}>Publicación</span>
-                            <span className={styles.metaValue}>
-                                {libro.first_publish_date || "N/A"}
-                            </span>
+                    {/* Publicación y Géneros */}
+                    <div className={styles.metaRow}>
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>Publicación</h2>
+                            <p className={styles.description}>
+                                {libro.first_publish_date || "Sin información"}
+                            </p>
                         </div>
-                        <div className={styles.metaItem}>
-                            <span className={styles.metaLabel}>Géneros</span>
+
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>Géneros</h2>
                             <div className={styles.chips}>
                                 {libro.subjects
                                     ?.slice(0, 5)

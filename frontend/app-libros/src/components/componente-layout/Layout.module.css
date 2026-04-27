@@ -2,9 +2,10 @@
 
 .layout {
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: var(--color-bg-radial-1), var(--color-bg-radial-2), var(--color-bg-app);
+    background: var(--color-bg-app);
 }
 
 .header {

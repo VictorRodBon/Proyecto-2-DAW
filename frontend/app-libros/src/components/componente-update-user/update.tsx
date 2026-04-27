@@ -66,7 +66,7 @@ export const UpdateUser = () => {
       
       setTimeout(() => navigate(`/perfil/${id}`), 1500);
     } catch (err) {
-      setError("Error al actualizar los datos");
+      setError("Error al actualizar los datos "+err);
     } finally {
       setLoading(false);
     }

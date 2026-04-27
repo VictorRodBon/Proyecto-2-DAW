@@ -22,10 +22,14 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: #f8fafc;
-  background: #0b1220;
+  background: linear-gradient(180deg, #0b1220 0%, #070a12 100%);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  background: linear-gradient(180deg, #0b1220 0%, #070a12 100%);
 }
 
 button,
