@@ -14,8 +14,8 @@ export const BotonDetalle = ({ authorName, bookKey, cover, params }: BotonDetall
         <button
             type="button"
             onClick={() => {
-                navigate(`/detalle/${bookKey}/${cover || ''}${params || ''}`, {
-                    state: { authorName },
+                navigate(`/detalle/${bookKey}/${cover || ''}`, {
+                    state: { authorName, userId: params?.replace('/', '') },
                 });
             }}
         >

@@ -9,13 +9,15 @@ interface ReadingCardProps {
   libro: ILibro;
   alEliminar: (id: string) => void;
   alCambiarEstado: (id: string, nuevoEstado: string) => void;
+  idUsuario?: string;
 }
 
 const ESTADOS = ['Pendiente', 'Leyendo', 'Terminado', 'Abandonado'];
 
-export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado }: ReadingCardProps) {
-  const [cargando, setCargando] = useState(false);
+export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, idUsuario }: ReadingCardProps) {
 
+  const [cargando, setCargando] = useState(false);
+  
   function manejarEliminar(): void {
     alEliminar(lectura.id_lectura);
     servicioLecturas.deleteLectura(lectura.id_lectura);
@@ -61,12 +63,10 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado }: Rea
             Finalizado: {lectura.fecha_fin}
           </p>
         )}
-        <button
-          onClick={manejarEliminar}
-          className={styles.deleteBtn}
-        >
-          Eliminar de biblioteca
-        </button>
+        {idUsuario && idUsuario == lectura.id_usuario &&
+        
+          <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
+        }
         <button
           onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
           className={styles.detailBtn}

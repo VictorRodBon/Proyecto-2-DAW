@@ -124,7 +124,7 @@ export function Detalle() {
                         <div className={styles.bar}></div>
                         <h2 className={styles.opinionesTitle}>Últimas opiniones</h2>
                     </div>
-                    <ListaOpiniones opiniones={opiniones} cargando={cargandoOpiniones} />
+                    <ListaOpiniones opiniones={opiniones} cargando={cargandoOpiniones} coverId={coverUrl || undefined} />
                 </div>
             )}
             </div>
