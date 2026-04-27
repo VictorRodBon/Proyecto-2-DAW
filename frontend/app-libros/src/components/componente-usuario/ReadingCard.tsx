@@ -9,12 +9,12 @@ interface ReadingCardProps {
   libro: ILibro;
   alEliminar: (id: string) => void;
   alCambiarEstado: (id: string, nuevoEstado: string) => void;
-  idUsuario?: string;
+  esPropietario?: boolean;
 }
 
 const ESTADOS = ['Pendiente', 'Leyendo', 'Terminado', 'Abandonado'];
 
-export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, idUsuario }: ReadingCardProps) {
+export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPropietario=false }: ReadingCardProps) {
 
   const [cargando, setCargando] = useState(false);
   
@@ -44,7 +44,7 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, idUsu
           className={styles.statusSelect}
           value={lectura.estado}
           onChange={manejarCambioEstado}
-          disabled={cargando}
+          disabled={cargando || !esPropietario}
         >
           {ESTADOS.map((estado) => (
             <option key={estado} value={estado}>
@@ -63,8 +63,7 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, idUsu
             Finalizado: {lectura.fecha_fin}
           </p>
         )}
-        {idUsuario && idUsuario == lectura.id_usuario &&
-        
+{esPropietario &&
           <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
         }
         <button

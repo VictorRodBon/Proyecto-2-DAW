@@ -3,7 +3,7 @@ import type { ILibro } from '../../types/Libro';
 import type { ILectura } from '../../types/Lectura';
 import type { IOpinion } from '../../types/Opinion';
 import type { IUsuario } from '../../types/Usuario';
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
 import { ListaLecturas } from './Lista-lecturas';
 import { servicioUsuarios } from '../../api/servicioUsuarios';
@@ -13,40 +13,41 @@ import { servicioLibros } from '../../api/servicioLibros';
 import styles from './UserSection.module.css';
 
 export function Perfil() {
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
   const [usuario, setUsuario] = useState<IUsuario | null>(null);
   const [opiniones, setOpiniones] = useState<IOpinion[]>([]);
   const [lecturasActuales, setLecturasActuales] = useState<Array<{ lectura: ILectura; libro: ILibro }>>([]);
   const [cargando, setCargando] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [esPropietario, setEsPropietario] = useState<boolean>(false);
 
   function cargarDatos(): void {
     async function obtenerDatos(): Promise<void> {
       try {
         setCargando(true);
 
-        if (!id) {
-          setError('ID de usuario no proporcionado');
+        const respuestaUsuario = await servicioUsuarios.getUsuarioActual();
+        if (!respuestaUsuario.user || respuestaUsuario.error) {
+          setError('No hay sesión activa');
           setCargando(false);
           return;
         }
+
+        const idActual = respuestaUsuario.user.id;
+
+        const idAMostrar = id || idActual;
+        setEsPropietario(idActual === idAMostrar);
         
-        const idUsuario = id;
-        
-        // Obtener datos del usuario de la tabla usuarios
-        const datosUsuario = await servicioUsuarios.getPorId(idUsuario);
+        const datosUsuario = await servicioUsuarios.getPorId(idAMostrar);
         if (datosUsuario) {
           setUsuario(datosUsuario);
         }
 
-        // Obtener opiniones del usuario
-        const opinionesUsuario = await servicioOpiniones.getPorUsuario(idUsuario);
+        const opinionesUsuario = await servicioOpiniones.getPorUsuario(idAMostrar);
         setOpiniones(opinionesUsuario || []);
 
-        // Obtener lecturas del usuario
-        const lecturasUsuario = await servicioLecturas.getPorUsuario(idUsuario);
+        const lecturasUsuario = await servicioLecturas.getPorUsuario(idAMostrar);
         
-        // Procesar lecturas - obtener datos de libros de Open Library
         const lecturasConLibros: Array<{ lectura: ILectura; libro: ILibro }> = [];
         
         for (let i = 0; i < lecturasUsuario.length; i++) {
@@ -54,10 +55,8 @@ export function Perfil() {
           
           let libro: ILibro;
           try {
-            // Intentar obtener el libro de Open Library usando el id_libro como key
             const libroObtenido = await servicioLibros.getData(lectura.id_libro);
             
-            // Extraer información del libro
             const primeraPortada = libroObtenido.covers && libroObtenido.covers.length > 0 
               ? libroObtenido.covers[0] 
               : undefined;
@@ -71,14 +70,12 @@ export function Perfil() {
               cover_i: primeraPortada
             };
           } catch (err) {
-            // Si no se encuentra el libro, crear un mock
             libro = {
               key: lectura.id_libro,
               title: 'Libro no disponible',
               author_name: 'Autor desconocido',
               cover_i: undefined
             };
-            console.log("error al solicitar los libros: "+err)
           }
           
           lecturasConLibros.push({
@@ -101,9 +98,8 @@ export function Perfil() {
   }
 
   useEffect(function() {
-    if (!id) return;
     cargarDatos();
-  }, [id]);
+  }, []);
 
   function manejarEliminarLectura(id: string): void {
     const lecturasActualizadas = lecturasActuales.filter(function(item) {
@@ -182,7 +178,7 @@ export function Perfil() {
               alEliminar={manejarEliminarLectura}
               alCambiarEstado={manejarCambiarEstadoLectura}
               cargando={cargando}
-              idUsuario={id}
+              esPropietario={esPropietario}
             />
           </section>
         </div>
