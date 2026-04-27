@@ -90,7 +90,7 @@ export const servicioUsuarios = {
   subirFotoPerfil: async (file: File, userId: string): Promise<string | null> => {
     const extension = file.name.split(".").pop();
     const nombreArchivo = `perfil-${userId}-${Date.now()}.${extension}`;
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from("avatars")
       .upload(nombreArchivo, file);
     if (error) {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { servicioUsuarios } from "../../api/servicioUsuarios";
-import type { IUsuario } from "../../types/Usuario";
 import styles from "../form.module.css";
 
 export const UpdateUser = () => {
