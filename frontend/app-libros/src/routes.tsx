@@ -40,19 +40,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/recuperar",
-    element: (
-      <RedirigirSiAutenticado>
-        <SolicitarRecuperacion />
-      </RedirigirSiAutenticado>
-    ),
+    element: <SolicitarRecuperacion />,
   },
   {
     path: "/nueva-contrasena",
-    element: (
-      <RedirigirSiAutenticado>
-        <NuevaContrasena />
-      </RedirigirSiAutenticado>
-    ),
+    element: <NuevaContrasena />,
   },
   {
     element: (
