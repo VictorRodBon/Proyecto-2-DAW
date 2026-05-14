@@ -8,10 +8,11 @@ interface Props {
   alEliminar: (id: string) => void;
   alCambiarEstado: (id: string, nuevoEstado: string) => void;
   cargando?: boolean;
-  idUsuario?: string;
+  esPropietario?: boolean;
 }
 
-export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=false, idUsuario }: Props) => {
+
+export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=false, esPropietario=false }: Props) => {
   return (
     <div className={styles.listaLecturas}>
       { cargando ? 
@@ -27,7 +28,7 @@ export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=
             libro={item.libro}
             alEliminar={alEliminar}
             alCambiarEstado={alCambiarEstado}
-            idUsuario={idUsuario}
+            esPropietario={esPropietario}
           />
         ))
       )}
