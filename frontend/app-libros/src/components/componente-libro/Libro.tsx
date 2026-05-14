@@ -84,8 +84,10 @@ export function Libro({ datos }: { datos: ILibro }) {
             />
           ) : (
             <div className={styles.placeholder}>
-              <BookIcon color="primary" fontSize="large" />
-              <Typography>{truncarTexto(datos.title, 5)}</Typography>
+              <BookIcon sx={{ fontSize: '4.5rem', color: 'primary.main' }} />
+              <Typography variant="body1" sx={{ fontSize: '1rem', textAlign: 'center' }}>
+                {truncarTexto(datos.title, 5)}
+              </Typography>
             </div>
           )}
         </div>

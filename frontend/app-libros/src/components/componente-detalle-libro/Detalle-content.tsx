@@ -3,6 +3,11 @@ import styles from "./DetalleLibro.module.css";
 
 import {BotonAtras} from "../componente-boton-atras/Boton-atras";
 
+
+import { truncarTexto } from '../../hooks/useTruncar';
+
+import BookIcon from '@mui/icons-material/Book';
+import { Typography } from '@mui/material';
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
     libro: IDetalleLibro;
@@ -66,8 +71,11 @@ export function DetalleContent({
                                 loading="lazy"
                             />
                         ) : (
-                            <div className={styles.coverFallback}>
-                                <span className={styles.coverFallbackText}>Sin Portada</span>
+                            <div className={styles.placeholder}>
+                                <BookIcon sx={{ fontSize: '4.5rem', color: 'primary.main' }} />
+                                <Typography variant="body1" sx={{ fontSize: '1rem', textAlign: 'center' }}>
+                                    {truncarTexto(libro.title, 5)}
+                                </Typography>
                             </div>
                         )}
                     </div>

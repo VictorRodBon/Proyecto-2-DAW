@@ -49,8 +49,10 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
           />
         ) : (
           <div className={styles.placeholder}>
-            <BookIcon color="primary" fontSize="large" />
-            <Typography>{truncarTexto(libro.title, 5)}</Typography>
+            <BookIcon sx={{ fontSize: '5rem' }} />
+            <Typography variant="body1" sx={{ fontSize: '1rem', textAlign: 'center' }}>
+              {truncarTexto(libro.title, 5)}
+            </Typography>
           </div>
         )}
         
