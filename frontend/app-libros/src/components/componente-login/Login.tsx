@@ -83,7 +83,8 @@ export function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
       <h2>Iniciar sesión</h2>
 
       <label>Email:</label>
@@ -96,22 +97,20 @@ export function Login() {
         {loading ? "Iniciando sesión..." : "Entrar"}
       </button>
 
-      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
-      {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {correcto && <p className={styles.success}>{correcto}</p>}
 
-      <p>
-        <Link to="/recuperar" className={styles.enlaceCrearCuenta}>
-          ¿Olvidaste tu contraseña?
-        </Link>
-      </p>
+      <span className={styles.enlaceRecuperar}>
+        <Link to="/recuperar">¿Olvidaste tu contraseña?</Link>
+      </span>
 
-      <p>
+      <p className={styles.registroP}>
         ¿No tienes cuenta?{" "}
         <Link to="/registro" className={styles.enlaceCrearCuenta}>
-          {" "}
           Crear cuenta
         </Link>
       </p>
     </form>
+    </div>
   );
 }

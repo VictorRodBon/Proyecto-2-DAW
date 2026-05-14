@@ -133,7 +133,8 @@ export function Registro() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
       <h2>Crear una cuenta</h2>
       <label>Nombre de usuario:</label>
       <input
@@ -151,13 +152,14 @@ export function Registro() {
       <button type="submit" disabled={loading}>
         {loading ? "Registrando..." : "Registrarse"}
       </button>
-      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
-      {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {correcto && <p className={styles.success}>{correcto}</p>}
       <p className={styles.registroP}>
         <Link to="/" className={styles.enlaceVolverLogin}>
           Volver al login
         </Link>
       </p>
-    </form>
+      </form>
+    </div>
   );
 }

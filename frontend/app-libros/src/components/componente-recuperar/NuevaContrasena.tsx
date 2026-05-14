@@ -47,7 +47,8 @@ export function NuevaContrasena() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
       <h2>Nueva contraseña</h2>
 
       <label>Contraseña:</label>
@@ -70,14 +71,15 @@ export function NuevaContrasena() {
         {loading ? "Guardando..." : "Guardar contraseña"}
       </button>
 
-      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
-      {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {correcto && <p className={styles.success}>{correcto}</p>}
 
       <p>
-        <Link to="/login" className={styles.enlaceCrearCuenta}>
+        <Link to="/login" className={styles.enlaceVolverLogin}>
           Volver al inicio de sesión
         </Link>
       </p>
-    </form>
+      </form>
+    </div>
   );
 }

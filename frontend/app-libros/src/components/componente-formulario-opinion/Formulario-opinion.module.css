@@ -2,19 +2,21 @@
 
 .formulario {
   width: 100%;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem 1rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
   background: var(--color-bg-app);
 }
 
 .contenedor {
-  width: min(600px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-bg-hover);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
 }
@@ -23,59 +25,61 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1.125rem 1.25rem 0.875rem;
+  padding: 1.5rem;
   border-bottom: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .titulo {
   flex: 1;
   margin: 0;
-  font-size: 1.375rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--color-text-primary);
 }
 
 .contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-  padding: 1.25rem;
-}
-
-.campos {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 .botonWrap {
   display: flex;
   justify-content: center;
+  margin-top: 0.5rem;
 }
 
 .campo {
   display: grid;
-  gap: 0.625rem;
+  gap: 0.5rem;
 }
 
 .etiqueta {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-text-secondary);
 }
 
 .areaTexto {
   width: 100%;
-  min-height: 120px;
-  padding: 0.875rem 1rem;
+  min-height: 150px;
+  padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-input);
-  backdrop-filter: blur(6px);
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
   resize: vertical;
   box-sizing: border-box;
   transition: all var(--transition-fast);
@@ -94,7 +98,8 @@
 .contenedorRating {
   display: flex;
   align-items: center;
-  padding: 0.875rem 1rem;
+  justify-content: space-between;
+  padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-input);
@@ -105,58 +110,79 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
+.etiquetaRating {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
 .botonEnviar {
-  margin-top: 0.625rem;
-  padding: 0.875rem 1.5rem;
-  border: 1px solid var(--color-border);
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--color-border-primary);
   border-radius: var(--radius-md);
-  background: rgba(99, 102, 241, 0.25);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(118, 75, 162, 0.3));
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .botonEnviar:hover:not(:disabled) {
-  background: rgba(99, 102, 241, 0.4);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(118, 75, 162, 0.4));
+  transform: translateY(-2px);
 }
 
 .botonEnviar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
-.error,
-.exito {
-  padding: 0.75rem 0.875rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid;
-  color: var(--color-text-primary);
+.mensajeError,
+.mensajeExito {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  text-align: center;
 }
 
-.error {
-  border-color: rgba(239, 68, 68, 0.35);
-  background: rgba(239, 68, 68, 0.10);
+.mensajeError {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
 }
 
-.exito {
-  border-color: rgba(16, 185, 129, 0.35);
-  background: rgba(16, 185, 129, 0.10);
+.mensajeExito {
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.1);
+  color: #6ee7b7;
 }
 
 @media (max-width: 480px) {
   .formulario {
     padding: 1rem;
+    align-items: flex-start;
   }
+
+  .contenedor {
+    max-width: 100%;
+  }
+
   .header {
-    padding: 0.875rem 1rem 0.625rem;
+    padding: 1.25rem;
   }
+
   .contenido {
-    padding: 1rem;
+    padding: 1.25rem;
   }
+
   .titulo {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
 }

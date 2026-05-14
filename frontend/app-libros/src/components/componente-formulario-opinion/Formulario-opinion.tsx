@@ -66,7 +66,7 @@ export const FormularioOpinion = () => {
         </div>
         <div className={styles.contenido}>
           {mensaje && (
-            <div className={mensaje.tipo === 'error' ? styles.error : styles.exito}>
+            <div className={mensaje.tipo === 'error' ? styles.mensajeError : styles.mensajeExito}>
               {mensaje.texto}
             </div>
           )}
