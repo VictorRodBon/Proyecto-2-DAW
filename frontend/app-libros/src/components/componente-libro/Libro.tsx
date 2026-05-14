@@ -11,6 +11,9 @@ import {BotonDetalle} from "../componente-boton-detalle/Boton-detalle"
 
 import { truncarTexto } from '../../hooks/useTruncar';
 
+import BookIcon from '@mui/icons-material/Book';
+import { Typography } from '@mui/material';
+
 export function Libro({ datos }: { datos: ILibro }) {
   const location = useLocation();
 
@@ -80,7 +83,10 @@ export function Libro({ datos }: { datos: ILibro }) {
               alt={`Portada de ${datos.title}`}
             />
           ) : (
-            <div className={styles.placeholder}>No Image</div>
+            <div className={styles.placeholder}>
+              <BookIcon color="primary" fontSize="large" />
+              <Typography>{truncarTexto(datos.title, 5)}</Typography>
+            </div>
           )}
         </div>
 

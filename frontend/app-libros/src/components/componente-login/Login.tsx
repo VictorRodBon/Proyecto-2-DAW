@@ -100,6 +100,12 @@ export function Login() {
       {correcto && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{correcto}</p>}
 
       <p>
+        <Link to="/recuperar" className={styles.enlaceCrearCuenta}>
+          ¿Olvidaste tu contraseña?
+        </Link>
+      </p>
+
+      <p>
         ¿No tienes cuenta?{" "}
         <Link to="/registro" className={styles.enlaceCrearCuenta}>
           {" "}

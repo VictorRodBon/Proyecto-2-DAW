@@ -10,6 +10,8 @@ import { UpdateUser } from "./components/componente-update-user/update";
 import { LayoutPrincipal } from "./components/componente-layout/Layout";
 import { RutaProtegida } from "./auth/RutaProtegida";
 import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
+import { SolicitarRecuperacion } from "./components/componente-recuperar/SolicitarRecuperacion";
+import { NuevaContrasena } from "./components/componente-recuperar/NuevaContrasena";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,22 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/recuperar",
+    element: (
+      <RedirigirSiAutenticado>
+        <SolicitarRecuperacion />
+      </RedirigirSiAutenticado>
+    ),
+  },
+  {
+    path: "/nueva-contrasena",
+    element: (
+      <RedirigirSiAutenticado>
+        <NuevaContrasena />
+      </RedirigirSiAutenticado>
+    ),
+  },
+  {
     element: (
       <RutaProtegida>
         <LayoutPrincipal />
@@ -48,7 +66,7 @@ export const router = createBrowserRouter([
         element: <BuscarLibro />,
       },
       {
-        path: "detalle/:id/:cover",
+        path: "detalle/:id/:cover?",
         element: <Detalle />,
       },
       {

@@ -4,6 +4,11 @@ import type { ILectura, } from '../../types/Lectura';
 import { servicioLecturas } from '../../api/servicioLecturas';
 import styles from './ReadingCard.module.css';
 
+import { truncarTexto } from '../../hooks/useTruncar';
+
+import BookIcon from '@mui/icons-material/Book';
+import { Typography } from '@mui/material';
+
 interface ReadingCardProps {
   lectura: ILectura;
   libro: ILibro;
@@ -35,11 +40,20 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
-        <img 
-          src={libro.cover_i ? `https://covers.openlibrary.org/b/id/${libro.cover_i}-M.jpg` : 'https://via.placeholder.com/200x300?text=Sin+Portada'} 
-          alt={libro.title}
-          className={styles.image}
-        />
+
+        {libro.cover_i ? (
+          <img
+            src={`https://covers.openlibrary.org/b/id/${libro.cover_i}-M.jpg`}
+            alt={`Portada de ${libro.title}`}
+            className={styles.image}
+          />
+        ) : (
+          <div className={styles.placeholder}>
+            <BookIcon color="primary" fontSize="large" />
+            <Typography>{truncarTexto(libro.title, 5)}</Typography>
+          </div>
+        )}
+        
         <select
           className={styles.statusSelect}
           value={lectura.estado}
@@ -63,15 +77,19 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
             Finalizado: {lectura.fecha_fin}
           </p>
         )}
-{esPropietario &&
-          <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
-        }
-        <button
-          onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
-          className={styles.detailBtn}
-        >
-          VER DETALLE
-        </button>
+        <div className={styles.buttons}>
+
+          {idUsuario && idUsuario == lectura.id_usuario &&
+          
+            <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
+          }
+          <button
+            onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
+            className={styles.detailBtn}
+          >
+            VER DETALLE
+          </button>
+        </div>
 
       </div>
     </div>
