@@ -112,3 +112,9 @@
 @keyframes boneyardShimmer {
   100% { transform: translateX(100%); }
 }
+
+.cargarMasWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}

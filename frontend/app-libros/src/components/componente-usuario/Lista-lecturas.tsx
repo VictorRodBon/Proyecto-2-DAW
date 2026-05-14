@@ -18,7 +18,7 @@ export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=
       (
         <p className={styles.loading}>Cargando lecturas...</p>
       ): lecturas.length===0?(
-        <p className={styles.noOpiniones}>Aún no se han almacenado lecturas.</p>
+        <p className={styles.noLecturas}>Aún no se han almacenado lecturas.</p>
       ):(
         lecturas.map((item) => (
           <ReadingCard

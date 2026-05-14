@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
         element: <BuscarLibro />,
       },
       {
-        path: "detalle/:id/:cover",
+        path: "detalle/:id/:cover?",
         element: <Detalle />,
       },
       {
