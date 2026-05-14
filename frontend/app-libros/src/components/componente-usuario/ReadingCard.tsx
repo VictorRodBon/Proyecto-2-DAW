@@ -79,7 +79,7 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
         )}
         <div className={styles.buttons}>
 
-          {idUsuario && idUsuario == lectura.id_usuario &&
+          {esPropietario &&
           
             <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
           }
