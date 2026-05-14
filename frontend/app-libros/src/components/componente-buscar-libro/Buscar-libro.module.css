@@ -3,63 +3,8 @@
 .buscador {
   width: 100%;
   min-height: 100vh;
-  padding: 24px 16px;
+  padding: 1.5rem 1rem;
   background: var(--color-bg-app);
-}
-
-.inputTexto,
-.selectCantidad,
-.botonBuscar,
-.botonCargarMas {
-  border-radius: 10px;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  background: var(--color-bg-input);
-  backdrop-filter: blur(6px);
-  transition: all var(--transition-fast);
-}
-
-.inputTexto {
-  min-width: 260px;
-  padding: 10px 12px;
-}
-
-.inputTexto::placeholder {
-  color: var(--color-text-placeholder);
-}
-
-.inputTexto:focus,
-.selectCantidad:focus {
-  outline: none;
-  border-color: var(--color-border-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-}
-
-.selectCantidad {
-  padding: 10px 12px;
-  cursor: pointer;
-}
-
-.selectCantidad option {
-  color: #111827;
-}
-
-.botonBuscar,
-.botonCargarMas {
-  cursor: pointer;
-  font-weight: 700;
-  padding: 10px 14px;
-}
-
-.botonBuscar:hover,
-.botonCargarMas:hover:not(:disabled) {
-  background: var(--color-bg-hover);
-  transform: translateY(-1px);
-}
-
-.botonCargarMas:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
 }
 
 .resultados {
@@ -69,7 +14,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 .resultados > * {
@@ -86,13 +31,13 @@
 .resultados :global([data-boneyard-skeleton="tarjeta-libro"]) {
   width: 100%;
   height: 430px;
-  background: var(--color-bg-hover) !important;
+  padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: 16px;
+  background: var(--color-bg-hover) !important;
   backdrop-filter: blur(8px);
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .resultados :global([data-boneyard-skeleton="tarjeta-libro"]) :global([data-boneyard-bone]) {
@@ -117,4 +62,59 @@
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
+}
+
+.inputTexto,
+.selectCantidad,
+.botonBuscar,
+.botonCargarMas {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  backdrop-filter: blur(6px);
+  transition: all var(--transition-fast);
+}
+
+.inputTexto {
+  min-width: 260px;
+  padding: 0.625rem 0.75rem;
+}
+
+.inputTexto::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.inputTexto:focus,
+.selectCantidad:focus {
+  outline: none;
+  border-color: var(--color-border-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.selectCantidad {
+  padding: 0.625rem 0.75rem;
+  cursor: pointer;
+}
+
+.selectCantidad option {
+  color: #111827;
+}
+
+.botonBuscar,
+.botonCargarMas {
+  padding: 0.625rem 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botonBuscar:hover,
+.botonCargarMas:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  transform: translateY(-1px);
+}
+
+.botonCargarMas:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }

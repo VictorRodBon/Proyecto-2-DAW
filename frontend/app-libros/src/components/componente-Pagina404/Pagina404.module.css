@@ -1,70 +1,71 @@
 @import '../../styles/variables.css';
 
 .errorContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg-app);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-bg-app);
 }
 
 .errorContent {
-    text-align: center;
-    padding: 40px;
-    background: var(--color-bg-hover);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-xl);
-    backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-hover);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-xl);
 }
 
 .errorCode {
-    font-size: 8rem;
-    margin: 0;
-    color: var(--color-text-primary);
-    line-height: 1;
+  margin: 0;
+  font-size: 8rem;
+  color: var(--color-text-primary);
+  line-height: 1;
 }
 
 .errorTitle {
-    font-size: 1.5rem;
-    color: var(--color-text-primary);
-    margin-bottom: 10px;
+  margin-bottom: 0.625rem;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
 }
 
 .errorText {
-    color: var(--color-text-secondary);
-    margin-bottom: 30px;
+  margin-bottom: 1.875rem;
+  color: var(--color-text-secondary);
 }
 
 .buttonGroup {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
+  display: flex;
+  gap: 0.9375rem;
+  justify-content: center;
 }
 
 .btnPrimary,
 .btnSecondary {
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: 1px solid var(--color-border);
-    cursor: pointer;
-    font-weight: 600;
-    transition: all var(--transition-fast);
+  padding: 0.75rem 1.5625rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .btnPrimary {
-    background: rgba(99, 102, 241, 0.25);
-    color: var(--color-text-primary);
-    border-color: var(--color-border-primary);
+  background: rgba(99, 102, 241, 0.25);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-primary);
 }
 
 .btnSecondary {
-    background: var(--color-bg-input);
-    color: var(--color-text-secondary);
+  background: var(--color-bg-input);
+  color: var(--color-text-secondary);
 }
 
 .btnPrimary:hover,
 .btnSecondary:hover {
-    transform: translateY(-2px);
-    background: var(--color-bg-hover);
+  transform: translateY(-2px);
+  background: var(--color-bg-hover);
 }

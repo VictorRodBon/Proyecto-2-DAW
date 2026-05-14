@@ -1,12 +1,17 @@
 import { Navigate } from "react-router-dom";
+import type { ReactNode } from "react";
 import { estaAutenticado } from "./gestorAutenticacion";
 
-export function RedirigirSiAutenticado(props: { children: any; }) {
+interface RedirigirSiAutenticadoProps {
+  children: ReactNode;
+}
+
+export function RedirigirSiAutenticado({ children }: RedirigirSiAutenticadoProps) {
   const autenticado = estaAutenticado();
 
   if (autenticado === true) {
     return <Navigate to="/search" replace />;
   }
 
-  return props.children;
+  return children;
 }

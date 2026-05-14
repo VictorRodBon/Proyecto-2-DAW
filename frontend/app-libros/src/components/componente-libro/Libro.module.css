@@ -1,6 +1,6 @@
 @import '../../styles/variables.css';
 
-.card {
+.libro {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,7 +16,7 @@
   transition: all var(--transition-fast);
 }
 
-.card:hover {
+.libro:hover {
   transform: translateY(-2px);
   border-color: var(--color-border-hover);
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);

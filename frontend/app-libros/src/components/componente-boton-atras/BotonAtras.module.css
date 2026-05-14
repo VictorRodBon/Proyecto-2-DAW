@@ -1,21 +1,21 @@
 @import '../../styles/variables.css';
 
 .backLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    background: var(--color-bg-input);
-    border: 1px solid var(--color-border);
-    cursor: pointer;
-    transition: background var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-input);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
 }
 
 .backLink:hover {
-    background: var(--color-bg-hover);
+  background: var(--color-bg-hover);
 }

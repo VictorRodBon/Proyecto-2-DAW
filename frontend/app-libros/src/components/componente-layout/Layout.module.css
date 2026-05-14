@@ -1,138 +1,138 @@
 @import '../../styles/variables.css';
 
 .layout {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--color-bg-app);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-app);
 }
 
 .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    padding: 12px 16px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    background: rgba(11, 18, 32, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(11, 18, 32, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .controles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .inputTexto,
 .selectCantidad,
 .botonBuscar {
-    border-radius: 10px;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-    background: var(--color-bg-input);
-    backdrop-filter: blur(6px);
-    transition: all var(--transition-fast);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  backdrop-filter: blur(6px);
+  transition: all var(--transition-fast);
 }
 
 .inputTexto {
-    min-width: 200px;
-    padding: 10px 12px;
+  min-width: 200px;
+  padding: 0.625rem 0.75rem;
 }
 
 .inputTexto::placeholder {
-    color: var(--color-text-placeholder);
+  color: var(--color-text-placeholder);
 }
 
 .inputTexto:focus,
 .selectCantidad:focus {
-    outline: none;
-    border-color: var(--color-border-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
+  border-color: var(--color-border-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .selectCantidad {
-    padding: 10px 12px;
-    cursor: pointer;
+  padding: 0.625rem 0.75rem;
+  cursor: pointer;
 }
 
 .selectCantidad option {
-    color: #111827;
+  color: #111827;
 }
 
 .botonBuscar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: 700;
-    padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .botonBuscar:hover {
-    background: var(--color-bg-hover);
-    transform: translateY(-1px);
+  background: var(--color-bg-hover);
+  transform: translateY(-1px);
 }
 
 .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 24px 16px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
 }
 
 .buscadorMovil {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .botonExpandir {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 10px;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-input);
-    color: var(--color-text-secondary);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    margin: 0 auto;
-    width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 120px;
+  margin: 0 auto;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-input);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .botonExpandir:hover {
-    background: var(--color-bg-hover);
-    border-color: var(--color-border-primary);
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-primary);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
 }
 
 .botonExpandir:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 .formularioExpandido {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-    background: var(--color-bg-hover);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-hover);
 }
