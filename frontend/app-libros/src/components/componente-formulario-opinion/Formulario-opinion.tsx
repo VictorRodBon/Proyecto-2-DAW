@@ -66,32 +66,39 @@ export const FormularioOpinion = () => {
         </div>
         <div className={styles.contenido}>
           {mensaje && (
-            <div className={mensaje.tipo === 'error' ? styles.mensajeError : styles.mensajeExito}>
+            <div 
+              className={mensaje.tipo === 'error' ? styles.mensajeError : styles.mensajeExito}
+              role={mensaje.tipo === 'error' ? 'alert' : 'status'}
+              aria-live="polite"
+            >
               {mensaje.texto}
             </div>
           )}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} aria-label="Formulario de opinión">
             <div className={styles.campos}>
               <div className={styles.campo}>
-                <label className={styles.etiqueta}>Puntuación</label>
-                <div className={styles.contenedorRating}>
+                <label className={styles.etiqueta} id="puntuacion-label">Puntuación</label>
+                <div className={styles.contenedorRating} role="group" aria-labelledby="puntuacion-label">
                   <RatingInput value={puntuacion} onChange={setPuntuacion} disabled={enviando} />
                 </div>
               </div>
               <div className={styles.campo}>
-                <label className={styles.etiqueta}>Tu opinión</label>
+                <label className={styles.etiqueta} htmlFor="valoracion-input">Tu opinión</label>
                 <textarea
+                  id="valoracion-input"
                   className={styles.areaTexto}
                   value={valoracion}
                   onChange={(e) => setValoracion(e.target.value)}
                   placeholder="Escribe tu opinión sobre el libro..."
                   rows={5}
                   disabled={enviando}
+                  aria-describedby="valoracion-hint"
                 />
+                <span id="valoracion-hint" className="sr-only">Escribe tu valoración sobre el libro</span>
               </div>
             </div>
             <div className={styles.botonWrap}>
-              <button type="submit" className={styles.botonEnviar} disabled={enviando}>
+              <button type="submit" className={styles.botonEnviar} disabled={enviando} aria-busy={enviando}>
                 {enviando ? "Enviando..." : "Enviar opinión"}
               </button>
             </div>

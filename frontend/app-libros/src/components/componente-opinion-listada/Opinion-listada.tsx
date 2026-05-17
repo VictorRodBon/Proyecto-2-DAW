@@ -55,7 +55,7 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
   const coverUrl = cover || coverId || '';
 
   return (
-    <div className={styles.container}>
+    <article className={styles.container} aria-label={`Opinión de ${nombreAMostrar}`}>
       <div className={styles.header}>
         {location.pathname.startsWith('/perfil') ? (
           <Link to={`/detalle/${opinion.id_libro}/${coverUrl}`}>
@@ -77,12 +77,13 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
           value={opinion.puntuacion}
           readOnly
           precision={0.5}
+          aria-label={`Puntuación: ${opinion.puntuacion} estrellas`}
           sx={{ color: "rgba(99, 102, 241, 0.95)" }}
           icon={<StarIcon fontSize="inherit" />}
           emptyIcon={<StarIcon style={{ opacity: 0.45 }} fontSize="inherit" />}
         />
       </div>
       {opinion.valoracion && <p className={styles.valoracion}>{opinion.valoracion}</p>}
-    </div>
+    </article>
   );
 };

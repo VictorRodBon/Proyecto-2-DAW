@@ -73,11 +73,11 @@ export const UpdateUser = () => {
   }
 
   if (cargandoDatos) {
-    return <div className={styles.form}>Cargando...</div>;
+    return <div className={styles.form} role="status" aria-live="polite">Cargando...</div>;
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} aria-label="Formulario de edición de perfil">
       <h2>Editar perfil</h2>
       
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -93,31 +93,36 @@ export const UpdateUser = () => {
             marginBottom: "10px"
           }}
         />
-        <label style={{ display: "block", cursor: "pointer", color: "rgba(99, 102, 241, 0.92)" }}>
+        <label htmlFor="foto-perfil" style={{ display: "block", cursor: "pointer", color: "rgba(99, 102, 241, 0.92)" }}>
           Cambiar foto
           <input 
+            id="foto-perfil"
             type="file" 
             accept="image/*" 
             onChange={handleFotoChange} 
             style={{ display: "none" }}
+            aria-describedby="foto-hint"
           />
         </label>
+        <span id="foto-hint" className="sr-only">Selecciona una imagen para tu foto de perfil</span>
       </div>
 
-      <label>Nombre de usuario:</label>
+      <label htmlFor="nombre-usuario">Nombre de usuario:</label>
       <input 
+        id="nombre-usuario"
         type="text" 
         value={nombreUsuario} 
         onChange={(e) => setNombreUsuario(e.target.value)}
         placeholder="Tu nombre de usuario"
+        aria-required="true"
       />
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Actualizando..." : "Guardar cambios"}
       </button>
 
-      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }}>{error}</p>}
-      {success && <p style={{ color: "rgba(16, 185, 129, 0.92)" }}>{success}</p>}
+      {error && <p style={{ color: "rgba(239, 68, 68, 0.92)" }} role="alert">{error}</p>}
+      {success && <p style={{ color: "rgba(16, 185, 129, 0.92)" }} role="status" aria-live="polite">{success}</p>}
 
       <p>
         <Link to={`/perfil/${id}`} className={styles.enlaceVolverLogin}>

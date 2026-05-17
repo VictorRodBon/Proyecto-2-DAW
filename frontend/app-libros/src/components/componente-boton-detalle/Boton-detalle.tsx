@@ -13,6 +13,7 @@ export const BotonDetalle = ({ authorName, bookKey, cover, params }: BotonDetall
     return (
         <button
             type="button"
+            aria-label="Ver detalles del libro"
             onClick={() => {
                 navigate(`/detalle/${bookKey}/${cover || ''}`, {
                     state: { authorName, userId: params?.replace('/', '') },

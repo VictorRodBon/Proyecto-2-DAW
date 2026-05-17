@@ -52,19 +52,21 @@ export function LayoutPrincipal() {
 
     return (
         <div className={styles.layout}>
-            <header className={styles.header}>
+            <header className={styles.header} role="banner">
                 <MiMenu />
                 {esMovil ? (
                     <div className={styles.buscadorMovil}>
                         <button
                             className={`${styles.botonExpandir} ${menuStyles.menuButton}`}
                             onClick={() => setBuscadorExpandido(!buscadorExpandido)}
+                            aria-expanded={buscadorExpandido}
+                            aria-controls="buscador-movil"
                         >
                             <SearchIcon className={menuStyles.icon} />
                             {buscadorExpandido ? "Ocultar" : "Buscar"}
                         </button>
                         {buscadorExpandido && (
-                            <div className={styles.formularioExpandido}>
+                            <div id="buscador-movil" className={styles.formularioExpandido} role="search">
                                 <input
                                     className={styles.inputTexto}
                                     type="text"
@@ -72,6 +74,7 @@ export function LayoutPrincipal() {
                                     onChange={(e) => setBusquedaTitle(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                     placeholder="Escribe un título..."
+                                    aria-label="Buscar por título"
                                 />
                                 <input
                                     className={styles.inputTexto}
@@ -80,18 +83,21 @@ export function LayoutPrincipal() {
                                     onChange={(e) => setBusquedaAuthor(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                     placeholder="Escribe un autor..."
+                                    aria-label="Buscar por autor"
                                 />
                                 <input
                                     className={styles.botonBuscar}
                                     type="button"
                                     value="Buscar"
                                     onClick={handleBuscar}
+                                    aria-label="Iniciar búsqueda"
                                 />
                                 <select
                                     className={styles.selectCantidad}
                                     name="cantidad"
                                     value={cantidad}
                                     onChange={(e) => setCantidad(Number(e.target.value))}
+                                    aria-label="Cantidad de resultados"
                                 >
                                     <option value="10">10</option>
                                     <option value="20">20</option>
@@ -101,7 +107,7 @@ export function LayoutPrincipal() {
                         )}
                     </div>
                 ) : (
-                    <div className={styles.controles}>
+                    <div className={styles.controles} role="search">
                         <input
                             className={styles.inputTexto}
                             type="text"
@@ -109,6 +115,7 @@ export function LayoutPrincipal() {
                             onChange={(e) => setBusquedaTitle(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Escribe un título..."
+                            aria-label="Buscar por título"
                         />
                         <input
                             className={styles.inputTexto}
@@ -117,12 +124,14 @@ export function LayoutPrincipal() {
                             onChange={(e) => setBusquedaAuthor(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Escribe un autor..."
+                            aria-label="Buscar por autor"
                         />
 
                         <button
                             className={styles.botonExpandir}
                             type="button"
                             onClick={handleBuscar}
+                            aria-label="Iniciar búsqueda"
                         >
                             <SearchIcon className={styles.iconoBuscar} />
                             Buscar
@@ -132,6 +141,7 @@ export function LayoutPrincipal() {
                             name="cantidad"
                             value={cantidad}
                             onChange={(e) => setCantidad(Number(e.target.value))}
+                            aria-label="Cantidad de resultados"
                         >
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -140,7 +150,7 @@ export function LayoutPrincipal() {
                     </div>
                 )}
             </header>
-            <main className={styles.main}>
+            <main className={styles.main} role="main">
                 <Outlet />
             </main>
         </div>

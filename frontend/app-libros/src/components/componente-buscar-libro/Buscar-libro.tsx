@@ -87,8 +87,8 @@ export function BuscarLibro() {
     };
 
     return (
-        <div className={styles.buscador}>
-            <main className={styles.resultados}>
+        <div className={styles.buscador} role="search" aria-label="Búsqueda de libros">
+            <main className={styles.resultados} aria-live="polite">
                 {(cargando && libros.length === 0
                     ? Array.from({ length: urlLimit }).map((_, i) => ({ ...libroMock, key: `sk-${i}` }))
                     : libros
@@ -104,10 +104,18 @@ export function BuscarLibro() {
             </main>
             {libros.length > 0 && hayMasResultados && (
                 <div className={styles.cargarMasWrap}>
-                    <button className={styles.botonCargarMas} onClick={cargarMas} disabled={cargando}>
+                    <button 
+                        className={styles.botonCargarMas} 
+                        onClick={cargarMas} 
+                        disabled={cargando}
+                        aria-busy={cargando}
+                    >
                         {cargando ? "Cargando..." : `Cargar ${urlLimit} más`}
                     </button>
                 </div>
+            )}
+            {libros.length === 0 && !cargando && (
+                <p role="status" aria-live="polite">No se encontraron resultados para esta búsqueda.</p>
             )}
         </div>
     );

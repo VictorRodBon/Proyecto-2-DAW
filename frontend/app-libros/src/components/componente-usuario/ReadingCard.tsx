@@ -38,7 +38,7 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
   }
 
   return (
-    <div className={styles.card}>
+    <article className={styles.card} aria-label={`Libro: ${libro.title}`}>
       <div className={styles.imageContainer}>
 
         {libro.cover_i ? (
@@ -48,7 +48,7 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
             className={styles.image}
           />
         ) : (
-          <div className={styles.placeholder}>
+          <div className={styles.placeholder} role="img" aria-label={`Sin portada para ${libro.title}`}>
             <BookIcon sx={{ fontSize: '5rem' }} />
             <Typography variant="body1" sx={{ fontSize: '1rem', textAlign: 'center' }}>
               {truncarTexto(libro.title, 5)}
@@ -56,11 +56,14 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
           </div>
         )}
         
+        <label htmlFor={`estado-${lectura.id_lectura}`} className="sr-only">Estado de lectura</label>
         <select
+          id={`estado-${lectura.id_lectura}`}
           className={styles.statusSelect}
           value={lectura.estado}
           onChange={manejarCambioEstado}
           disabled={cargando || !esPropietario}
+          aria-label={esPropietario ? "Cambiar estado de lectura" : "Estado de lectura"}
         >
           {ESTADOS.map((estado) => (
             <option key={estado} value={estado}>
@@ -79,21 +82,26 @@ export function ReadingCard({ lectura, libro, alEliminar, alCambiarEstado, esPro
             Finalizado: {lectura.fecha_fin}
           </p>
         )}
-        <div className={styles.buttons}>
+        <div className={styles.buttons} role="group" aria-label="Acciones del libro">
 
           {esPropietario &&
           
-            <button onClick={manejarEliminar} className={styles.deleteBtn}>Eliminar de biblioteca</button>
+            <button 
+              onClick={manejarEliminar} 
+              className={styles.deleteBtn}
+              aria-label={`Eliminar ${libro.title} de la biblioteca`}
+            >Eliminar de biblioteca</button>
           }
           <button
             onClick={() => window.location.href = `/detalle/${libro.key}/${libro.cover_i}`}
             className={styles.detailBtn}
+            aria-label={`Ver detalles de ${libro.title}`}
           >
             VER DETALLE
           </button>
         </div>
 
       </div>
-    </div>
+    </article>
   );
 }

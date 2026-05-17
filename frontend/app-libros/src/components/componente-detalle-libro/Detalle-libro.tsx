@@ -99,9 +99,9 @@ export function Detalle() {
 
     // Renderizado único: Skeleton gestiona el estado 'loading' internamente
     return (
-        <div className={styles.page}>
+        <div className={styles.page} role="main">
             <div className={styles.card}>
-                {error && <div className={styles.error}>{error}</div>}
+                {error && <div className={styles.error} role="alert">{error}</div>}
                 
                 <Skeleton
                     name="detalle-libro"

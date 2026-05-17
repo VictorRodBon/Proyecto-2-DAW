@@ -84,24 +84,37 @@ export function Login() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} aria-label="Formulario de inicio de sesión">
       <h2>Iniciar sesión</h2>
 
-      <label>Email:</label>
-      <input type="text" value={email} onChange={handleCambioEmail} />
+      <label htmlFor="email-login">Email:</label>
+      <input 
+        id="email-login"
+        type="text" 
+        value={email} 
+        onChange={handleCambioEmail}
+        aria-required="true"
+        aria-describedby={error && email ? "login-error" : undefined}
+      />
 
-      <label>Contraseña:</label>
-      <input type="password" value={password} onChange={handleCambioPassword} />
+      <label htmlFor="password-login">Contraseña:</label>
+      <input 
+        id="password-login"
+        type="password" 
+        value={password} 
+        onChange={handleCambioPassword}
+        aria-required="true"
+      />
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Iniciando sesión..." : "Entrar"}
       </button>
 
-      {error && <p className={styles.error}>{error}</p>}
-      {correcto && <p className={styles.success}>{correcto}</p>}
+      {error && <p id="login-error" className={styles.error} role="alert">{error}</p>}
+      {correcto && <p id="login-success" className={styles.success} role="status" aria-live="polite">{correcto}</p>}
 
       <span className={styles.enlaceRecuperar}>
-        <Link to="/recuperar">¿Olvidaste tu contraseña?</Link>
+        <Link to="/recuperar" aria-label="Recuperar contraseña">¿Olvidaste tu contraseña?</Link>
       </span>
 
       <p className={styles.registroP}>

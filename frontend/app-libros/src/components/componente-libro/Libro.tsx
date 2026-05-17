@@ -74,7 +74,7 @@ export function Libro({ datos }: { datos: ILibro }) {
     setCargando(false);
   }
   return (
-    <div className={styles.libro}>
+    <article className={styles.libro} aria-label={`Libro: ${datos.title}`}>
       <div className={styles.main}>
         <div className={styles.imagen}>
           {datos.cover_i ? (
@@ -83,7 +83,7 @@ export function Libro({ datos }: { datos: ILibro }) {
               alt={`Portada de ${datos.title}`}
             />
           ) : (
-            <div className={styles.placeholder}>
+            <div className={styles.placeholder} role="img" aria-label={`Sin portada para ${datos.title}`}>
               <BookIcon sx={{ fontSize: '4.5rem', color: 'primary.main' }} />
               <Typography variant="body1" sx={{ fontSize: '1rem', textAlign: 'center' }}>
                 {truncarTexto(datos.title, 5)}
@@ -103,11 +103,13 @@ export function Libro({ datos }: { datos: ILibro }) {
           type="button"
           onClick={manejarBiblioteca}
           disabled={cargando}
+          aria-busy={cargando}
+          aria-pressed={biblioteca}
           className={biblioteca ? styles.esta : styles["no-esta"]}
         >
           {cargando ? "CARGANDO..." : biblioteca ? "ELIMINAR DE BIBLIOTECA" : "AÑADIR A BIBLIOTECA"}
         </button>
       </div>
-    </div>
+    </article>
   );
 }

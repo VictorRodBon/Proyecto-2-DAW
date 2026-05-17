@@ -14,10 +14,15 @@ interface Props {
 
 export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=false, esPropietario=false }: Props) => {
   return (
-    <div className={styles.listaLecturas}>
+    <div 
+      className={styles.listaLecturas} 
+      role="list" 
+      aria-label="Lista de lecturas"
+      aria-busy={cargando}
+    >
       { cargando ? 
       (
-        <p className={styles.loading}>Cargando lecturas...</p>
+        <p className={styles.loading} role="status" aria-live="polite">Cargando lecturas...</p>
       ): lecturas.length===0?(
         <p className={styles.noLecturas}>Aún no se han almacenado lecturas.</p>
       ):(

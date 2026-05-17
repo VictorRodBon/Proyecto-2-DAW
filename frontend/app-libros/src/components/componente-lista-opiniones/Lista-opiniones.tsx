@@ -11,9 +11,14 @@ interface Props {
 
 export const ListaOpiniones = ({ opiniones, cargando = false, coverId }: Props) => {
     return (
-        <div className={styles.listaOpiniones}>
+        <div 
+            className={styles.listaOpiniones} 
+            role="region" 
+            aria-label="Lista de opiniones"
+            aria-busy={cargando}
+        >
             {cargando ? (
-                <p className={styles.loading}>Cargando opiniones...</p>
+                <p className={styles.loading} role="status" aria-live="polite">Cargando opiniones...</p>
             ) : opiniones.length === 0 ? (
                 <p className={styles.noOpiniones}>Aún no hay opiniones para este libro.</p>
             ) : (

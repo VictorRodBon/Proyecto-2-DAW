@@ -39,12 +39,13 @@ export function DetalleContent({
     return (
         <>
             <div className={styles.header}>
-                <div className={styles.buttonsGrp}>
+                <div className={styles.buttonsGrp} role="group" aria-label="Opciones del libro">
                     <BotonAtras />
                     <button 
                         type="button" 
                         className={styles.opinionesToggle} 
                         onClick={() => setMostrarOpiniones(!mostrarOpiniones)}
+                        aria-expanded={mostrarOpiniones}
                     >
                         {mostrarOpiniones ? "Ocultar opiniones" : "Ver opiniones"}
                     </button>
@@ -52,6 +53,7 @@ export function DetalleContent({
                         type="button" 
                         className={styles.opinionesToggle}
                         onClick={() => navigate(`/addOpinion/${id}?title=${libro.title.replace(/\s/g, '+')}`)}
+                        aria-label="Añadir opinión sobre este libro"
                     >
                         Añadir Opinión
                     </button>

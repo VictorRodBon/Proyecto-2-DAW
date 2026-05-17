@@ -138,7 +138,7 @@ export function Perfil() {
             <div className={styles.headerGradientBg}></div>
             <div className={styles.headerContent}>
               <h1 className={styles.title}>Error</h1>
-              <p className={styles.appName}>{error}</p>
+              <p className={styles.appName} role="alert">{error}</p>
             </div>
           </div>
         </div>
@@ -161,9 +161,17 @@ export function Perfil() {
             </div>
             <img 
               src={usuario?.foto_perfil || "/avatar-default.svg"} 
-              alt={usuario?.nombre_usuario}
+              alt={`Foto de perfil de ${usuario?.nombre_usuario}`}
               className={styles.profileImage}
               onClick={() => window.location.href = `/update/${usuario?.id}`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  window.location.href = `/update/${usuario?.id}`;
+                }
+              }}
+              aria-label="Editar perfil"
             />
 
           </div>

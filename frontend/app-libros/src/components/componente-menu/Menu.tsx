@@ -52,7 +52,9 @@ export const MiMenu = () => {
             <button 
                 className={styles.menuButton} 
                 aria-controls="fade-menu" 
-                aria-haspopup="true" 
+                aria-haspopup="true"
+                aria-expanded={open}
+                aria-label="Abrir menú de navegación"
                 onClick={handleClick}
             >
                 <MenuIcon className={styles.icon} />
@@ -64,6 +66,7 @@ export const MiMenu = () => {
                 keepMounted
                 open={open}
                 onClose={handleClose}
+                aria-label="Menú de navegación"
                 sx={{
                     '& .MuiPaper-root': {
                         background: 'rgba(11, 18, 32, 0.95)',

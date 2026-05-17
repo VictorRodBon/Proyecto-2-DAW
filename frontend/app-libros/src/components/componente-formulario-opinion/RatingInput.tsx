@@ -20,6 +20,7 @@ export function RatingInput({
       precision={1}
       size={size}
       disabled={disabled}
+      aria-label={disabled ? "Puntuación deshabilitada" : `Puntuación: ${value} de 5 estrellas`}
       icon={<StarIcon fontSize="inherit" />}
       emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
     />

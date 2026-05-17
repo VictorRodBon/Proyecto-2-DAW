@@ -134,26 +134,48 @@ export function Registro() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} aria-label="Formulario de registro">
       <h2>Crear una cuenta</h2>
-      <label>Nombre de usuario:</label>
+      <label htmlFor="username-reg">Nombre de usuario:</label>
       <input
+        id="username-reg"
         type="text"
         value={nombreUsuario}
         onChange={handleNombreUsuarioChange}
         placeholder="Tu nombre de usuario"
+        aria-required="true"
       />
-      <label>Email:</label>
-      <input type="email" value={email} onChange={handleEmailChange} />
-      <label>Contraseña:</label>
-      <input type="password" value={password} onChange={handlePasswordChange} />
-      <label>Confirmar contraseña:</label>
-      <input type="password" value={confirm} onChange={handleConfirmChange} />
-      <button type="submit" disabled={loading}>
+      <label htmlFor="email-reg">Email:</label>
+      <input 
+        id="email-reg"
+        type="email" 
+        value={email} 
+        onChange={handleEmailChange}
+        aria-required="true"
+      />
+      <label htmlFor="password-reg">Contraseña:</label>
+      <input 
+        id="password-reg"
+        type="password" 
+        value={password} 
+        onChange={handlePasswordChange}
+        aria-required="true"
+        aria-describedby="password-hint"
+      />
+      <span id="password-hint" className={styles.srOnly}>La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un carácter especial</span>
+      <label htmlFor="confirm-reg">Confirmar contraseña:</label>
+      <input 
+        id="confirm-reg"
+        type="password" 
+        value={confirm} 
+        onChange={handleConfirmChange}
+        aria-required="true"
+      />
+      <button type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Registrando..." : "Registrarse"}
       </button>
-      {error && <p className={styles.error}>{error}</p>}
-      {correcto && <p className={styles.success}>{correcto}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
+      {correcto && <p className={styles.success} role="status" aria-live="polite">{correcto}</p>}
       <p className={styles.registroP}>
         <Link to="/" className={styles.enlaceVolverLogin}>
           Volver al login

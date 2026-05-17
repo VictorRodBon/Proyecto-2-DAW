@@ -39,23 +39,25 @@ export function SolicitarRecuperacion() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} aria-label="Formulario de recuperación de contraseña">
       <h2>Recuperar contraseña</h2>
 
-      <label>Email:</label>
+      <label htmlFor="email-recup">Email:</label>
       <input
+        id="email-recup"
         type="text"
         value={email}
         onChange={handleCambioEmail}
         placeholder="Tu correo electrónico"
+        aria-required="true"
       />
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Enviando..." : "Enviar correo"}
       </button>
 
-      {error && <p className={styles.error}>{error}</p>}
-      {correcto && <p className={styles.success}>{correcto}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
+      {correcto && <p className={styles.success} role="status" aria-live="polite">{correcto}</p>}
 
       <p>
         <Link to="/login" className={styles.enlaceVolverLogin}>

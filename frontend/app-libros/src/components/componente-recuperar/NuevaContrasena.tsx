@@ -48,31 +48,35 @@ export function NuevaContrasena() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} aria-label="Formulario de nueva contraseña">
       <h2>Nueva contraseña</h2>
 
-      <label>Contraseña:</label>
+      <label htmlFor="nueva-password">Contraseña:</label>
       <input
+        id="nueva-password"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Nueva contraseña"
+        aria-required="true"
       />
 
-      <label>Confirmar contraseña:</label>
+      <label htmlFor="confirmar-password">Confirmar contraseña:</label>
       <input
+        id="confirmar-password"
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirmar contraseña"
+        aria-required="true"
       />
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Guardando..." : "Guardar contraseña"}
       </button>
 
-      {error && <p className={styles.error}>{error}</p>}
-      {correcto && <p className={styles.success}>{correcto}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
+      {correcto && <p className={styles.success} role="status" aria-live="polite">{correcto}</p>}
 
       <p>
         <Link to="/login" className={styles.enlaceVolverLogin}>
