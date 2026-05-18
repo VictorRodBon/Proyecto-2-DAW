@@ -143,9 +143,9 @@ export function LayoutPrincipal() {
                             onChange={(e) => setCantidad(Number(e.target.value))}
                             aria-label="Cantidad de resultados"
                         >
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
+                            <option value="10">10 - libros</option>
+                            <option value="20">20 - libros</option>
+                            <option value="50">50 - libros</option>
                         </select>
                     </div>
                 )}
