@@ -24,7 +24,7 @@ export const ListaLecturas = ({ lecturas, alEliminar, alCambiarEstado, cargando=
       (
         <p className={styles.loading} role="status" aria-live="polite">Cargando lecturas...</p>
       ): lecturas.length===0?(
-        <p className={styles.noLecturas}>Aún no shay lecturas almacenadas.</p>
+        <p className={styles.noLecturas}>Aún no hay lecturas almacenadas.</p>
       ):(
         lecturas.map((item) => (
           <ReadingCard

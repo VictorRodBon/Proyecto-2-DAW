@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { cerrarSesionLocal } from "@/auth/gestorAutenticacion";
 import type { IUsuario } from "@/types/Usuario";
 import type { User, Session } from "@supabase/supabase-js";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -45,7 +46,7 @@ export const servicioUsuarios = {
   // LOGOUT - Cerrar sesión
   logout: async (): Promise<void> => {
     await supabase.auth.signOut();
-    localStorage.removeItem("sb-qnwjmetgvbyitgrloosg-auth-token");
+    cerrarSesionLocal();
   },
   // OBTENER SESIÓN ACTUAL
   getSession: async () => {
