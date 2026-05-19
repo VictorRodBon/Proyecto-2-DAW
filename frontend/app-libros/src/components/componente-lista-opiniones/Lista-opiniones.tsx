@@ -20,7 +20,7 @@ export const ListaOpiniones = ({ opiniones, cargando = false, coverId }: Props) 
             {cargando ? (
                 <p className={styles.loading} role="status" aria-live="polite">Cargando opiniones...</p>
             ) : opiniones.length === 0 ? (
-                <p className={styles.noOpiniones}>Aún no hay opiniones para este libro.</p>
+                <p className={styles.noOpiniones}>Aún no hay opiniones almacenadas.</p>
             ) : (
                 opiniones.map((opinion) => (
                     <OpinionListada key={opinion.id_opinion} opinion={opinion} coverId={coverId} />
