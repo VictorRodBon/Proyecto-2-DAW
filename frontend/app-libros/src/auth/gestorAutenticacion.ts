@@ -25,7 +25,7 @@ export function estaAutenticado(): boolean {
   return true;
 }
 
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 export async function enviarCorreoRecuperacion(email: string): Promise<{ success: boolean; error?: string }> {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {

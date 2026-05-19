@@ -1,5 +1,5 @@
-import type { IOpinion } from "../../types/Opinion";
-import { OpinionListada } from "../componente-opinion-listada/Opinion-listada";
+import type { IOpinion } from "@/types/Opinion";
+import { OpinionListada } from "@/components/componente-opinion-listada/Opinion-listada";
 import styles from "./Lista-opiniones.module.css";
 
 

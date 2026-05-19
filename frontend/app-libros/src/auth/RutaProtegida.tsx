@@ -2,7 +2,7 @@
 import { Navigate } from "react-router-dom";
 import { estaAutenticado } from "./gestorAutenticacion";
 
-export function RutaProtegida(props: { children: any; }) {
+export function RutaProtegida(props: { children: React.ReactNode; }) {
   const autenticado = estaAutenticado();
 
   if (autenticado === false) {

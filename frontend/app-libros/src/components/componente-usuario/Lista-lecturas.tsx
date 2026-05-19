@@ -1,5 +1,5 @@
-import type { ILibro } from '../../types/Libro';
-import type { ILectura } from '../../types/Lectura';
+import type { ILibro } from '@/types/Libro';
+import type { ILectura } from '@/types/Lectura';
 import { ReadingCard } from './ReadingCard';
 import styles from './Lista-lecturas.module.css';
 

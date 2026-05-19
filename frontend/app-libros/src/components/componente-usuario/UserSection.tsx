@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import type { ILibro } from '../../types/Libro';
-import type { ILectura } from '../../types/Lectura';
-import type { IOpinion } from '../../types/Opinion';
-import type { IUsuario } from '../../types/Usuario';
+import type { ILibro } from '@/types/Libro';
+import type { ILectura } from '@/types/Lectura';
+import type { IOpinion } from '@/types/Opinion';
+import type { IUsuario } from '@/types/Usuario';
 import { useParams } from "react-router-dom";
-import { ListaOpiniones } from '../componente-lista-opiniones/Lista-opiniones';
+import { ListaOpiniones } from '@/components/componente-lista-opiniones/Lista-opiniones';
 import { ListaLecturas } from './Lista-lecturas';
-import { servicioUsuarios } from '../../api/servicioUsuarios';
-import { servicioOpiniones } from '../../api/servicioOpiniones';
-import { servicioLecturas } from '../../api/servicioLecturas';
-import { servicioLibros } from '../../api/servicioLibros';
+import { servicioUsuarios } from '@/api/servicioUsuarios';
+import { servicioOpiniones } from '@/api/servicioOpiniones';
+import { servicioLecturas } from '@/api/servicioLecturas';
+import { servicioLibros } from '@/api/servicioLibros';
 import styles from './UserSection.module.css';
 
 export function Perfil() {
@@ -21,7 +21,7 @@ export function Perfil() {
   const [error, setError] = useState<string | null>(null);
   const [esPropietario, setEsPropietario] = useState<boolean>(false);
 
-  function cargarDatos(): void {
+  function cargarDatos(controller?: AbortController): void {
     async function obtenerDatos(): Promise<void> {
       try {
         setCargando(true);
@@ -38,15 +38,15 @@ export function Perfil() {
         const idAMostrar = id || idActual;
         setEsPropietario(idActual === idAMostrar);
         
-        const datosUsuario = await servicioUsuarios.getPorId(idAMostrar);
+        const datosUsuario = await servicioUsuarios.getPorId(idAMostrar, { signal: controller?.signal });
         if (datosUsuario) {
           setUsuario(datosUsuario);
         }
 
-        const opinionesUsuario = await servicioOpiniones.getPorUsuario(idAMostrar);
+        const opinionesUsuario = await servicioOpiniones.getPorUsuario(idAMostrar, { signal: controller?.signal });
         setOpiniones(opinionesUsuario || []);
 
-        const lecturasUsuario = await servicioLecturas.getPorUsuario(idAMostrar);
+        const lecturasUsuario = await servicioLecturas.getPorUsuario(idAMostrar, { signal: controller?.signal });
         
         const lecturasConLibros: Array<{ lectura: ILectura; libro: ILibro }> = [];
         
@@ -55,7 +55,7 @@ export function Perfil() {
           
           let libro: ILibro;
           try {
-            const libroObtenido = await servicioLibros.getData(lectura.id_libro);
+            const libroObtenido = await servicioLibros.getData(lectura.id_libro, { signal: controller?.signal });
             
             const primeraPortada = libroObtenido.covers && libroObtenido.covers.length > 0 
               ? libroObtenido.covers[0] 
@@ -98,7 +98,9 @@ export function Perfil() {
   }
 
   useEffect(function() {
-    cargarDatos();
+    const controller = new AbortController();
+    cargarDatos(controller);
+    return () => controller.abort();
   }, []);
 
 

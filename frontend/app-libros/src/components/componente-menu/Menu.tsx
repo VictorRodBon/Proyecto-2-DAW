@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import styles from "./Menu.module.css";
 
-import { servicioUsuarios } from "../../api/servicioUsuarios";
+import { servicioUsuarios } from "@/api/servicioUsuarios";
 
 export const MiMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -19,14 +19,14 @@ export const MiMenu = () => {
     const open = Boolean(anchorEl);
     const [usuario, setUsuario] = useState<string>();
 
-    (async function getUser() {
-        
-        const respuestaUsuario = await servicioUsuarios.getUsuarioActual();
-        if (respuestaUsuario.user) {
-            setUsuario(respuestaUsuario.user.id);
-        }
-
-    })()
+    useEffect(() => {
+        (async () => {
+            const respuestaUsuario = await servicioUsuarios.getUsuarioActual();
+            if (respuestaUsuario.user) {
+                setUsuario(respuestaUsuario.user.id);
+            }
+        })();
+    }, []);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);

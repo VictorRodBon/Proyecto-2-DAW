@@ -1,21 +1,20 @@
-import type { ILectura } from "../types/Lectura";
+import type { ILectura } from "@/types/Lectura";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const servicioLecturas = {
-  // Crear lectura
   postLectura: async (datos: {
     id_usuario: string;
     id_libro: string;
     fecha_inicio?: string; 
     fecha_fin?: string;    
     estado: string;
-  }): Promise<ILectura | null> => {
-    //
+  }, options?: { signal?: AbortSignal }): Promise<ILectura | null> => {
     const response = await fetch(`${API_URL}/lecturas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
+      signal: options?.signal,
     });
 
     if (!response.ok) {
@@ -26,9 +25,8 @@ export const servicioLecturas = {
     return (await response.json()) as ILectura;
   },
 
-  // Obtener lecturas por usuario
-  getPorUsuario: async (id_usuario: string): Promise<ILectura[]> => {
-    const response = await fetch(`${API_URL}/lecturas/usuario/${id_usuario}`);
+  getPorUsuario: async (id_usuario: string, options?: { signal?: AbortSignal }): Promise<ILectura[]> => {
+    const response = await fetch(`${API_URL}/lecturas/usuario/${id_usuario}`, { signal: options?.signal });
 
     if (!response.ok) {
       console.error("Error al obtener lecturas por usuario:", response.status, response.statusText);
@@ -38,15 +36,16 @@ export const servicioLecturas = {
     return (await response.json()) as ILectura[];
   },
 
-  // Actualizar lectura
   putLectura: async (
     id_lectura: string,
-    datos: Partial<Pick<ILectura, "fecha_inicio" | "fecha_fin" | "estado">>
+    datos: Partial<Pick<ILectura, "fecha_inicio" | "fecha_fin" | "estado">>,
+    options?: { signal?: AbortSignal }
   ): Promise<ILectura | null> => {
     const response = await fetch(`${API_URL}/lecturas/${id_lectura}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
+      signal: options?.signal,
     });
 
     if (!response.ok) {
@@ -57,10 +56,10 @@ export const servicioLecturas = {
     return (await response.json()) as ILectura;
   },
 
-  // Eliminar lectura
-  deleteLectura: async (id_lectura: string): Promise<boolean> => {
+  deleteLectura: async (id_lectura: string, options?: { signal?: AbortSignal }): Promise<boolean> => {
     const response = await fetch(`${API_URL}/lecturas/${id_lectura}`, {
       method: "DELETE",
+      signal: options?.signal,
     });
 
     if (!response.ok) {

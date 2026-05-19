@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import type { IOpinion } from "../../types/Opinion";
-import type { IUsuario } from "../../types/Usuario";
-import { servicioUsuarios } from '../../api/servicioUsuarios';
-import { servicioLibros } from '../../api/servicioLibros';
+import type { IOpinion } from "@/types/Opinion";
+import type { IUsuario } from "@/types/Usuario";
+import { servicioUsuarios } from '@/api/servicioUsuarios';
+import { servicioLibros } from '@/api/servicioLibros';
 
-import { truncarTexto } from "../../hooks/useTruncar";
+import { truncarTexto } from "@/hooks/useTruncar";
 
 
 import Rating from "@mui/material/Rating";
@@ -25,19 +25,22 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
   const location = useLocation();
 
   useEffect(() => {
+    const controller = new AbortController();
     async function obtenerUsuario() {
-      const datosUsuario = await servicioUsuarios.getPorId(opinion.id_usuario);
+      const datosUsuario = await servicioUsuarios.getPorId(opinion.id_usuario, { signal: controller.signal });
       if (datosUsuario) {
         setUsuario(datosUsuario);
       }
     }
     obtenerUsuario();
+    return () => controller.abort();
   }, [opinion.id_usuario]);
 
   useEffect(() => {
+    const controller = new AbortController();
     async function obtenerCoverYNombre() {
       if (location.pathname.startsWith('/perfil')) {
-        const libro = await servicioLibros.getData(opinion.id_libro);
+        const libro = await servicioLibros.getData(opinion.id_libro, { signal: controller.signal });
         if (libro?.covers?.[0]) {
           setCover(String(libro.covers[0]));
         }
@@ -47,6 +50,7 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
       }
     }
     obtenerCoverYNombre();
+    return () => controller.abort();
   }, [opinion.id_libro, location.pathname]);
 
   const nombreAMostrar = location.pathname.startsWith('/perfil') 

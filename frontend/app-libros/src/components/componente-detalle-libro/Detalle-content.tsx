@@ -1,10 +1,10 @@
-import type { IDetalleLibro } from "../../types";
+import type { IDetalleLibro } from "@/types";
 import styles from "./DetalleLibro.module.css";
 
-import {BotonAtras} from "../componente-boton-atras/Boton-atras";
+import {BotonAtras} from "@/components/componente-boton-atras/Boton-atras";
 
 
-import { truncarTexto } from '../../hooks/useTruncar';
+import { truncarTexto } from '@/hooks/useTruncar';
 
 import BookIcon from '@mui/icons-material/Book';
 import { Typography } from '@mui/material';

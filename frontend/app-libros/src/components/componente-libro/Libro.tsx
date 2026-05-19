@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import {servicioUsuarios} from '../../api/servicioUsuarios';
-import {servicioLecturas} from '../../api/servicioLecturas';
+import {servicioUsuarios} from '@/api/servicioUsuarios';
+import {servicioLecturas} from '@/api/servicioLecturas';
 
-import type { ILibro } from "../../types";
+import type { ILibro } from "@/types";
 import styles from "./Libro.module.css";
 
-import {BotonDetalle} from "../componente-boton-detalle/Boton-detalle"
+import {BotonDetalle} from "@/components/componente-boton-detalle/Boton-detalle"
 
-import { truncarTexto } from '../../hooks/useTruncar';
+import { truncarTexto } from '@/hooks/useTruncar';
 
 import BookIcon from '@mui/icons-material/Book';
 import { Typography } from '@mui/material';
@@ -29,11 +29,12 @@ export function Libro({ datos }: { datos: ILibro }) {
   const queryParams = location.search;
 
   useEffect(() => {
+    const controller = new AbortController();
     async function verificarBiblioteca() {
       const { user } = await servicioUsuarios.getUsuarioActual();
       if (!user) return;
 
-      const lecturas = await servicioLecturas.getPorUsuario(user.id);
+      const lecturas = await servicioLecturas.getPorUsuario(user.id, { signal: controller.signal });
       const lecturaExistente = lecturas.find(l => l.id_libro === key);
       
       if (lecturaExistente) {
@@ -42,6 +43,7 @@ export function Libro({ datos }: { datos: ILibro }) {
       }
     }
     verificarBiblioteca();
+    return () => controller.abort();
   }, [key]);
 
   async function manejarBiblioteca() {

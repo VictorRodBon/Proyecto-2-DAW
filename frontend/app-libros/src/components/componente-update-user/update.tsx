@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { servicioUsuarios } from "../../api/servicioUsuarios";
-import styles from "../form.module.css";
+import { servicioUsuarios } from "@/api/servicioUsuarios";
+import styles from "@/components/form.module.css";
 
 export const UpdateUser = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,10 +16,11 @@ export const UpdateUser = () => {
   const [cargandoDatos, setCargandoDatos] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
     async function cargarUsuario() {
       if (!id) return;
       
-      const usuario = await servicioUsuarios.getPorId(id);
+      const usuario = await servicioUsuarios.getPorId(id, { signal: controller.signal });
       if (usuario) {
         setNombreUsuario(usuario.nombre_usuario);
         setFotoPreview(usuario.foto_perfil || null);
@@ -27,6 +28,7 @@ export const UpdateUser = () => {
       setCargandoDatos(false);
     }
     cargarUsuario();
+    return () => controller.abort();
   }, [id]);
 
   function handleFotoChange(e: React.ChangeEvent<HTMLInputElement>) {

@@ -1,17 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Login } from "./components/componente-login/Login";
-import { Registro } from "./components/componente-registro/Registro";
-import { Pagina404 } from "./components/componente-Pagina404/Pagina404";
-import { BuscarLibro } from "./components/componente-buscar-libro/Buscar-libro";
-import { Detalle } from "./components/componente-detalle-libro/Detalle-libro";
-import { FormularioOpinion } from "./components/componente-formulario-opinion/Formulario-opinion";
-import { Perfil } from "./components/componente-usuario/UserSection";
-import { UpdateUser } from "./components/componente-update-user/update";
-import { LayoutPrincipal } from "./components/componente-layout/Layout";
-import { RutaProtegida } from "./auth/RutaProtegida";
-import { RedirigirSiAutenticado } from "./auth/RedirigirSiAutenticado";
-import { SolicitarRecuperacion } from "./components/componente-recuperar/SolicitarRecuperacion";
-import { NuevaContrasena } from "./components/componente-recuperar/NuevaContrasena";
+import { lazy } from "react";
+
+const Login = lazy(() => import("@/components/componente-login/Login").then(m => ({ default: m.Login })));
+const Registro = lazy(() => import("@/components/componente-registro/Registro").then(m => ({ default: m.Registro })));
+const Pagina404 = lazy(() => import("@/components/componente-Pagina404/Pagina404").then(m => ({ default: m.Pagina404 })));
+const BuscarLibro = lazy(() => import("@/components/componente-buscar-libro/Buscar-libro").then(m => ({ default: m.BuscarLibro })));
+const Detalle = lazy(() => import("@/components/componente-detalle-libro/Detalle-libro").then(m => ({ default: m.Detalle })));
+const FormularioOpinion = lazy(() => import("@/components/componente-formulario-opinion/Formulario-opinion").then(m => ({ default: m.FormularioOpinion })));
+const Perfil = lazy(() => import("@/components/componente-usuario/UserSection").then(m => ({ default: m.Perfil })));
+const UpdateUser = lazy(() => import("@/components/componente-update-user/update").then(m => ({ default: m.UpdateUser })));
+const LayoutPrincipal = lazy(() => import("@/components/componente-layout/Layout").then(m => ({ default: m.LayoutPrincipal })));
+const RutaProtegida = lazy(() => import("@/auth/RutaProtegida").then(m => ({ default: m.RutaProtegida })));
+const RedirigirSiAutenticado = lazy(() => import("@/auth/RedirigirSiAutenticado").then(m => ({ default: m.RedirigirSiAutenticado })));
+const SolicitarRecuperacion = lazy(() => import("@/components/componente-recuperar/SolicitarRecuperacion").then(m => ({ default: m.SolicitarRecuperacion })));
+const NuevaContrasena = lazy(() => import("@/components/componente-recuperar/NuevaContrasena").then(m => ({ default: m.NuevaContrasena })));
 
 export const router = createBrowserRouter([
   {

@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { servicioLibros } from "../../api/servicioLibros";
-import type { IOpinion } from "../../types/Opinion";
+import { servicioLibros } from "@/api/servicioLibros";
+import type { IOpinion } from "@/types/Opinion";
 import { DetalleContent } from './Detalle-content';
 import { Skeleton } from 'boneyard-js/react';
-import type { IDetalleLibro } from "../../types";
+import type { IDetalleLibro } from "@/types";
 import styles from "./DetalleLibro.module.css";
 
-import {servicioOpiniones} from "../../api/servicioOpiniones";
+import {servicioOpiniones} from "@/api/servicioOpiniones";
 
-import { ListaOpiniones } from "../componente-lista-opiniones/Lista-opiniones";
+import { ListaOpiniones } from "@/components/componente-lista-opiniones/Lista-opiniones";
 
 import '../../bones/registry'
 
@@ -50,12 +50,13 @@ export function Detalle() {
     }, [cover, libro?.covers]);
 
     useEffect(() => {
+        const controller = new AbortController();
         if (!id) return;
         const cargarDatos = async () => {
             try {
                 setCargando(true);
                 setError(null);
-                const data = await servicioLibros.getData(id);
+                const data = await servicioLibros.getData(id, { signal: controller.signal });
                 setLibro(data);
 
                 if (autorDesdeBusqueda.trim()) {
@@ -69,7 +70,7 @@ export function Detalle() {
 
                 if (authorKeys.length > 0) {
                     const nombres = await Promise.all(
-                        authorKeys.slice(0, 5).map((k:string) => servicioLibros.getAutorNombre(k))
+                        authorKeys.slice(0, 5).map((k:string) => servicioLibros.getAutorNombre(k, { signal: controller.signal }))
                     );
                     setAutores(nombres.filter((n): n is string => !!n?.trim()).join(", "));
                 }
@@ -84,7 +85,7 @@ export function Detalle() {
         const cargarOpiniones = async () => {
             setCargandoOpiniones(true);
             try {
-                const opiniones = await servicioOpiniones.getPorLibro(id);
+                const opiniones = await servicioOpiniones.getPorLibro(id, { signal: controller.signal });
                 setOpiniones(opiniones);
             } catch (error) {
                 console.error("Error cargando opiniones:", error);
@@ -95,6 +96,7 @@ export function Detalle() {
         }
         cargarOpiniones();
         cargarDatos();
+        return () => controller.abort();
     }, [id, autorDesdeBusqueda]);
 
     // Renderizado único: Skeleton gestiona el estado 'loading' internamente

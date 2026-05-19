@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { enviarCorreoRecuperacion } from "../../auth/gestorAutenticacion";
-import styles from "../form.module.css";
+import { enviarCorreoRecuperacion } from "@/auth/gestorAutenticacion";
+import styles from "@/components/form.module.css";
 
 export function SolicitarRecuperacion() {
   const [email, setEmail] = useState("");

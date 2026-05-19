@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabase";
-import styles from "../form.module.css";
+import { supabase } from "@/lib/supabase";
+import styles from "@/components/form.module.css";
 
 export function NuevaContrasena() {
   const [password, setPassword] = useState("");

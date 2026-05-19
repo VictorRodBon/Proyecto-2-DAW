@@ -1,5 +1,5 @@
-import { supabase } from "../lib/supabase";
-import type { IUsuario } from "../types/Usuario";
+import { supabase } from "@/lib/supabase";
+import type { IUsuario } from "@/types/Usuario";
 import type { User, Session } from "@supabase/supabase-js";
 const API_URL = import.meta.env.VITE_API_URL;
 export interface AuthResponse {
@@ -58,9 +58,9 @@ export const servicioUsuarios = {
     return { user: data.user, error };
   },
   // GET /usuarios/me/:id - Obtener de la tabla usuarios (para datos adicionales)
-  getPorId: async (id: string): Promise<IUsuario | null> => {
+  getPorId: async (id: string, options?: { signal?: AbortSignal }): Promise<IUsuario | null> => {
     const url = `${API_URL}/usuarios/me/${id}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: options?.signal });
     if (!response.ok) {
       console.error("Error al obtener usuario:", response.status, response.statusText);
       return null;
@@ -71,13 +71,15 @@ export const servicioUsuarios = {
   // PATCH /usuarios/me/:id - Actualizar en la tabla usuarios
   putPorId: async (
     id: string,
-    datos: Partial<Pick<IUsuario, "nombre_usuario" | "estado" | "foto_perfil">>
+    datos: Partial<Pick<IUsuario, "nombre_usuario" | "estado" | "foto_perfil">>,
+    options?: { signal?: AbortSignal }
   ): Promise<IUsuario | null> => {
     const url = `${API_URL}/usuarios/me/${id}`;
     const response = await fetch(url, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
+      signal: options?.signal,
     });
     if (!response.ok) {
       console.error("Error al actualizar usuario:", response.status, response.statusText);

@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 // Link para navegar entre páginas
 // useNavigate para redirigir a otra página después del login exitoso
 import { Link, useNavigate } from "react-router-dom";
-import { servicioUsuarios } from "../../api/servicioUsuarios";
-import { estaAutenticado } from "../../auth/gestorAutenticacion";
-import styles from "../form.module.css";
+import { servicioUsuarios } from "@/api/servicioUsuarios";
+import { estaAutenticado } from "@/auth/gestorAutenticacion";
+import styles from "@/components/form.module.css";
 
 export function Login() {
   const [email, setEmail] = useState("");

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { servicioUsuarios } from "../../api/servicioUsuarios";
-import { estaAutenticado } from "../../auth/gestorAutenticacion";
-import styles from "../form.module.css";
+import { servicioUsuarios } from "@/api/servicioUsuarios";
+import { estaAutenticado } from "@/auth/gestorAutenticacion";
+import styles from "@/components/form.module.css";
 
 export function Registro() {
   const [nombreUsuario, setNombreUsuario] = useState("");

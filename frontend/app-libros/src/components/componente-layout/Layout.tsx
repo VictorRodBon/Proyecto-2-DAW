@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { MiMenu } from "../componente-menu/Menu";
+import { MiMenu } from "@/components/componente-menu/Menu";
 import SearchIcon from '@mui/icons-material/Search';
 import styles from "./Layout.module.css";
-import menuStyles from "../componente-menu/Menu.module.css";
+import menuStyles from "@/components/componente-menu/Menu.module.css";
 
 export function LayoutPrincipal() {
     const navigate = useNavigate();

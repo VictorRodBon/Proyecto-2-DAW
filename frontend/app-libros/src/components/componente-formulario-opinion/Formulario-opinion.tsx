@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { servicioOpiniones } from "../../api/servicioOpiniones";
-import { servicioUsuarios } from "../../api/servicioUsuarios";
+import { servicioOpiniones } from "@/api/servicioOpiniones";
+import { servicioUsuarios } from "@/api/servicioUsuarios";
 import { RatingInput } from "./RatingInput";
 import styles from "./Formulario-opinion.module.css";
 
-import { truncarTexto } from '../../hooks/useTruncar';
+import { truncarTexto } from '@/hooks/useTruncar';
 
-import {BotonAtras} from "../componente-boton-atras/Boton-atras"
+import {BotonAtras} from "@/components/componente-boton-atras/Boton-atras"
 
 
 export const FormularioOpinion = () => {

@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Libro } from "../componente-libro/Libro";
-import { servicioLibros } from "../../api/servicioLibros";
-import type { ILibro } from "../../types";
+import { Libro } from "@/components/componente-libro/Libro";
+import { servicioLibros } from "@/api/servicioLibros";
+import type { ILibro } from "@/types";
 
 import {lista} from "./lista.ts";
 
@@ -45,6 +45,7 @@ export function BuscarLibro() {
     }, [urlBusqueda]);
 
     useEffect(() => {
+        const controller = new AbortController();
         if (!busquedaInicial) return;
         
         const busqueda=urlBusqueda||busquedaInicial;
@@ -56,7 +57,7 @@ export function BuscarLibro() {
                 let ultimoResultados: ILibro[] = [];
 
                 for (let p = 1; p <= urlPagina; p++) {
-                    ultimoResultados = await servicioLibros.getByTitle(busqueda, p, urlLimit, urlAuthor);
+                    ultimoResultados = await servicioLibros.getByTitle(busqueda, p, urlLimit, urlAuthor, { signal: controller.signal });
                     resultadosAcumulados.push(...ultimoResultados);
                 }
 
@@ -68,6 +69,7 @@ export function BuscarLibro() {
         };
 
         cargar();
+        return () => controller.abort();
     }, [busquedaInicial, urlBusqueda, urlPagina, urlLimit, urlAuthor]);
 
     const cargarMas = async () => {

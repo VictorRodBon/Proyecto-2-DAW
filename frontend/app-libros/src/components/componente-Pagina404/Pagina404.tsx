@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Pagina404.module.css"; // Recomendado usar CSS Modules
 
-import {BotonAtras} from "../componente-boton-atras/Boton-atras"
+import {BotonAtras} from "@/components/componente-boton-atras/Boton-atras"
 
 export function Pagina404() {
   const navigate = useNavigate();

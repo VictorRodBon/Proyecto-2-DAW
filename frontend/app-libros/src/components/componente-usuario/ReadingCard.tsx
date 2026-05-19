@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { ILibro } from '../../types/Libro';
-import type { ILectura, } from '../../types/Lectura';
-import { servicioLecturas } from '../../api/servicioLecturas';
+import type { ILibro } from '@/types/Libro';
+import type { ILectura, } from '@/types/Lectura';
+import { servicioLecturas } from '@/api/servicioLecturas';
 import styles from './ReadingCard.module.css';
 
-import { truncarTexto } from '../../hooks/useTruncar';
+import { truncarTexto } from '@/hooks/useTruncar';
 
 import BookIcon from '@mui/icons-material/Book';
 import { Typography } from '@mui/material';

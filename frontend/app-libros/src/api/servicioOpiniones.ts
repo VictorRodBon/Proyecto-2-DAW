@@ -1,5 +1,5 @@
 
-import type { IOpinion } from "../types/Opinion";
+import type { IOpinion } from "@/types/Opinion";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 export const servicioOpiniones = {
@@ -8,11 +8,12 @@ export const servicioOpiniones = {
     id_libro: string;
     puntuacion: number;
     valoracion: string;
-  }): Promise<IOpinion | null> => {
+  }, options?: { signal?: AbortSignal }): Promise<IOpinion | null> => {
     const response = await fetch(`${API_URL}/opiniones`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
+      signal: options?.signal,
     });
 
     if (!response.ok) {
@@ -23,8 +24,8 @@ export const servicioOpiniones = {
     return (await response.json()) as IOpinion;
   },
 
-  getPorLibro: async (id_libro: string): Promise<IOpinion[]> => {
-    const response = await fetch(`${API_URL}/opiniones/libro/${id_libro}`);
+  getPorLibro: async (id_libro: string, options?: { signal?: AbortSignal }): Promise<IOpinion[]> => {
+    const response = await fetch(`${API_URL}/opiniones/libro/${id_libro}`, { signal: options?.signal });
 
     if (!response.ok) {
       console.error("Error al obtener opiniones por libro:", response.status, response.statusText);
@@ -34,8 +35,8 @@ export const servicioOpiniones = {
     return (await response.json()) as IOpinion[];
   },
 
-  getPorUsuario: async (id_usuario: string): Promise<IOpinion[]> => {
-    const response = await fetch(`${API_URL}/opiniones/usuario/${id_usuario}`);
+  getPorUsuario: async (id_usuario: string, options?: { signal?: AbortSignal }): Promise<IOpinion[]> => {
+    const response = await fetch(`${API_URL}/opiniones/usuario/${id_usuario}`, { signal: options?.signal });
 
     if (!response.ok) {
       console.error("Error al obtener opiniones por usuario:", response.status, response.statusText);
@@ -47,12 +48,14 @@ export const servicioOpiniones = {
 
   putOpinion: async (
     id_opinion: number,
-    datos: Partial<Pick<IOpinion, "puntuacion" | "valoracion">>
+    datos: Partial<Pick<IOpinion, "puntuacion" | "valoracion">>,
+    options?: { signal?: AbortSignal }
   ): Promise<IOpinion | null> => {
     const response = await fetch(`${API_URL}/opiniones/${id_opinion}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
+      signal: options?.signal,
     });
 
     if (!response.ok) {
@@ -63,9 +66,10 @@ export const servicioOpiniones = {
     return (await response.json()) as IOpinion;
   },
 
-  deleteOpinion: async (id_opinion: number): Promise<boolean> => {
+  deleteOpinion: async (id_opinion: number, options?: { signal?: AbortSignal }): Promise<boolean> => {
     const response = await fetch(`${API_URL}/opiniones/${id_opinion}`, {
       method: "DELETE",
+      signal: options?.signal,
     });
 
     if (!response.ok) {
