@@ -76,6 +76,7 @@ export function Detalle() {
                     setAutores(nombres.filter((n): n is string => !!n?.trim()).join(", "));
                 }
             } catch (err) {
+                if (err instanceof DOMException && err.name === 'AbortError') return;
                 console.error("Error cargando libro:", err);
                 setError("No se pudieron cargar los detalles: " + (err instanceof Error ? err.message : String(err)));
             } finally {
@@ -89,6 +90,7 @@ export function Detalle() {
                 const opiniones = await servicioOpiniones.getPorLibro(id, { signal: controller.signal });
                 setOpiniones(opiniones);
             } catch (error) {
+                if (error instanceof DOMException && error.name === 'AbortError') return;
                 console.error("Error cargando opiniones:", error);
                 setOpiniones([]);
             } finally {
@@ -118,6 +120,7 @@ export function Detalle() {
                         mostrarOpiniones={mostrarOpiniones}
                         navigate={navigate}
                         id={id || ""}
+                        opiniones={opiniones}
                     />
                 </Skeleton>
             </div>

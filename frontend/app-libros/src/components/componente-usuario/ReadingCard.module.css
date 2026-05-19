@@ -173,8 +173,3 @@
   }
 }
 
-@media (max-width: 480px) {
-  .imageContainer {
-    height: 12rem;
-  }
-}

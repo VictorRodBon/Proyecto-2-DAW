@@ -1,13 +1,18 @@
 import type { IDetalleLibro } from "@/types";
 import styles from "./DetalleLibro.module.css";
 
-import {BotonAtras} from "@/components/componente-boton-atras/Boton-atras";
+import { BotonAtras } from "@/components/componente-boton-atras/Boton-atras";
 
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
 
 import { truncarTexto } from '@/hooks/useTruncar';
 
 import BookIcon from '@mui/icons-material/Book';
 import { Typography } from '@mui/material';
+
+import type { IOpinion } from "@/types/Opinion";
+
 // Definimos la interfaz para evitar el uso de 'any'
 interface DetalleContentProps {
     libro: IDetalleLibro;
@@ -17,16 +22,18 @@ interface DetalleContentProps {
     mostrarOpiniones: boolean;
     navigate: (path: string) => void;
     id: string;
+    opiniones:IOpinion[];
 }
 
-export function DetalleContent({ 
-    libro, 
-    autores, 
-    coverUrl, 
-    setMostrarOpiniones, 
-    mostrarOpiniones, 
-    navigate, 
-    id 
+export function DetalleContent({
+    libro,
+    autores,
+    coverUrl,
+    setMostrarOpiniones,
+    mostrarOpiniones,
+    navigate,
+    id,
+    opiniones
 }: DetalleContentProps) {
 
     // Helper para renderizar la descripción de forma segura
@@ -36,21 +43,37 @@ export function DetalleContent({
         return libro.description.value || "Sin descripción disponible.";
     };
 
+    const obtenerMediaOpiniones = (): number => {
+        if (!opiniones || opiniones.length === 0) {
+          return 0; // Evitamos dividir por cero si no hay opiniones
+        }
+        // Sumamos todas las puntuaciones
+        const sumaTotal = opiniones.reduce((acumulado, opinion) => {
+          return acumulado + opinion.puntuacion; // Cambia 'puntuacion' por el nombre exacto de tu propiedad
+        }, 0);
+        // Dividimos la suma entre el número total de opiniones
+        const media = sumaTotal / opiniones.length;
+        // Opcional: Redondear a un decimal (ej: 4.5)
+        return Math.round(media * 10) / 10;
+    };
+
+    const media=obtenerMediaOpiniones()
+
     return (
         <>
             <div className={styles.header}>
                 <div className={styles.buttonsGrp} role="group" aria-label="Opciones del libro">
                     <BotonAtras />
-                    <button 
-                        type="button" 
-                        className={styles.opinionesToggle} 
+                    <button
+                        type="button"
+                        className={styles.opinionesToggle}
                         onClick={() => setMostrarOpiniones(!mostrarOpiniones)}
                         aria-expanded={mostrarOpiniones}
                     >
                         {mostrarOpiniones ? "Ocultar opiniones" : "Ver opiniones"}
                     </button>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         className={styles.opinionesToggle}
                         onClick={() => navigate(`/addOpinion/${id}?title=${libro.title.replace(/\s/g, '+')}`)}
                         aria-label="Añadir opinión sobre este libro"
@@ -63,13 +86,12 @@ export function DetalleContent({
 
             <div className={styles.content}>
                 <div className={styles.coverCol}>
-                    {/* Contenedor de imagen adaptado para Skeleton */}
                     <div className={styles.cover}>
                         {coverUrl ? (
-                            <img 
-                                className={styles.cover} 
-                                src={coverUrl} 
-                                alt={`Portada de ${libro.title}`} 
+                            <img
+                                className={styles.cover}
+                                src={coverUrl}
+                                alt={`Portada de ${libro.title}`}
                                 loading="lazy"
                             />
                         ) : (
@@ -80,6 +102,19 @@ export function DetalleContent({
                                 </Typography>
                             </div>
                         )}
+                    </div>
+                    <div className={styles.media} onClick={() => setMostrarOpiniones(!mostrarOpiniones)}>
+                        Valoración de otros lectores 
+                        <Rating
+                            value={media}
+                            readOnly
+                            precision={0.5}
+                            aria-label={`Puntuación: ${media} estrellas`}
+                            sx={{ color: "rgba(99, 102, 241, 0.95)" }}
+                            icon={<StarIcon fontSize="inherit" />}
+                            emptyIcon={<StarIcon style={{ opacity: 0.45 }} fontSize="inherit" />}
+                        />
+
                     </div>
                 </div>
 

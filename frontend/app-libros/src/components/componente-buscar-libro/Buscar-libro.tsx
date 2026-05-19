@@ -68,7 +68,7 @@ export function BuscarLibro() {
             }
         };
 
-        cargar();
+        cargar().catch(() => {});
         return () => controller.abort();
     }, [busquedaInicial, urlBusqueda, urlPagina, urlLimit, urlAuthor]);
 

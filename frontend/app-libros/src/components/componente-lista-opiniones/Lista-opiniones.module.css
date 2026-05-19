@@ -33,8 +33,3 @@ a {
   color: white;
 }
 
-@media (max-width: 768px) {
-  .listaOpiniones {
-    max-height: 300px;
-  }
-}

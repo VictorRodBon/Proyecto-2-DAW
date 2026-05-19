@@ -32,7 +32,7 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
         setUsuario(datosUsuario);
       }
     }
-    obtenerUsuario();
+    obtenerUsuario().catch(() => {});
     return () => controller.abort();
   }, [opinion.id_usuario]);
 
@@ -49,7 +49,7 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
         }
       }
     }
-    obtenerCoverYNombre();
+    obtenerCoverYNombre().catch(() => {});
     return () => controller.abort();
   }, [opinion.id_libro, location.pathname]);
 

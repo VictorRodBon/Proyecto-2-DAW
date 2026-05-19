@@ -42,7 +42,7 @@ export function Libro({ datos }: { datos: ILibro }) {
         setIdLectura(lecturaExistente.id_lectura);
       }
     }
-    verificarBiblioteca();
+    verificarBiblioteca().catch(() => {});
     return () => controller.abort();
   }, [key]);
 

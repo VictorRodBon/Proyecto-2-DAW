@@ -23,6 +23,7 @@ export function Perfil() {
 
   function cargarDatos(controller?: AbortController): void {
     async function obtenerDatos(): Promise<void> {
+      let abortado = false;
       try {
         setCargando(true);
 
@@ -69,7 +70,7 @@ export function Perfil() {
                 : 'Autor desconocido',
               cover_i: primeraPortada
             };
-          } catch (err) {
+          } catch {
             libro = {
               key: lectura.id_libro,
               title: 'Libro no disponible',
@@ -87,10 +88,11 @@ export function Perfil() {
         setLecturasActuales(lecturasConLibros || []);
         setError(null);
       } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') { abortado = true; return; }
         const mensaje = err instanceof Error ? err.message : 'Error al cargar datos';
         setError(mensaje);
       } finally {
-        setCargando(false);
+        if (!abortado) setCargando(false);
       }
     }
 
@@ -182,14 +184,6 @@ export function Perfil() {
         <div className={styles.sectionsContainer}>
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <div className={`${styles.bar} ${styles.purple}`}></div>
-              <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
-            </div>
-            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
-          </section>
-
-          <section className={styles.section}>
-            <div className={styles.sectionHeader}>
               <div className={`${styles.bar} ${styles.orange}`}></div>
               <h2 className={styles.sectionTitle}>Últimas lecturas</h2>
             </div>
@@ -201,6 +195,15 @@ export function Perfil() {
               esPropietario={esPropietario}
             />
           </section>
+
+          <section className={styles.section}>
+            <div className={styles.sectionHeader}>
+              <div className={`${styles.bar} ${styles.purple}`}></div>
+              <h2 className={styles.sectionTitle}>Últimas opiniones</h2>
+            </div>
+            <ListaOpiniones opiniones={opiniones} cargando={cargando} />
+          </section>
+
         </div>
       </div>
     </div>

@@ -29,8 +29,3 @@
   color: var(--color-text-secondary);
 }
 
-@media (max-width: 768px) {
-  .listaLecturas {
-    max-height: 300px;
-  }
-}
