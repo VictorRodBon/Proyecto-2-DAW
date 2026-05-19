@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy } from "react";
+import { RutaProtegida } from "@/auth/RutaProtegida";
+import { RedirigirSiAutenticado } from "@/auth/RedirigirSiAutenticado";
 
 const Login = lazy(() => import("@/components/componente-login/Login").then(m => ({ default: m.Login })));
 const Registro = lazy(() => import("@/components/componente-registro/Registro").then(m => ({ default: m.Registro })));
@@ -10,8 +12,6 @@ const FormularioOpinion = lazy(() => import("@/components/componente-formulario-
 const Perfil = lazy(() => import("@/components/componente-usuario/UserSection").then(m => ({ default: m.Perfil })));
 const UpdateUser = lazy(() => import("@/components/componente-update-user/update").then(m => ({ default: m.UpdateUser })));
 const LayoutPrincipal = lazy(() => import("@/components/componente-layout/Layout").then(m => ({ default: m.LayoutPrincipal })));
-const RutaProtegida = lazy(() => import("@/auth/RutaProtegida").then(m => ({ default: m.RutaProtegida })));
-const RedirigirSiAutenticado = lazy(() => import("@/auth/RedirigirSiAutenticado").then(m => ({ default: m.RedirigirSiAutenticado })));
 const SolicitarRecuperacion = lazy(() => import("@/components/componente-recuperar/SolicitarRecuperacion").then(m => ({ default: m.SolicitarRecuperacion })));
 const NuevaContrasena = lazy(() => import("@/components/componente-recuperar/NuevaContrasena").then(m => ({ default: m.NuevaContrasena })));
 

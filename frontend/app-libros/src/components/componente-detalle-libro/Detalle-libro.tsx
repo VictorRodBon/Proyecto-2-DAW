@@ -50,8 +50,9 @@ export function Detalle() {
     }, [cover, libro?.covers]);
 
     useEffect(() => {
-        const controller = new AbortController();
         if (!id) return;
+
+        const controller = new AbortController();
         const cargarDatos = async () => {
             try {
                 setCargando(true);

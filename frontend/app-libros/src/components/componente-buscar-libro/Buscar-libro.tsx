@@ -45,9 +45,9 @@ export function BuscarLibro() {
     }, [urlBusqueda]);
 
     useEffect(() => {
-        const controller = new AbortController();
         if (!busquedaInicial) return;
-        
+
+        const controller = new AbortController();
         const busqueda=urlBusqueda||busquedaInicial;
 
         const cargar = async () => {
