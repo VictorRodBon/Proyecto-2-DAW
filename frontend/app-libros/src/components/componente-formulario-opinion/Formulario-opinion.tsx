@@ -22,8 +22,6 @@ export const FormularioOpinion = () => {
   const [enviando, setEnviando] = useState(false);
   const [mensaje, setMensaje] = useState<{ tipo: 'error' | 'exito'; texto: string } | null>(null);
 
-  console.log(id_libro);
-  console.log(title);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
