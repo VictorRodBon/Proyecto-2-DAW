@@ -40,12 +40,13 @@ export function BuscarLibro() {
 
     const busquedaInicial = useMemo(() => {
         if (urlBusqueda) return urlBusqueda;
+        if (urlAuthor) return "";
         const randomIndex = Math.floor(Math.random() * lista.length);
         return lista[randomIndex];
-    }, [urlBusqueda]);
+    }, [urlBusqueda, urlAuthor]);
 
     useEffect(() => {
-        if (!busquedaInicial) return;
+        if (!busquedaInicial && !urlAuthor) return;
 
         const controller = new AbortController();
         const busqueda=urlBusqueda||busquedaInicial;

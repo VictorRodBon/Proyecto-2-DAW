@@ -22,7 +22,7 @@ interface DetalleContentProps {
     mostrarOpiniones: boolean;
     navigate: (path: string) => void;
     id: string;
-    opiniones:IOpinion[];
+    opiniones: IOpinion[];
 }
 
 export function DetalleContent({
@@ -36,7 +36,7 @@ export function DetalleContent({
     opiniones
 }: DetalleContentProps) {
 
-    // Helper para renderizar la descripción de forma segura
+
     const renderDescription = () => {
         if (!libro.description) return "Sin descripción disponible.";
         if (typeof libro.description === "string") return libro.description;
@@ -45,19 +45,17 @@ export function DetalleContent({
 
     const obtenerMediaOpiniones = (): number => {
         if (!opiniones || opiniones.length === 0) {
-          return 0; // Evitamos dividir por cero si no hay opiniones
+            return 0; 
         }
-        // Sumamos todas las puntuaciones
+        
         const sumaTotal = opiniones.reduce((acumulado, opinion) => {
-          return acumulado + opinion.puntuacion; // Cambia 'puntuacion' por el nombre exacto de tu propiedad
+            return acumulado + opinion.puntuacion; 
         }, 0);
-        // Dividimos la suma entre el número total de opiniones
         const media = sumaTotal / opiniones.length;
-        // Opcional: Redondear a un decimal (ej: 4.5)
         return Math.round(media * 10) / 10;
     };
 
-    const media=obtenerMediaOpiniones()
+    const media = obtenerMediaOpiniones()
 
     return (
         <>
@@ -104,7 +102,7 @@ export function DetalleContent({
                         )}
                     </div>
                     <div className={styles.media} onClick={() => setMostrarOpiniones(!mostrarOpiniones)}>
-                        Valoración de otros lectores 
+                        Valoración de otros lectores
                         <Rating
                             value={media}
                             readOnly
@@ -126,7 +124,11 @@ export function DetalleContent({
                         </p>
                     </div>
 
-                    <div className={styles.section}>
+                    <div
+                        className={styles.section}
+                        onClick={() => {
+                            navigate(`/search?q=&page=1&limit=10&author=${autores}`)
+                        }}>
                         <h2 className={styles.sectionTitle}>Autores</h2>
                         <p className={styles.description}>
                             {autores || "Cargando autores..."}
