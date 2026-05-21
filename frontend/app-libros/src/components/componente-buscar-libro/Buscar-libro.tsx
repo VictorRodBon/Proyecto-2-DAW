@@ -40,12 +40,13 @@ export function BuscarLibro() {
 
     const busquedaInicial = useMemo(() => {
         if (urlBusqueda) return urlBusqueda;
+        if (urlAuthor) return "";
         const randomIndex = Math.floor(Math.random() * lista.length);
         return lista[randomIndex];
-    }, [urlBusqueda]);
+    }, [urlBusqueda, urlAuthor]);
 
     useEffect(() => {
-        if (!busquedaInicial) return;
+        if (!busquedaInicial && !urlAuthor) return;
 
         const controller = new AbortController();
         const busqueda=urlBusqueda||busquedaInicial;
@@ -57,7 +58,7 @@ export function BuscarLibro() {
                 let ultimoResultados: ILibro[] = [];
 
                 for (let p = 1; p <= urlPagina; p++) {
-                    ultimoResultados = await servicioLibros.getByTitle(busqueda, p, urlLimit, urlAuthor, { signal: controller.signal });
+                    ultimoResultados = await servicioLibros.getLibros(busqueda, p, urlLimit, urlAuthor, { signal: controller.signal });
                     resultadosAcumulados.push(...ultimoResultados);
                 }
 
@@ -80,7 +81,7 @@ export function BuscarLibro() {
         
         setCargando(true);
         try {
-            const nuevosLibros = await servicioLibros.getByTitle(urlBusqueda, siguientePagina, urlLimit, urlAuthor);
+            const nuevosLibros = await servicioLibros.getLibros(urlBusqueda, siguientePagina, urlLimit, urlAuthor);
             setLibros(prev => [...prev, ...nuevosLibros]);
             setHayMasResultados(nuevosLibros.length === urlLimit);
         } finally {

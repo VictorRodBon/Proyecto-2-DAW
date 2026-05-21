@@ -25,7 +25,8 @@ export function LayoutPrincipal() {
 
     const handleBuscar = () => {
         const q = busquedaTitle.trim();
-        if (!q) return;
+        const a = busquedaAuthor.trim();
+        if (!q && !a) return;
 
         const params = new URLSearchParams();
         params.set("q", q);
