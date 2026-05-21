@@ -58,7 +58,7 @@ export function BuscarLibro() {
                 let ultimoResultados: ILibro[] = [];
 
                 for (let p = 1; p <= urlPagina; p++) {
-                    ultimoResultados = await servicioLibros.getByTitle(busqueda, p, urlLimit, urlAuthor, { signal: controller.signal });
+                    ultimoResultados = await servicioLibros.getLibros(busqueda, p, urlLimit, urlAuthor, { signal: controller.signal });
                     resultadosAcumulados.push(...ultimoResultados);
                 }
 
@@ -81,7 +81,7 @@ export function BuscarLibro() {
         
         setCargando(true);
         try {
-            const nuevosLibros = await servicioLibros.getByTitle(urlBusqueda, siguientePagina, urlLimit, urlAuthor);
+            const nuevosLibros = await servicioLibros.getLibros(urlBusqueda, siguientePagina, urlLimit, urlAuthor);
             setLibros(prev => [...prev, ...nuevosLibros]);
             setHayMasResultados(nuevosLibros.length === urlLimit);
         } finally {

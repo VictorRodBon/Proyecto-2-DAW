@@ -4,7 +4,7 @@ import type { ILibro } from "@/types";
 const API_URL = "https://openlibrary.org";
 
 export const servicioLibros = {
-    getByTitle: async (
+    getLibros: async (
         title: string = "", 
         pagina: number = 1, 
         cantidad: number = 10, 
