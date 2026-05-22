@@ -42,11 +42,20 @@ export const router = createBrowserRouter([
   },
   {
     path: "/recuperar",
-    element: <SolicitarRecuperacion />,
+    element: (
+      <RedirigirSiAutenticado>
+        <SolicitarRecuperacion />
+      </RedirigirSiAutenticado>
+    ),
   },
   {
     path: "/nueva-contrasena",
-    element: <NuevaContrasena />,
+    element: (
+      <RedirigirSiAutenticado>
+        <NuevaContrasena />
+      </RedirigirSiAutenticado>
+
+    ),
   },
   {
     element: (
@@ -72,8 +81,8 @@ export const router = createBrowserRouter([
         element: <Perfil />
       },
       {
-        path:"update/:id",
-        element: <UpdateUser/>
+        path: "update/:id",
+        element: <UpdateUser />
       }
     ],
   },

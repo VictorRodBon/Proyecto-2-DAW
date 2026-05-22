@@ -2,16 +2,24 @@
 
 ## INTRODUCCIÓN Y OBJETIVOS
 
+### Descripción
+
+El proyecto consiste en el desarrollo de una aplicación web orientada a la gestión y seguimiento de lecturas personales. La plataforma permite a los usuarios registrar los libros que han leído, los que tienen pendientes y el que están leyendo actualmente. Adicionalmente, ofrece la posibilidad de añadir reseñas y puntuaciones a los títulos completados o abandonados. Como funcionalidad ampliada, se contempla la incorporación de un componente social que permita descubrir y compartir opiniones entre usuarios.
+
 ### Motivación:
+
+Actualmente, muchos lectores llevan un seguimiento de sus lecturas de forma manual (cuadernos, hojas de cálculo) o mediante aplicaciones con interfaces poco atractivas o funcionalidades limitadas. Este proyecto nace de la necesidad de contar con una herramienta moderna, intuitiva y visualmente atractiva que centralice la experiencia lectora. A largo plazo, la incorporación de un apartado social facilitaría encontrar reseñas de forma cómoda y cercana, sin depender de plataformas generalistas.
 
 ### Objetivos:
 
 ### Alcance:
+
 La aplicación consiste en llevar un registro de los libros leidos por cada usuario, así como compartir las opiniones que tienen los mismos sobre estos.
 
 No es una aplicación de lecturas ni de compraventa de libros. 
 
 ## ANÁLISIS
+
 ### Requisitos funcionales:
 
 ### Requisitos no funcionales:
@@ -21,6 +29,7 @@ No es una aplicación de lecturas ni de compraventa de libros.
 ## DISEÑO
 
 ## TECNOLOGÍAS UTILIZADAS
+
 ### Frontend:
 Para el desarrollo del frontend se ha utilizado el framework de [React](https://es.react.dev/). Como apollo para la creación del Frontend se ha utilizado librerías de componentes, como: [Boneyard-js](https://github.com/0xGF/boneyard) para los Skeletons de carga de página, [Material UI (MUI)](https://mui.com/material-ui/) para algunos componentes.
 ### Backend:

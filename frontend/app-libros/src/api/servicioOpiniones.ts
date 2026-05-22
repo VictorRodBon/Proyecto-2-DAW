@@ -1,7 +1,7 @@
 
 import type { IOpinion } from "@/types/Opinion";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 export const servicioOpiniones = {
   postOpinion: async (datos: {
     id_usuario: string;
