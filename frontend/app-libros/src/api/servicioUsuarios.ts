@@ -3,6 +3,7 @@ import { cerrarSesionLocal } from "@/auth/gestorAutenticacion";
 import type { IUsuario } from "@/types/Usuario";
 import type { User, Session } from "@supabase/supabase-js";
 const API_URL = import.meta.env.VITE_API_URL;
+
 export interface AuthResponse {
   success: boolean;
   data?: {
@@ -12,6 +13,7 @@ export interface AuthResponse {
   error?: string;
 }
 export const servicioUsuarios = {
+
   // LOGIN - Iniciar sesión
   login: async (email: string, password: string): Promise<AuthResponse> => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -23,6 +25,7 @@ export const servicioUsuarios = {
     }
     return { success: true, data: { user: data.user!, session: data.session! } };
   },
+
   // REGISTRO - Crear nueva cuenta
   registro: async (
     email: string,
@@ -43,21 +46,25 @@ export const servicioUsuarios = {
     }
     return { success: true, data: { user: data.user!, session: data.session! } };
   },
+
   // LOGOUT - Cerrar sesión
   logout: async (): Promise<void> => {
     await supabase.auth.signOut();
     cerrarSesionLocal();
   },
+
   // OBTENER SESIÓN ACTUAL
   getSession: async () => {
     const { data, error } = await supabase.auth.getSession();
     return { session: data.session, error };
   },
+
   // OBTENER USUARIO ACTUAL (del token)
   getUsuarioActual: async () => {
     const { data, error } = await supabase.auth.getUser();
     return { user: data.user, error };
   },
+
   // GET /usuarios/me/:id - Obtener de la tabla usuarios (para datos adicionales)
   getPorId: async (id: string, options?: { signal?: AbortSignal }): Promise<IUsuario | null> => {
     const url = `${API_URL}/usuarios/me/${id}`;
@@ -69,6 +76,7 @@ export const servicioUsuarios = {
     const data = (await response.json()) as IUsuario;
     return data;
   },
+
   // PATCH /usuarios/me/:id - Actualizar en la tabla usuarios
   putPorId: async (
     id: string,
@@ -89,6 +97,7 @@ export const servicioUsuarios = {
     const data = (await response.json()) as IUsuario;
     return data;
   },
+
   // SUBIR IMAGEN A SUPABASE STORAGE
   subirFotoPerfil: async (file: File, userId: string): Promise<string | null> => {
     const extension = file.name.split(".").pop();
@@ -105,6 +114,7 @@ export const servicioUsuarios = {
       .getPublicUrl(nombreArchivo);
     return urlData.publicUrl;
   },
+  
   // ACTUALIZAR FOTO DE PERFIL (upload + update en DB)
   actualizarFotoPerfil: async (userId: string, file: File): Promise<IUsuario | null> => {
     const urlImagen = await servicioUsuarios.subirFotoPerfil(file, userId);
