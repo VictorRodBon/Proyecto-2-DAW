@@ -14,7 +14,7 @@ describe('servicioOpiniones', () => {
             valoracion: 'Buen libro'
         };
         
-        global.fetch = vi.fn().mockResolvedValue({
+        globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve(fakeResponse)
         });
