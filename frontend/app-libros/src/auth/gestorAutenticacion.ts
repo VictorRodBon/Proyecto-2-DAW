@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-const LLAVE_TOKEN = import.meta.env.LLAVE_TOKEN;
+const LLAVE_TOKEN = "sb-qnwjmetgvbyitgrloosg-auth-token";
 
 interface SesionAlmacenada {
   access_token?: string;
