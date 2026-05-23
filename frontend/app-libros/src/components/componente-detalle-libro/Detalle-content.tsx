@@ -67,6 +67,7 @@ export function DetalleContent({
                         className={styles.opinionesToggle}
                         onClick={() => setMostrarOpiniones(!mostrarOpiniones)}
                         aria-expanded={mostrarOpiniones}
+                        data-testid="btn-ver-opiniones"
                     >
                         {mostrarOpiniones ? "Ocultar opiniones" : "Ver opiniones"}
                     </button>

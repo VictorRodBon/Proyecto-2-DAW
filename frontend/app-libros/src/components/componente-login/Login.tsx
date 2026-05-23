@@ -89,6 +89,7 @@ export function Login() {
 
       <label htmlFor="email-login">Email:</label>
       <input 
+        data-testid="email"
         id="email-login"
         type="text" 
         value={email} 
@@ -99,6 +100,7 @@ export function Login() {
 
       <label htmlFor="password-login">Contraseña:</label>
       <input 
+      data-testid="password"
         id="password-login"
         type="password" 
         value={password} 
@@ -106,7 +108,7 @@ export function Login() {
         aria-required="true"
       />
 
-      <button type="submit" disabled={loading} aria-busy={loading}>
+      <button type="submit" disabled={loading} aria-busy={loading} data-testid="btn-login">
         {loading ? "Iniciando sesión..." : "Entrar"}
       </button>
 

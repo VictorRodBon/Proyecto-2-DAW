@@ -14,6 +14,7 @@ export function RatingInput({
 }: RatingInputProps) {
   return (
     <Rating
+      data-testid="puntuacion-rating"
       name="puntuacion-rating"
       value={value}
       onChange={(_event, newValue) => onChange(newValue || 0)}

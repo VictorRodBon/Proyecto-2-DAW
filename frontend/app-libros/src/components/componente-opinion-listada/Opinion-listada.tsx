@@ -59,7 +59,7 @@ export const OpinionListada = ({ opinion, nombreUsuario, coverId }: OpinionLista
   const coverUrl = cover || coverId || '';
 
   return (
-    <article className={styles.container} aria-label={`Opinión de ${nombreAMostrar}`}>
+    <article data-testid="opinion-usuario" className={styles.container} aria-label={`Opinión de ${nombreAMostrar}`}>
       <div className={styles.header}>
         {location.pathname.startsWith('/perfil') ? (
           <Link to={`/detalle/${opinion.id_libro}/${coverUrl}`}>
