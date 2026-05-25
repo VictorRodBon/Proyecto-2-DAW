@@ -16,6 +16,7 @@ export const ListaOpiniones = ({ opiniones, cargando = false, coverId }: Props) 
             role="region" 
             aria-label="Lista de opiniones"
             aria-busy={cargando}
+            data-testid="lista-opiniones"
         >
             {cargando ? (
                 <p className={styles.loading} role="status" aria-live="polite">Cargando opiniones...</p>

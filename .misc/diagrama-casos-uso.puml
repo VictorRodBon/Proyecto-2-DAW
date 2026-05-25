@@ -1,0 +1,71 @@
+@startuml
+left to right direction
+skinparam ranksep 60
+skinparam packageStyle rectangle
+
+actor Visitante as VIS
+actor Usuario as USU
+actor Admin as ADM
+
+rectangle "Sistema de Gestión de Libros" {
+
+  ' --- Módulo Autenticación ---
+  (Registrarse) as UC01
+  (Iniciar sesión) as UC02
+  (Recuperar contraseña) as UC03
+  (Cerrar sesión) as UC04
+
+  ' --- Módulo Biblioteca ---
+  (Añadir libro a biblioteca) as UC05
+  (Cambiar estado de lectura) as UC06
+  (Eliminar libro de biblioteca) as UC07
+
+  ' --- Módulo Opiniones ---
+  (Escribir reseña) as UC08
+  (Editar reseña) as UC09
+  (Eliminar reseña) as UC10
+  (Ver reseñas) as UC11
+
+  ' --- Módulo Perfil ---
+  (Ver perfil) as UC12
+  (Editar perfil) as UC13
+
+  ' --- Módulo Búsqueda ---
+  (Buscar libros) as UC14
+  (Ver detalle de libro) as UC15
+  
+  ' --- Módulo Administración ---
+  (Moderar contenido) as UC16
+}
+
+' Relaciones de Herencia entre Actores
+USU -up-|> VIS
+USU -up-|> ADM
+
+' Acciones de VISITANTE (Cualquiera las puede hacer)
+VIS --> UC01
+VIS --> UC02
+VIS --> UC03
+VIS --> UC14
+VIS --> UC11
+
+' Relaciones lógicas internas (Evitan líneas desde el actor)
+UC14 <.. UC15 : <<extend>> (Opcional)
+
+' Acciones exclusivas del USUARIO LOGUEADO
+USU --> UC04
+USU --> UC05
+USU --> UC06
+USU --> UC07
+USU --> UC08
+USU --> UC12
+
+' El usuario edita/elimina desde su propio perfil o reseña
+UC08 <.. UC09 : <<extend>>
+UC08 <.. UC10 : <<extend>>
+UC12 <.. UC13 : <<extend>>
+
+' Acciones exclusivas del ADMINISTRADOR
+ADM --> UC16
+
+@endif

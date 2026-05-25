@@ -77,13 +77,14 @@ export const FormularioOpinion = () => {
               <div className={styles.campo}>
                 <label className={styles.etiqueta} id="puntuacion-label">Puntuación</label>
                 <div className={styles.contenedorRating} role="group" aria-labelledby="puntuacion-label">
-                  <RatingInput value={puntuacion} onChange={setPuntuacion} disabled={enviando} />
+                  <RatingInput value={puntuacion} onChange={setPuntuacion} disabled={enviando} data-testid="puntuacion-rating"/>
                 </div>
               </div>
               <div className={styles.campo}>
                 <label className={styles.etiqueta} htmlFor="valoracion-input">Tu opinión</label>
                 <textarea
                   id="valoracion-input"
+                  data-testid="valoracion"
                   className={styles.areaTexto}
                   value={valoracion}
                   onChange={(e) => setValoracion(e.target.value)}
@@ -96,7 +97,12 @@ export const FormularioOpinion = () => {
               </div>
             </div>
             <div className={styles.botonWrap}>
-              <button type="submit" className={styles.botonEnviar} disabled={enviando} aria-busy={enviando}>
+              <button 
+              type="submit" 
+              className={styles.botonEnviar} 
+              disabled={enviando} 
+              aria-busy={enviando}
+              data-testid="btn-enviar-opinion">
                 {enviando ? "Enviando..." : "Enviar opinión"}
               </button>
             </div>
