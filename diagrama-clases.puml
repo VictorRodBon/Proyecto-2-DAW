@@ -1,0 +1,155 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 13
+
+' === BACKEND ===
+package Backend {
+
+  class Usuario {
+    + id : String
+    + nombre_usuario : String
+    + estado : String
+    + rol : String
+    + foto_perfil : String?
+    + fecha_creacion : DateTime
+  }
+
+  class Opiniones {
+    + id_opinion : Int
+    + id_usuario : String
+    + id_libro : String
+    + puntuacion : Int
+    + valoracion : String?
+    + fecha_creacion : DateTime
+  }
+
+  class LecturasUsuarios {
+    + id_lectura : String
+    + id_usuario : String
+    + id_libro : String
+    + fecha_inicio : DateTime?
+    + fecha_fin : DateTime?
+    + estado : String
+  }
+
+  class PrismaService
+
+  class UsuariosService {
+    + findMe(id) : Usuario
+    + updateMe(id, dto) : Usuario
+  }
+
+  class OpinionesService {
+    + create(dto) : Opiniones
+    + findByLibro(id) : Opiniones[]
+    + findByUsuario(id) : Opiniones[]
+    + update(id, dto) : Opiniones
+    + remove(id) : void
+  }
+
+  class LecturasService {
+    + create(id_user, dto) : LecturasUsuarios
+    + findByUsuario(id) : LecturasUsuarios[]
+    + update(id, dto) : LecturasUsuarios
+    + remove(id) : void
+  }
+
+  Usuario "1" --> "0..*" Opiniones
+  Usuario "1" --> "0..*" LecturasUsuarios
+  UsuariosService --> PrismaService
+  OpinionesService --> PrismaService
+  LecturasService --> PrismaService
+}
+
+' === FRONTEND ===
+package "Frontend: Interfaces" {
+
+  interface IUsuario {
+    + id: string
+    + nombre_usuario: string
+    + rol: string
+    + foto_perfil: string
+  }
+
+  interface ILibro {
+    + key: string
+    + title: string
+    + author_name: string
+    + cover_i?: string
+  }
+
+  interface ILectura {
+    + id_lectura: string
+    + id_libro: string
+    + estado: string
+  }
+
+  interface IOpinion {
+    + id_opinion: number
+    + id_usuario: string
+    + puntuacion: number
+    + valoracion: string
+  }
+}
+
+package "Frontend: Servicios" {
+
+  class servicioUsuarios {
+    + login(email, pass)
+    + getPorId(id) : IUsuario
+    + putPorId(id, datos) : IUsuario
+  }
+
+  class servicioLibros {
+    + getLibros(title, page) : ILibro[]
+    + getData(key) : IDetalleLibro
+  }
+
+  class servicioOpiniones {
+    + postOpinion(datos) : IOpinion
+    + getPorLibro(id) : IOpinion[]
+    + putOpinion(id, datos)
+    + deleteOpinion(id)
+  }
+
+  class servicioLecturas {
+    + postLectura(datos) : ILectura
+    + getPorUsuario(id) : ILectura[]
+    + putLectura(id, datos)
+    + deleteLectura(id)
+  }
+}
+
+package "Frontend: Componentes" {
+
+  class RutaProtegida
+  class ErrorBoundary
+  class LayoutPrincipal
+  class BuscarLibro
+  class Detalle
+  class FormularioOpinion
+  class Perfil
+  class UpdateUser
+}
+
+' === RELACIONES ===
+IUsuario ..> Usuario
+ILectura ..> LecturasUsuarios
+IOpinion ..> Opiniones
+
+servicioUsuarios ..> IUsuario
+servicioOpiniones ..> IOpinion
+servicioLecturas ..> ILectura
+servicioLibros ..> ILibro
+
+RutaProtegida ..> servicioUsuarios
+BuscarLibro ..> servicioLibros
+Detalle ..> servicioLibros
+FormularioOpinion ..> servicioOpiniones
+Perfil ..> servicioUsuarios
+Perfil ..> servicioLecturas
+Perfil ..> servicioOpiniones
+UpdateUser ..> servicioUsuarios
+
+@enduml

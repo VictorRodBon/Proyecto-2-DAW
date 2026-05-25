@@ -5,8 +5,6 @@
   [X] Visuales
   [] Carga
 [] BACK
-  [] Unitario 
-  [] Integración
-  [] E2E
-  [] Visuales
-  [] Carga
+  [X] Unitario 
+  [X] Integración
+  [X] E2E
