@@ -1,8 +1,10 @@
-import {Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus,} from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus, UseGuards, } from '@nestjs/common';
 import { LecturasService } from './lecturas.service';
 import { CreateLecturaDto } from './dto/create-lectura.dto';
 import { UpdateLecturaDto } from './dto/update-lectura.dto';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
+@UseGuards(SupabaseAuthGuard)
 @Controller('lecturas')
 export class LecturasController {
   constructor(private readonly lecturasService: LecturasService) {}

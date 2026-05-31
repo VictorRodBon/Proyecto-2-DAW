@@ -9,11 +9,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { OpinionesService } from './opiniones.service';
 import { CreateOpinioneDto } from './dto/create-opinione.dto';
 import { UpdateOpinioneDto } from './dto/update-opinione.dto';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
+@UseGuards(SupabaseAuthGuard)
 @Controller('opiniones')
 export class OpinionesController {
   constructor(private readonly opinionesService: OpinionesService) {}
