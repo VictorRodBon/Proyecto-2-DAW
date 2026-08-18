@@ -2,8 +2,8 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: "0 0 */3 * *"   # Ejecuta cada 3 días a medianoche
-  workflow_dispatch:        # Permite ejecutarlo manualmente
+    - cron: "0 12 * * *"
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Ping Supabase REST
         run: |
-          curl -X GET "https://qnwjmetgvbyitgrloosg.supabase.co/rest/v1/usuarios?select=id&limit=1" \
-          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          curl -f -X GET "https://qnwjmetgvbyitgrloosg.supabase.co/rest/v1/usuarios?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
 
